@@ -1,0 +1,44 @@
+{
+  "endpoints": [
+    {
+      "id": "get-employee-list",
+      "method": "POST",
+      "path": "/api/EmployeeApi/GetEmployeeList",
+      "summary": "Retrieve a paginated list of employees with optional filters.",
+      "description": "Returns employees filtered by department, position, status, etc. Supports server-side pagination and sorting.",
+      "parameters": [
+        { "name": "pageNo", "in": "body", "type": "number", "required": true, "description": "Page number (1-based)" },
+        { "name": "pageSize", "in": "body", "type": "number", "required": true, "description": "Number of records per page" },
+        { "name": "search", "in": "body", "type": "string", "required": false, "description": "Search keyword for name or employee ID" },
+        { "name": "departmentId", "in": "body", "type": "number", "required": false, "description": "Filter by department" }
+      ],
+      "requestBody": "{\n  \"pageNo\": 1,\n  \"pageSize\": 20,\n  \"search\": \"John\",\n  \"departmentId\": null\n}",
+      "responseBody": "{\n  \"data\": [\n    {\n      \"employeeId\": 1,\n      \"employeeName\": \"John Doe\",\n      \"empId\": \"EMP000001\",\n      \"department\": \"Engineering\",\n      \"position\": \"Developer\"\n    }\n  ],\n  \"totalRecords\": 150,\n  \"pageNo\": 1,\n  \"pageSize\": 20\n}",
+      "tags": ["employee", "list", "pagination"]
+    },
+    {
+      "id": "get-employee-detail",
+      "method": "GET",
+      "path": "/api/EmployeeApi/GetEmployeeDetail",
+      "summary": "Get full details of a single employee by ID.",
+      "description": "Returns complete employee profile including personal info, employment details, and custom fields.",
+      "parameters": [
+        { "name": "employeeId", "in": "query", "type": "number", "required": true, "description": "The employee's unique ID" }
+      ],
+      "requestBody": "",
+      "responseBody": "{\n  \"employeeId\": 1,\n  \"employeeName\": \"John Doe\",\n  \"empId\": \"EMP000001\",\n  \"email\": \"john@company.com\",\n  \"phone\": \"+95-9XXXXXXX\",\n  \"department\": \"Engineering\",\n  \"position\": \"Senior Developer\",\n  \"status\": \"Active\"\n}",
+      "tags": ["employee", "detail", "profile"]
+    },
+    {
+      "id": "save-employee",
+      "method": "POST",
+      "path": "/api/EmployeeApi/SaveEmployee",
+      "summary": "Create or update an employee record.",
+      "description": "If `employeeId` is 0, creates a new employee. Otherwise updates the existing record.",
+      "parameters": [],
+      "requestBody": "{\n  \"employeeId\": 0,\n  \"employeeName\": \"Jane Smith\",\n  \"email\": \"jane@company.com\",\n  \"departmentId\": 5,\n  \"positionId\": 12,\n  \"startDate\": \"2026-01-15\"\n}",
+      "responseBody": "{\n  \"isSuccess\": true,\n  \"message\": \"Employee saved successfully\",\n  \"data\": { \"employeeId\": 155 }\n}",
+      "tags": ["employee", "create", "update"]
+    }
+  ]
+}

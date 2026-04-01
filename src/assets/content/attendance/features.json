@@ -1,0 +1,18 @@
+{
+  "features": [
+    {
+      "id": "attendance-calendar",
+      "title": "Attendance Calendar",
+      "summary": "Monthly calendar view showing daily attendance status for each employee.",
+      "content": "The **Attendance Calendar** provides a visual monthly overview.\n\n### Features\n- Color-coded daily status (Present, Absent, Late, Leave, Holiday)\n- Click on a day to view detailed check-in/check-out times\n- Filter by department or employee\n- Export to Excel\n\n### Status Colors\n- 🟢 Green = Present\n- 🔴 Red = Absent\n- 🟡 Yellow = Late\n- 🔵 Blue = On Leave\n- ⚪ Gray = Holiday/Off Day",
+      "tags": ["attendance", "calendar", "view"]
+    },
+    {
+      "id": "approval-workflow",
+      "title": "Approval Workflow",
+      "summary": "Multi-level approval system for leave requests, overtime, and other HR processes.",
+      "content": "The **Approval Workflow** enables configurable multi-level approval chains.\n\n### How it works\n1. Employee submits a request (leave, overtime, etc.)\n2. System routes to the configured approver(s) based on rules\n3. Each level approves or rejects\n4. Final status updates the employee's record\n\n### Configuration\n- Set up approval chains in **Policy > Approval Policy**\n- Supports up to 5 approval levels\n- Can route by department, position level, or specific person\n- Email/push notifications at each step",
+      "tags": ["approval", "workflow", "leave"]
+    }
+  ]
+}

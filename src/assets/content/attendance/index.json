@@ -1,0 +1,6 @@
+{
+  "slug": "attendance",
+  "name": "Attendance Module",
+  "sections": ["features", "api-reference", "qa"],
+  "lastUpdated": "2026-03-27"
+}

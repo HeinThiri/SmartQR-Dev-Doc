@@ -1,0 +1,53 @@
+{
+  "domains": [
+    {
+      "slug": "employee",
+      "name": "Employee",
+      "icon": "bi-people",
+      "description": "Employee profiles, contracts, custom fields, and employee book management.",
+      "order": 1
+    },
+    {
+      "slug": "attendance",
+      "name": "Attendance",
+      "icon": "bi-calendar-check",
+      "description": "Daily attendance, calendar view, duty roster, and shift management.",
+      "order": 2
+    },
+    {
+      "slug": "payroll",
+      "name": "Payroll",
+      "icon": "bi-cash-stack",
+      "description": "Salary calculation, payslips, tax computation, and payroll reports.",
+      "order": 3
+    },
+    {
+      "slug": "kpi",
+      "name": "KPI",
+      "icon": "bi-graph-up",
+      "description": "Key performance indicators, goal tracking, and performance reviews.",
+      "order": 4
+    },
+    {
+      "slug": "lms",
+      "name": "LMS",
+      "icon": "bi-mortarboard",
+      "description": "Learning management — courses, quizzes, assignments, and certificates.",
+      "order": 5
+    },
+    {
+      "slug": "approval-workflow",
+      "name": "Approval Workflow",
+      "icon": "bi-check2-circle",
+      "description": "Multi-level approval chains, request routing, and approval policies.",
+      "order": 6
+    },
+    {
+      "slug": "common-features",
+      "name": "Common Features",
+      "icon": "bi-puzzle",
+      "description": "Reusable shared components — grid export, file upload, common utilities.",
+      "order": 7
+    }
+  ]
+}

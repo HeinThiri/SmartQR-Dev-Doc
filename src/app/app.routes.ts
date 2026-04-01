@@ -1,0 +1,115 @@
+import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+import { LayoutComponent } from './layout/layout.component';
+import { LoginComponent } from './pages/login/login.component';
+import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { DomainListComponent } from './pages/domain/domain-list.component';
+import { DomainDetailComponent } from './pages/domain/domain-detail.component';
+import { SearchComponent } from './pages/search/search.component';
+import { CommonFeaturesComponent } from './pages/common-features/common-features.component';
+import { GridExportComponent } from './pages/common-features/grid-export.component';
+import { MultiProductBrandingComponent } from './pages/common-features/multi-product-branding.component';
+import { AdvancedViewComponent } from './pages/common-features/advanced-view.component';
+import { MaintenanceAlertComponent } from './pages/common-features/maintenance-alert.component';
+import { SmsPohIntegrationComponent } from './pages/common-features/sms-poh-integration.component';
+import { TotpMfaComponent } from './pages/common-features/totp-mfa.component';
+import { ApprovalWorkflowComponent } from './pages/common-features/approval-workflow.component';
+import { CustomFieldComponent } from './pages/common-features/custom-field.component';
+import { LogNoteComponent } from './pages/common-features/log-note.component';
+import { VimeoIntegrationComponent } from './pages/common-features/vimeo-integration.component';
+import { EmailNotificationComponent } from './pages/common-features/email-notification.component';
+import { DataMigrationComponent } from './pages/common-features/data-migration.component';
+import { HowToDocComponent } from './pages/how-to-doc/how-to-doc.component';
+import { SmartHrComponent } from './pages/smart-hr/smart-hr.component';
+import { SalaryBookComponent } from './pages/smart-hr/salary-book.component';
+import { OrgStructureComponent } from './pages/smart-hr/org-structure.component';
+import { AttendanceCalendarComponent } from './pages/smart-hr/attendance-calendar.component';
+import { DutyRosterComponent } from './pages/smart-hr/duty-roster.component';
+import { ChildDataLogComponent } from './pages/smart-hr/child-data-log.component';
+import { LicenseValidationComponent } from './pages/smart-hr/license-validation.component';
+import { ReportViewerComponent } from './pages/smart-hr/report-viewer.component';
+import { GroupDataAccessComponent } from './pages/smart-hr/group-data-access.component';
+import { DynamicProcedureComponent } from './pages/smart-hr/dynamic-procedure.component';
+import { LearningModuleComponent } from './pages/smart-hr/learning-module.component';
+import { MyWorkspaceComponent } from './pages/smart-hr/my-workspace.component';
+import { AssetManagementComponent } from './pages/smart-hr/asset-management.component';
+import { TaxDesignComponent } from './pages/smart-hr/tax-design.component';
+import { CouponCreditComponent } from './pages/smart-hr/coupon-credit.component';
+import { SmartPayIntegrationComponent } from './pages/smart-hr/smart-pay-integration.component';
+import { SmartHrCaseComponent } from './pages/smart-hr-case/smart-hr-case.component';
+import { PentestComponent } from './pages/pentest/pentest.component';
+import { Bug1Component } from './pages/pentest/bug-1.component';
+import { Bug2Component } from './pages/pentest/bug-2.component';
+import { Bug3Component } from './pages/pentest/bug-3.component';
+import { Bug4Component } from './pages/pentest/bug-4.component';
+import { Bug5Component } from './pages/pentest/bug-5.component';
+import { Bug6Component } from './pages/pentest/bug-6.component';
+import { Bug7Component } from './pages/pentest/bug-7.component';
+import { Bug8Component } from './pages/pentest/bug-8.component';
+import { Bug9Component } from './pages/pentest/bug-9.component';
+import { Bug10Component } from './pages/pentest/bug-10.component';
+import { Bug11Component } from './pages/pentest/bug-11.component';
+import { Bug12Component } from './pages/pentest/bug-12.component';
+import { Bug13Component } from './pages/pentest/bug-13.component';
+
+export const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  {
+    path: '',
+    component: LayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+      { path: 'welcome', component: WelcomeComponent },
+      { path: 'common-features', component: CommonFeaturesComponent },
+      { path: 'common-features/grid-export', component: GridExportComponent },
+      { path: 'common-features/multi-product-branding', component: MultiProductBrandingComponent },
+      { path: 'common-features/advanced-view', component: AdvancedViewComponent },
+      { path: 'common-features/maintenance-alert', component: MaintenanceAlertComponent },
+      { path: 'common-features/sms-poh-integration', component: SmsPohIntegrationComponent },
+      { path: 'common-features/totp-mfa', component: TotpMfaComponent },
+      { path: 'common-features/approval-workflow', component: ApprovalWorkflowComponent },
+      { path: 'common-features/custom-field', component: CustomFieldComponent },
+      { path: 'common-features/log-note', component: LogNoteComponent },
+      { path: 'common-features/vimeo-integration', component: VimeoIntegrationComponent },
+      { path: 'common-features/email-notification', component: EmailNotificationComponent },
+      { path: 'common-features/data-migration', component: DataMigrationComponent },
+      { path: 'domains', component: DomainListComponent },
+      { path: 'domains/:slug', component: DomainDetailComponent },
+      { path: 'search', component: SearchComponent },
+      { path: 'how-to-doc', component: HowToDocComponent },
+      { path: 'smart-hr', component: SmartHrComponent },
+      { path: 'smart-hr/salary-book', component: SalaryBookComponent },
+      { path: 'smart-hr/org-structure', component: OrgStructureComponent },
+      { path: 'common-features/dynamic-procedure', component: DynamicProcedureComponent },
+      { path: 'smart-hr/learning-module', component: LearningModuleComponent },
+      { path: 'smart-hr/my-workspace', component: MyWorkspaceComponent },
+      { path: 'smart-hr/asset-management', component: AssetManagementComponent },
+      { path: 'smart-hr/attendance-calendar', component: AttendanceCalendarComponent },
+      { path: 'smart-hr/duty-roster', component: DutyRosterComponent },
+      { path: 'smart-hr/child-data-log', component: ChildDataLogComponent },
+      { path: 'smart-hr/license-validation', component: LicenseValidationComponent },
+      { path: 'smart-hr/report-viewer', component: ReportViewerComponent },
+      { path: 'smart-hr/group-data-access', component: GroupDataAccessComponent },
+      { path: 'smart-hr/tax-design', component: TaxDesignComponent },
+      { path: 'smart-hr/coupon-credit', component: CouponCreditComponent },
+      { path: 'smart-hr/smart-pay-integration', component: SmartPayIntegrationComponent },
+      { path: 'smart-hr-case', component: SmartHrCaseComponent },
+      { path: 'pentest', component: PentestComponent },
+      { path: 'pentest/bug-1', component: Bug1Component },
+      { path: 'pentest/bug-2', component: Bug2Component },
+      { path: 'pentest/bug-3', component: Bug3Component },
+      { path: 'pentest/bug-4', component: Bug4Component },
+      { path: 'pentest/bug-5', component: Bug5Component },
+      { path: 'pentest/bug-6', component: Bug6Component },
+      { path: 'pentest/bug-7', component: Bug7Component },
+      { path: 'pentest/bug-8', component: Bug8Component },
+      { path: 'pentest/bug-9', component: Bug9Component },
+      { path: 'pentest/bug-10', component: Bug10Component },
+      { path: 'pentest/bug-11', component: Bug11Component },
+      { path: 'pentest/bug-12', component: Bug12Component },
+      { path: 'pentest/bug-13', component: Bug13Component },
+    ]
+  },
+  { path: '**', redirectTo: 'welcome' }
+];

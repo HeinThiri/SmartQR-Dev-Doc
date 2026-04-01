@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "qa-export-001",
+      "question": "Can I export a grid that uses band columns (grouped headers)?",
+      "answer": "Yes. The export reads all header rows including band column headers. The `readGridStyles()` helper traverses `.dx-header-row` elements to capture styles for both parent (band) and child column headers. Band columns will appear correctly in both PDF and Excel output.",
+      "tags": ["export", "band-columns", "grid"]
+    },
+    {
+      "id": "qa-export-002",
+      "question": "How do I exclude certain columns from the export (like action buttons)?",
+      "answer": "Pass the `excludeColumns` option with an array of column names or dataFields to hide:\n\n```typescript\nthis.myCommon.showExportDialog({\n  gridInstance: this.myGrid.instance,\n  reportTitle: 'My Report',\n  fileName: 'My_Report',\n  excludeColumns: ['Recalculate', 'Actions'],\n});\n```\n\nThese columns will be hidden before export and restored after.",
+      "tags": ["export", "columns", "exclude"]
+    },
+    {
+      "id": "qa-export-003",
+      "question": "What's the difference between A4 and Dynamic Width paper size?",
+      "answer": "- **A4**: Fixed page size (210x297mm portrait, 297x210mm landscape). Columns are compressed to fit. Good for standard reports.\n- **Dynamic Width**: Page width is auto-calculated from the total of all column widths. Minimum is 297mm landscape or 210mm portrait. Good for wide grids with many columns that would be too compressed on A4.",
+      "tags": ["export", "pdf", "paper-size"]
+    },
+    {
+      "id": "qa-export-004",
+      "question": "How do I customize column widths in the PDF export?",
+      "answer": "Use `fixedColumnWidthMap` and `defaultColumnWidth`:\n\n```typescript\nthis.myCommon.showExportDialog({\n  gridInstance: this.myGrid.instance,\n  reportTitle: 'Report',\n  fileName: 'Report',\n  fixedColumnWidthMap: { fullName: 30, department: 25 },  // specific columns in mm\n  defaultColumnWidth: 18,  // all other columns in mm\n});\n```\n\nIf you don't set these, column widths default to the grid's own proportional sizing.",
+      "tags": ["export", "pdf", "column-width"]
+    },
+    {
+      "id": "qa-export-005",
+      "question": "Does the export support custom HTML in the footer?",
+      "answer": "Yes, but only basic HTML tags:\n- `<b>text</b>` — Bold\n- `<i>text</i>` — Italic\n- `<br>` or `\\n` — Line break\n\nFor PDF, the HTML is parsed and rendered with proper formatting. For Excel, HTML tags are stripped and the text is rendered as plain lines.\n\n```typescript\ncustomFooterHtml: '<b>Note:</b> This report is confidential.<br>Contact HR for questions.'\n```",
+      "tags": ["export", "footer", "html"]
+    }
+  ]
+}

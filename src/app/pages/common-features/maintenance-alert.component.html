@@ -1,0 +1,331 @@
+<div class="page">
+  <a routerLink="/common-features" class="back-link">
+    <i class="bi bi-arrow-left"></i> Common Features
+  </a>
+  <h1>System Maintenance Alert</h1>
+  <p class="subtitle">Schedule, manage, and communicate planned maintenance windows to all users. Live banner, auto-redirect, email notifications via Hangfire, and developer bypass.</p>
+  <div class="doc-status"><i class="bi bi-check-circle-fill"></i> Completed</div>
+
+  <!-- Overview -->
+  <section class="card">
+    <h2>Overview</h2>
+    <ul>
+      <li><strong>Live banner</strong> appears at the top of every page when maintenance is approaching or active</li>
+      <li><strong>Auto-redirect</strong> to <code>/maintenance</code> page when maintenance starts</li>
+      <li><strong>Email notifications</strong> — manual send or auto-scheduled via Hangfire background job</li>
+      <li><strong>Bypass mechanism</strong> — <code>/bypass</code> sets a cookie so developers can test during maintenance</li>
+      <li><strong>Two-layer redirect</strong> — banner <code>setTimeout</code> + route guard for backgrounded tabs</li>
+    </ul>
+  </section>
+
+  <!-- DB Diagram -->
+  <section class="card">
+    <h2>Database Diagram</h2>
+    <div class="er-diagram">
+      <div class="er-layer">
+        <div class="er-label">Core Table</div>
+        <div class="er-row">
+          <div class="er-table er-primary">
+            <div class="er-title"><i class="bi bi-table"></i> SysMaintenanceAlert</div>
+            <div class="er-field"><span class="er-key">PK</span> MaintenanceId</div>
+            <div class="er-field">Title</div>
+            <div class="er-field">Message</div>
+            <div class="er-field">MaintenanceStart</div>
+            <div class="er-field">MaintenanceEnd</div>
+            <div class="er-field">AlertBeforeMinutes</div>
+            <div class="er-field">Status</div>
+            <div class="er-field">ScheduleJobId</div>
+            <div class="er-field">ReceiverMail</div>
+            <div class="er-field">EmailSentOn</div>
+          </div>
+        </div>
+      </div>
+      <div class="er-layer">
+        <div class="er-label">Linked Tables</div>
+        <div class="er-row">
+          <div class="er-table er-small">
+            <div class="er-title"><i class="bi bi-table"></i> CrmEmailTemplate</div>
+            <div class="er-field">ETA0009</div>
+          </div>
+          <div class="er-connector"><div class="er-line"></div></div>
+          <div class="er-table er-small">
+            <div class="er-title"><i class="bi bi-table"></i> SysLicense</div>
+            <div class="er-field">Recipients</div>
+          </div>
+          <div class="er-connector"><div class="er-line"></div></div>
+          <div class="er-table er-small">
+            <div class="er-title"><i class="bi bi-table"></i> HrDeploymentVersion</div>
+            <div class="er-field">Version info</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flow Diagram -->
+  <section class="card">
+    <h2>Flow Diagram</h2>
+    <div class="diagram">
+      <div class="diagram-row">
+        <div class="diagram-node node-start"><i class="bi bi-person-gear"></i> Admin Creates Alert</div>
+        <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="diagram-node node-action"><i class="bi bi-save"></i> Save<small>Status=4 Scheduled</small></div>
+        <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="diagram-node node-step"><i class="bi bi-clock"></i> Hangfire Job<small>Scheduled</small></div>
+        <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="diagram-node node-pending"><i class="bi bi-broadcast"></i> Banner Polls<small>/GetActiveAlert</small></div>
+      </div>
+      <div class="diagram-down"><i class="bi bi-arrow-down"></i></div>
+      <div class="diagram-row">
+        <div class="diagram-node node-pending"><i class="bi bi-exclamation-triangle"></i> Banner Shows</div>
+        <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="diagram-node node-danger"><i class="bi bi-wrench"></i> Maintenance Starts<small>Auto-Redirect</small></div>
+        <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="diagram-node node-action"><i class="bi bi-envelope"></i> Hangfire Sends<small>Email</small></div>
+        <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="diagram-node node-success"><i class="bi bi-check-lg"></i> Completed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Status Values -->
+  <section class="card">
+    <h2>Status Values</h2>
+    <table>
+      <thead><tr><th>Value</th><th>Name</th><th>Banner</th><th>Redirects</th><th>Auto Email</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="status-dot dot-grey"></span><code>"1"</code></td><td>Draft</td><td>No</td><td>No</td><td>No</td><td>Being prepared</td></tr>
+        <tr><td><span class="status-dot dot-green"></span><code>"2"</code></td><td>Active</td><td>Yes</td><td>Yes</td><td>No</td><td>Live alert; users redirected</td></tr>
+        <tr><td><span class="status-dot dot-blue"></span><code>"3"</code></td><td>Completed</td><td>No</td><td>No</td><td>No</td><td>Stops banner + redirect immediately</td></tr>
+        <tr><td><span class="status-dot dot-yellow"></span><code>"4"</code></td><td>Scheduled</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Hangfire job fires at start - alert minutes</td></tr>
+        <tr><td><span class="status-dot dot-red"></span><code>"5"</code></td><td>Cancelled</td><td>No</td><td>No</td><td>No</td><td>Any Hangfire job is cancelled</td></tr>
+      </tbody>
+    </table>
+    <div class="info">
+      <i class="bi bi-info-circle"></i>
+      <span>To stop the maintenance alert immediately, set status to <strong>"3" (Completed)</strong>.</span>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section class="card">
+    <h2>Architecture</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div><strong>Admin creates alert</strong><p>maintenance-alert-detail form: title, message, start/end, status</p></div>
+      </div>
+      <div class="flow-arrow"><i class="bi bi-arrow-down"></i></div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div><strong>Save → API → Database</strong><p>If status="4" (Scheduled), Hangfire job is created for auto-email</p></div>
+      </div>
+      <div class="flow-arrow"><i class="bi bi-arrow-down"></i></div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div><strong>Banner polls every 5 min</strong><p><code>GetActiveAlert</code> — shows banner when in maintenance window</p></div>
+      </div>
+      <div class="flow-arrow"><i class="bi bi-arrow-down"></i></div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div><strong>Maintenance starts</strong><p>Banner <code>setTimeout</code> or guard redirects users to <code>/maintenance</code></p></div>
+      </div>
+      <div class="flow-arrow"><i class="bi bi-arrow-down"></i></div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div><strong>Hangfire job fires</strong><p>Email sent via AWS SES → status auto-changes to "3" (Completed)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API Endpoints -->
+  <section class="card">
+    <h2>API Endpoints</h2>
+    <p>Base path: <code>/SysMaintenanceAlertApi</code> — JWT Bearer required except GetActiveAlert.</p>
+    <table>
+      <thead><tr><th>Method</th><th>Path</th><th>Permission</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>GET</code></td><td><code>/GetAll?keyword=</code></td><td>read</td><td>All active alerts, filtered by keyword</td></tr>
+        <tr><td><code>GET</code></td><td><code>/GetByID/&#123;id&#125;</code></td><td>read</td><td>Single alert with full details</td></tr>
+        <tr><td><code>GET</code></td><td><code>/GetActiveAlert</code></td><td><strong>Anonymous</strong></td><td>Current active alert (no auth — for /maintenance page)</td></tr>
+        <tr><td><code>POST</code></td><td><code>/Save</code></td><td>create/update</td><td>Create or update + manage Hangfire job</td></tr>
+        <tr><td><code>DELETE</code></td><td><code>/Delete/&#123;id&#125;</code></td><td>delete</td><td>Soft-delete + cancel Hangfire job</td></tr>
+        <tr><td><code>POST</code></td><td><code>/SendEmail/&#123;id&#125;</code></td><td>update</td><td>Manually send email to all recipients</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Database -->
+  <section class="card">
+    <h2>Database</h2>
+    <h3>Table: SysMaintenanceAlert</h3>
+    <table>
+      <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>MaintenanceId</code></td><td>NVARCHAR (GUID)</td><td>Primary key</td></tr>
+        <tr><td><code>Title</code></td><td>NVARCHAR</td><td>Alert title</td></tr>
+        <tr><td><code>Message</code></td><td>NVARCHAR</td><td>Alert body message</td></tr>
+        <tr><td><code>MaintenanceStart</code></td><td>DATETIME</td><td>Maintenance window start (local time)</td></tr>
+        <tr><td><code>MaintenanceEnd</code></td><td>DATETIME</td><td>Maintenance window end</td></tr>
+        <tr><td><code>AlertBeforeMinutes</code></td><td>INT</td><td>Minutes before start to show banner (default: 30)</td></tr>
+        <tr><td><code>Status</code></td><td>NVARCHAR</td><td>"1"–"5" (see Status Values)</td></tr>
+        <tr><td><code>ScheduleJobId</code></td><td>NVARCHAR(200)</td><td>Hangfire job ID for scheduled email</td></tr>
+        <tr><td><code>ReceiverMail</code></td><td>NVARCHAR</td><td>Extra TO email recipient</td></tr>
+        <tr><td><code>CcreceiverMail</code></td><td>NVARCHAR</td><td>CC email recipient</td></tr>
+        <tr><td><code>EmailSentOn</code></td><td>DATETIME?</td><td>When email was last sent</td></tr>
+        <tr><td><code>DeploymentVersionId</code></td><td>NVARCHAR</td><td>FK to HrDeploymentVersion</td></tr>
+      </tbody>
+    </table>
+    <h3>Migration Script</h3>
+    <pre><code>ALTER TABLE SysMaintenanceAlert
+ADD ScheduleJobId NVARCHAR(200) NULL;</code></pre>
+  </section>
+
+  <!-- Hangfire Job -->
+  <section class="card">
+    <h2>Hangfire Auto-Email Job</h2>
+    <p><strong>Class:</strong> <code>MaintenanceAlertEmailJob</code> in <code>Infrastructure/BackgroundServices/</code></p>
+    <p><strong>Method:</strong> <code>SendEmailAuto(string maintenanceId)</code></p>
+    <h3>Job Lifecycle</h3>
+    <table>
+      <thead><tr><th>Trigger</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>Save with Status="4"</td><td>Old job deleted → new job scheduled → <code>ScheduleJobId</code> saved</td></tr>
+        <tr><td>Save with other status</td><td>Old job deleted → <code>ScheduleJobId</code> cleared</td></tr>
+        <tr><td>Delete record</td><td>Job deleted → record soft-deleted</td></tr>
+        <tr><td>Job fires</td><td>Sends email → Status="3", ScheduleJobId=null, EmailSentOn set</td></tr>
+      </tbody>
+    </table>
+    <h3>Guard Checks</h3>
+    <ul>
+      <li>Record not found or Active=false → skip</li>
+      <li>EmailSentOn already set → skip (idempotent)</li>
+      <li>Status != "4" (admin changed it) → skip</li>
+    </ul>
+  </section>
+
+  <!-- Email -->
+  <section class="card">
+    <h2>Email Notification</h2>
+    <h3>Recipient Logic</h3>
+    <ol>
+      <li>Collect all <code>ContactEmail</code> from <code>SysLicense</code> where Active=true</li>
+      <li>Add <code>ReceiverMail</code> from alert record</li>
+      <li>Filter through <code>IsValidEmail()</code>, deduplicate</li>
+      <li>Send one email per TO recipient via AWS SES</li>
+      <li>Send CC separately if <code>CcreceiverMail</code> is set</li>
+    </ol>
+    <h3>Template Placeholders (ETA0009)</h3>
+    <table>
+      <thead><tr><th>Placeholder</th><th>Replaced With</th></tr></thead>
+      <tbody>
+        <tr><td><code>[title]</code></td><td>record.Title</td></tr>
+        <tr><td><code>[message]</code></td><td>record.Message</td></tr>
+        <tr><td><code>[maintenanceStart]</code></td><td>Formatted: dd MMM yyyy, hh:mm tt</td></tr>
+        <tr><td><code>[maintenanceEnd]</code></td><td>Formatted: dd MMM yyyy, hh:mm tt</td></tr>
+        <tr><td><code>[versionInfo]</code></td><td>Deployment version table row or empty</td></tr>
+        <tr><td><code>[webUiUrl]</code></td><td>From SysConfig.WebUiurl</td></tr>
+        <tr><td><code>[copyrightYear]</code></td><td>Current year</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Banner & Redirect -->
+  <section class="card">
+    <h2>Live Banner &amp; Redirect</h2>
+    <p>Component: <code>MaintenanceAlertBannerComponent</code> — placed in <code>vertical.component.html</code> for all logged-in users.</p>
+    <ul>
+      <li>Polls <code>GetActiveAlert</code> every <strong>5 minutes</strong></li>
+      <li><strong>Upcoming</strong> (before start): clock icon + scheduled time range</li>
+      <li><strong>In Progress</strong> (after start): wrench icon + "Ongoing until..." message</li>
+      <li>Dismiss hides UI only — redirect timer continues running</li>
+    </ul>
+    <h3>Two-Layer Redirect Coverage</h3>
+    <table>
+      <thead><tr><th>Scenario</th><th>Covered By</th></tr></thead>
+      <tbody>
+        <tr><td>User active on any page when maintenance starts</td><td>Banner <code>setTimeout</code></td></tr>
+        <tr><td>User's tab was backgrounded (timer throttled)</td><td><code>MaintenanceGuard</code> on next navigation</td></tr>
+        <tr><td>User opens new tab after maintenance started</td><td>Banner <code>checkAlert()</code> → immediate redirect</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Bypass -->
+  <section class="card">
+    <h2>Developer Bypass</h2>
+    <p>Route: <code>/bypass</code> — sets <code>smarthr_bypass=true</code> cookie (4 hours), then redirects to <code>/</code>.</p>
+    <ul>
+      <li>Banner and guard both check this cookie — skip redirect if present</li>
+      <li>Cookie expires after 4 hours automatically</li>
+      <li>For IIS-level maintenance: use <code>/_bypass.html</code> (static file in IIS root)</li>
+    </ul>
+    <pre><code>// Usage during deployment testing:
+Dev team visits: https://hr_qa.smarticwork.com/bypass
+  → cookie set → redirected to / → system loads normally
+  → other users without cookie → still redirected to /maintenance</code></pre>
+  </section>
+
+  <!-- Files Reference -->
+  <section class="card">
+    <h2>Files Reference</h2>
+    <h3>Backend</h3>
+    <table>
+      <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>APIs/System_Module/SysMaintenanceAlertApi.cs</code></td><td>REST API controller</td></tr>
+        <tr><td><code>Infrastructure/.../SysMaintenanceAlertController.cs</code></td><td>Business logic</td></tr>
+        <tr><td><code>Infrastructure/BackgroundServices/MaintenanceAlertEmailJob.cs</code></td><td>Hangfire auto-email job</td></tr>
+        <tr><td><code>DBModels/.../SysMaintenanceAlert.cs</code></td><td>EF Core entity</td></tr>
+        <tr><td><code>DBModels/.../SysMaintenanceAlertView.cs</code></td><td>EF Core read view</td></tr>
+        <tr><td><code>DTO/System_Module/SysMaintenanceAlertDTO.cs</code></td><td>Request/response DTO</td></tr>
+        <tr><td><code>Shared/Enums/MailCode.cs</code></td><td>MaintenanceAlertCode = "ETA0009"</td></tr>
+      </tbody>
+    </table>
+    <h3>Frontend</h3>
+    <table>
+      <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>systemconfig/maintenance-alert/maintenance-alert-list/</code></td><td>List page (grid + search + delete)</td></tr>
+        <tr><td><code>systemconfig/maintenance-alert/maintenance-alert-detail/</code></td><td>Detail panel (create/edit/send email)</td></tr>
+        <tr><td><code>layouts/maintenance-alert-banner/</code></td><td>Live banner + redirect scheduler</td></tr>
+        <tr><td><code>pages/maintenance-page/</code></td><td>/maintenance page (anonymous)</td></tr>
+        <tr><td><code>pages/maintenance-page/bypass.component.ts</code></td><td>/bypass page (cookie setter)</td></tr>
+        <tr><td><code>core/guards/maintenance.guard.ts</code></td><td>Route guard — redirect on navigation</td></tr>
+        <tr><td><code>services/systemconfig/sys-maintenance-alert.service.ts</code></td><td>HTTP service + cached alert state</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Setup Checklist -->
+  <section class="card">
+    <h2>Setup Checklist</h2>
+    <table>
+      <thead><tr><th>#</th><th>Task</th><th>Required</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>SysMaintenanceAlert</code> table + <code>SysMaintenanceAlertView</code> view exist</td><td>Yes</td></tr>
+        <tr><td>2</td><td><code>ScheduleJobId NVARCHAR(200) NULL</code> column added</td><td>Yes</td></tr>
+        <tr><td>3</td><td><code>CrmEmailTemplate</code> row with <code>ETA0009</code> + HTML body</td><td>Yes</td></tr>
+        <tr><td>4</td><td><code>SysConfig.WebUiurl</code> set correctly</td><td>Yes</td></tr>
+        <tr><td>5</td><td>AWS SES credentials in appsettings.json</td><td>Yes</td></tr>
+        <tr><td>6</td><td><code>SMARTHR_ENCRYPTION_KEY</code> environment variable set</td><td>Yes</td></tr>
+        <tr><td>7</td><td>Hangfire SQL connection string configured</td><td>Yes</td></tr>
+        <tr><td>8</td><td>Permission <code>permission_MaintenanceAlert</code> granted</td><td>Yes</td></tr>
+        <tr><td>9</td><td>Menu item added: <code>system/maintenance-alert</code></td><td>Yes</td></tr>
+        <tr><td>10</td><td>Static maintenance.html on S3 (full server down fallback)</td><td>Optional</td></tr>
+        <tr><td>11</td><td>IIS URL Rewrite rule in web.config</td><td>Optional</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Doc Log -->
+  <section class="card">
+    <h2>Doc Log</h2>
+    <table>
+      <thead><tr><th>Date</th><th>Author</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td>2026-03-27</td><td>Hein Htet Zaw</td><td>Initial documentation</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>

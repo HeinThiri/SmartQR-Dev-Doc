@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "id": "qa-emp-001",
+      "question": "How do I add custom fields to the employee profile?",
+      "answer": "Go to **Policy > Custom Field Setup**, click **Add**, and configure the field name, type (text, dropdown, date, etc.), and which section it belongs to. Custom fields will automatically appear in the employee profile form.",
+      "tags": ["custom-field", "configuration"]
+    },
+    {
+      "id": "qa-emp-002",
+      "question": "What is the maximum file size for employee document uploads?",
+      "answer": "Images can be up to **500 KB** and documents (PDF, Word, Excel) up to **5 MB** each. You can upload up to **10 files** per record.",
+      "tags": ["upload", "documents", "limit"]
+    },
+    {
+      "id": "qa-emp-003",
+      "question": "How does the employee ID auto-generation work?",
+      "answer": "Employee IDs follow the pattern `EMP` + 6-digit running number (e.g., EMP000001). The running number is configured in **Policy > Running Nos**. You can customize the prefix and starting number per company.",
+      "tags": ["employee-id", "running-number", "configuration"]
+    },
+    {
+      "id": "qa-emp-004",
+      "question": "Can I bulk import employees from Excel?",
+      "answer": "Yes. Go to **Employee > Employee Book**, click the **Import** button, download the template Excel file, fill in the data, and upload. The system will validate and create employee records. Duplicate employee IDs will be flagged as errors.",
+      "tags": ["import", "excel", "bulk"]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "id": "qa-att-001",
+      "question": "How do I configure attendance calculation rules?",
+      "answer": "Go to **Policy > Attendance Policy** to set rules for late threshold, overtime calculation, and absence tracking. You can define different rules per department or work location.",
+      "tags": ["attendance", "configuration", "policy"]
+    },
+    {
+      "id": "qa-att-002",
+      "question": "What devices are supported for attendance check-in?",
+      "answer": "Smart HR supports:\n- **Biometric devices** (fingerprint, face recognition)\n- **QR Code** scanning via mobile app\n- **GPS-based** check-in from the mobile app\n- **Manual entry** by HR admin\n\nDevice integration is configured in **Policy > Attendance Policy > Device Setup**.",
+      "tags": ["attendance", "device", "check-in"]
+    },
+    {
+      "id": "qa-att-003",
+      "question": "How does the approval workflow route requests to the correct approver?",
+      "answer": "The routing is configured in **Policy > Approval Policy**. You can set rules based on:\n- **Department**: Route to department head\n- **Position Level**: Route to the next level up\n- **Specific Person**: Always route to a named approver\n\nMultiple levels are supported (up to 5). If an approver is on leave, the system can auto-delegate to a backup.",
+      "tags": ["approval", "workflow", "routing"]
+    }
+  ]
+}

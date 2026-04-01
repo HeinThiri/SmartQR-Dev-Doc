@@ -1,0 +1,19 @@
+{
+  "endpoints": [
+    {
+      "id": "get-attendance-calendar",
+      "method": "POST",
+      "path": "/api/AttendanceCalendar/GetAttendanceCalendar",
+      "summary": "Retrieve attendance calendar data for a given month and year.",
+      "description": "Returns daily attendance records for all employees (or filtered) in the specified month.",
+      "parameters": [
+        { "name": "month", "in": "body", "type": "number", "required": true, "description": "Month (1-12)" },
+        { "name": "year", "in": "body", "type": "number", "required": true, "description": "Year (e.g., 2026)" },
+        { "name": "departmentId", "in": "body", "type": "number", "required": false, "description": "Filter by department" }
+      ],
+      "requestBody": "{\n  \"month\": 3,\n  \"year\": 2026,\n  \"departmentId\": null\n}",
+      "responseBody": "{\n  \"data\": [\n    {\n      \"employeeId\": 1,\n      \"employeeName\": \"John Doe\",\n      \"days\": [\n        { \"date\": \"2026-03-01\", \"status\": \"Present\", \"checkIn\": \"08:55\", \"checkOut\": \"18:02\" },\n        { \"date\": \"2026-03-02\", \"status\": \"Weekend\" }\n      ]\n    }\n  ]\n}",
+      "tags": ["attendance", "calendar", "monthly"]
+    }
+  ]
+}

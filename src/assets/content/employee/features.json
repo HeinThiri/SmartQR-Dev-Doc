@@ -1,0 +1,25 @@
+{
+  "features": [
+    {
+      "id": "quick-search",
+      "title": "Quick Search",
+      "summary": "Global search bar that instantly finds employees, contracts, and records across all modules.",
+      "content": "The **Quick Search** feature provides a unified search experience across the entire Smart HR system.\n\n### How it works\n- Located in the top navigation bar, accessible from any page\n- Searches across employee names, IDs, contract numbers, and more\n- Results are grouped by category (Employee, Contract, Attendance)\n- Click on a result to navigate directly to that record\n\n### Configuration\n- Search is enabled by default for all users\n- Results are filtered by the user's permission level\n- Maximum 20 results per category",
+      "tags": ["search", "navigation", "global"]
+    },
+    {
+      "id": "employee-profile",
+      "title": "Employee Profile",
+      "summary": "Comprehensive employee information management with customizable fields and sections.",
+      "content": "The **Employee Profile** is the central hub for all employee data.\n\n### Key Sections\n- **Personal Info**: Name, DOB, gender, contact details\n- **Employment**: Position, department, employment type, status\n- **Documents**: Upload and manage employee documents\n- **Custom Fields**: Add organization-specific fields\n\n### Features\n- Profile photo upload with auto-resize\n- Employment history tracking\n- Multi-language support for names\n- Bulk import via Excel",
+      "tags": ["employee", "profile", "management"]
+    },
+    {
+      "id": "employee-contract",
+      "title": "Employee Contract",
+      "summary": "Contract lifecycle management including creation, renewal, and termination tracking.",
+      "content": "Manage the full lifecycle of employment contracts.\n\n### Contract Types\n- Employment Contract\n- Probation Contract\n- Fixed-term Contract\n- Internship Agreement\n\n### Features\n- Auto-generated contract numbers (CTN-XXXXXX)\n- Duration calculation from start/end dates\n- File attachment support (up to 10 files)\n- Contract renewal workflow\n- Expiry notification alerts",
+      "tags": ["contract", "employee", "document"]
+    }
+  ]
+}

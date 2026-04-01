@@ -3,6 +3,11 @@ import { authGuard } from './core/guards/auth.guard';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './pages/login/login.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
+import { ArchitectureComponent } from './pages/architecture/architecture.component';
+import { SmartQrHubComponent } from './pages/smart-qr-hub/smart-qr-hub.component';
+import { DeepDivesComponent } from './pages/deep-dives/deep-dives.component';
+import { ApiTruthSourceComponent } from './pages/api-truth-source/api-truth-source.component';
 import { DomainListComponent } from './pages/domain/domain-list.component';
 import { DomainDetailComponent } from './pages/domain/domain-detail.component';
 import { SearchComponent } from './pages/search/search.component';
@@ -61,6 +66,11 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: 'welcome', component: WelcomeComponent },
+      { path: 'getting-started', component: GettingStartedComponent },
+      { path: 'architecture', component: ArchitectureComponent },
+      { path: 'smart-qr-hub', component: SmartQrHubComponent },
+      { path: 'deep-dives', component: DeepDivesComponent },
+      { path: 'api-truth-source', component: ApiTruthSourceComponent },
       { path: 'common-features', component: CommonFeaturesComponent },
       { path: 'common-features/grid-export', component: GridExportComponent },
       { path: 'common-features/multi-product-branding', component: MultiProductBrandingComponent },

@@ -1,0 +1,65 @@
+{
+  "endpoints": [
+    {
+      "id": "save-qr",
+      "method": "POST",
+      "path": "/SmartQRApi/SaveQR",
+      "summary": "Create or update a QR code record and payload.",
+      "description": "Called from `qr-code.service` when persisting editor state. Request/response bodies follow backend `ServiceResponse` shape (`statusTerm`, `resultObject`).",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\", \"userID\": \"...\", \"licenseId\": \"...\", \"qrTypeID\": 1, \"name\": \"...\", \"contentJson\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": { \"qrCodeID\": \"...\" } }",
+      "tags": ["SaveQR", "crud", "SmartQRApi"]
+    },
+    {
+      "id": "get-qr-list",
+      "method": "GET",
+      "path": "/SmartQRApi/GetQRList/{userId}",
+      "summary": "List QR codes owned by a user.",
+      "description": "Populates the main QR list. Path includes encoded `userId` from localStorage after login.",
+      "parameters": [
+        { "name": "userId", "in": "path", "type": "string", "required": true, "description": "Authenticated user id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": [ { \"QRCodeID\": \"...\", \"Name\": \"...\" } ] }",
+      "tags": ["GetQRList", "list", "SmartQRApi"]
+    },
+    {
+      "id": "get-qr",
+      "method": "GET",
+      "path": "/SmartQRApi/GetQR/{qrCodeID}",
+      "summary": "Load a single QR for editing (authenticated).",
+      "description": "Used in edit flows; requires auth headers as configured in the HTTP client.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR identifier" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": { \"QRCodeID\": \"...\", \"ContentJson\": \"...\" } }",
+      "tags": ["GetQR", "detail", "SmartQRApi"]
+    },
+    {
+      "id": "get-qr-public",
+      "method": "GET",
+      "path": "/SmartQRApi/GetQRPublic/{qrCodeID}",
+      "summary": "Public read of QR payload for viewers.",
+      "description": "Used by public viewer routes so scanners do not need a user session.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR identifier from scan link" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": { \"ContentJson\": \"...\" } }",
+      "tags": ["GetQRPublic", "viewer", "public"]
+    },
+    {
+      "id": "scan-qr",
+      "method": "POST",
+      "path": "/SmartQRApi/ScanQR",
+      "summary": "Record a scan event for analytics.",
+      "description": "Invoked when a QR is opened or scanned, depending on product rules.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["ScanQR", "analytics", "SmartQRApi"]
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "endpoints": [
+    {
+      "id": "save-qr-types",
+      "method": "POST",
+      "path": "/SmartQRApi/SaveQR",
+      "summary": "Persist wizard output for any QR type.",
+      "description": "Primary write for create/update from all step-two screens. Body includes `qrTypeID`, serialized content, and user context.",
+      "parameters": [],
+      "requestBody": "{ \"qrTypeID\": 5, \"name\": \"Cafe Menu\", \"contentJson\": \"{...}\", \"userID\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": { \"qrCodeID\": \"...\" } }",
+      "tags": ["SaveQR", "wizard", "persist"]
+    },
+    {
+      "id": "get-qr-edit",
+      "method": "GET",
+      "path": "/SmartQRApi/GetQR/{qrCodeID}",
+      "summary": "Hydrate wizard for edit mode.",
+      "description": "Loaded when navigating to `/qr-codes/edit/{type}/:id`.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": { \"ContentJson\": \"...\", \"QRTypeID\": 3 } }",
+      "tags": ["GetQR", "edit", "wizard"]
+    },
+    {
+      "id": "delete-qr",
+      "method": "DELETE",
+      "path": "/SmartQRApi/DeleteQR/{id}",
+      "summary": "Remove a QR from the owner list.",
+      "description": "Called from list actions after confirmation.",
+      "parameters": [
+        { "name": "id", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["DeleteQR", "crud"]
+    },
+    {
+      "id": "toggle-pause",
+      "method": "POST",
+      "path": "/SmartQRApi/TogglePause/{qrCodeID}",
+      "summary": "Pause or resume QR without deleting.",
+      "description": "Used from owner dashboard to temporarily disable scanning experience.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["TogglePause", "lifecycle"]
+    },
+    {
+      "id": "resolve-maps",
+      "method": "GET",
+      "path": "/SmartQRApi/ResolveGoogleMapsUrl",
+      "summary": "Resolve shortened Google Maps URLs for embedding.",
+      "description": "Query `shortUrl` used during location steps in some wizards.",
+      "parameters": [
+        { "name": "shortUrl", "in": "query", "type": "string", "required": true, "description": "Short maps link" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": { \"resolvedUrl\": \"...\" } }",
+      "tags": ["maps", "ResolveGoogleMapsUrl"]
+    }
+  ]
+}

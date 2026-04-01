@@ -1,0 +1,62 @@
+{
+  "endpoints": [
+    {
+      "id": "auth-login",
+      "method": "POST",
+      "path": "/AuthenticationApi/login",
+      "summary": "Authenticate user with email and password.",
+      "description": "Used by `login.component.ts`. Returns `resultObject` with `token`, `userid`/`userId`, `licenseId`, `roleId`, `userrolename`.",
+      "parameters": [],
+      "requestBody": "{ \"Email\": \"user@example.com\", \"Password\": \"***\", \"LocalTimeZone\": \"Asia/Yangon\" }",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": { \"token\": \"jwt...\", \"userid\": \"...\", \"licenseId\": \"...\", \"roleId\": \"...\", \"userrolename\": \"Admin\" } }",
+      "tags": ["login", "AuthenticationApi", "token"]
+    },
+    {
+      "id": "auth-register",
+      "method": "POST",
+      "path": "/AuthenticationApi/Register",
+      "summary": "Register a new account (login-v2 path).",
+      "description": "Creates user and returns same shape as login for immediate session bootstrap.",
+      "parameters": [],
+      "requestBody": "{ \"Email\": \"...\", \"Password\": \"...\", \"UserName\": \"...\", \"PhoneNumber\": \"\", \"LocalTimeZone\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": { \"token\": \"...\", \"userid\": \"...\" } }",
+      "tags": ["Register", "signup", "AuthenticationApi"]
+    },
+    {
+      "id": "auth-reset-password",
+      "method": "POST",
+      "path": "/AuthenticationApi/ResetPassword",
+      "summary": "Apply a new password after reset verification.",
+      "description": "Called from set-password flow with server-issued reset context.",
+      "parameters": [],
+      "requestBody": "{ \"userId\": \"...\", \"newPassword\": \"...\", \"token\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["ResetPassword", "password"]
+    },
+    {
+      "id": "auth-verify-otp",
+      "method": "POST",
+      "path": "/AuthenticationApi/VerifyForgotPasswordOtp",
+      "summary": "Verify OTP during forgot-password.",
+      "description": "Query or body parameters include `userId` and `otpCode` per UI implementation.",
+      "parameters": [
+        { "name": "userId", "in": "query", "type": "string", "required": true, "description": "User identifier" },
+        { "name": "otpCode", "in": "query", "type": "string", "required": true, "description": "One-time code" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["OTP", "forgot-password", "AuthenticationApi"]
+    },
+    {
+      "id": "auth-google",
+      "method": "POST",
+      "path": "/AuthenticationApi/googleLogin",
+      "summary": "Exchange Google credential for app session.",
+      "description": "Used when social login is enabled from login.component.",
+      "parameters": [],
+      "requestBody": "{ \"idToken\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": { \"token\": \"...\" } }",
+      "tags": ["googleLogin", "OAuth"]
+    }
+  ]
+}

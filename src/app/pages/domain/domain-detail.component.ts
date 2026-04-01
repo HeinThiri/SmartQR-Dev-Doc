@@ -18,6 +18,13 @@ import { marked } from 'marked';
         </a>
         <h1>{{ domainIndex.name }}</h1>
         <small class="text-muted">Last updated: {{ domainIndex.lastUpdated }}</small>
+        <p *ngIf="domainIndex.summary" class="domain-summary">{{ domainIndex.summary }}</p>
+        <div *ngIf="domainIndex.keyFiles?.length" class="key-files">
+          <strong>Key files</strong>
+          <ul>
+            <li *ngFor="let f of domainIndex.keyFiles"><code>{{ f }}</code></li>
+          </ul>
+        </div>
       </div>
 
       <!-- Tabs -->
@@ -138,6 +145,17 @@ import { marked } from 'marked';
     }
     .back-link:hover { text-decoration: underline; }
     .page-header h1 { font-size: 26px; font-weight: 700; color: #1a1f36; margin: 0 0 4px; }
+    .domain-summary {
+      font-size: 15px; line-height: 1.6; color: #555; margin: 12px 0 0; max-width: 820px;
+    }
+    .key-files {
+      margin-top: 14px; padding: 14px 18px; background: #f8f9fc;
+      border-radius: 10px; border-left: 4px solid #6c8cff; font-size: 14px;
+    }
+    .key-files strong { display: block; margin-bottom: 8px; color: #1a1f36; }
+    .key-files ul { margin: 0; padding-left: 20px; color: #444; }
+    .key-files li { margin-bottom: 4px; }
+    .key-files code { font-size: 12px; background: #fff; padding: 2px 6px; border-radius: 4px; }
 
     .tab-bar {
       display: flex; gap: 4px; margin-bottom: 24px;

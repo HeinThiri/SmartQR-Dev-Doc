@@ -1,0 +1,89 @@
+{
+  "endpoints": [
+    {
+      "id": "get-shops",
+      "method": "GET",
+      "path": "/SmartQRApi/GetShops/{qrCodeID}",
+      "summary": "Owner list of shops for a QR.",
+      "description": "Used in shops-configuration admin.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": [] }",
+      "tags": ["GetShops", "shops", "admin"]
+    },
+    {
+      "id": "get-shops-public",
+      "method": "GET",
+      "path": "/SmartQRApi/GetShopsPublic/{qrCodeID}",
+      "summary": "Public shop list for menu viewer.",
+      "description": "No auth; returns only publishable shops.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": [] }",
+      "tags": ["GetShopsPublic", "menu viewer", "public"]
+    },
+    {
+      "id": "create-shop",
+      "method": "POST",
+      "path": "/SmartQRApi/CreateShop",
+      "summary": "Create a shop row.",
+      "description": "Body includes `qrCodeID` and shop metadata.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\", \"name\": \"Branch 1\" }",
+      "responseBody": "{ \"resultObject\": { \"shopID\": \"...\" } }",
+      "tags": ["CreateShop", "shops"]
+    },
+    {
+      "id": "get-products-public",
+      "method": "GET",
+      "path": "/SmartQRApi/GetProductsPublic/{shopID}",
+      "summary": "Public menu items for a shop.",
+      "description": "Feeds **menu viewer** product grids.",
+      "parameters": [
+        { "name": "shopID", "in": "path", "type": "string", "required": true, "description": "Shop id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": [] }",
+      "tags": ["GetProductsPublic", "menu viewer", "product"]
+    },
+    {
+      "id": "submit-menu-order",
+      "method": "POST",
+      "path": "/SmartQRApi/SubmitMenuOrder",
+      "summary": "Customer submits order from viewer.",
+      "description": "Creates order visible in **GetMenuOrders** admin list.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\", \"shopID\": \"...\", \"items\": [] }",
+      "responseBody": "{ \"resultObject\": { \"orderID\": \"...\" } }",
+      "tags": ["SubmitMenuOrder", "menu orders", "menu viewer"]
+    },
+    {
+      "id": "get-menu-orders",
+      "method": "GET",
+      "path": "/SmartQRApi/GetMenuOrders/{qrCodeID}",
+      "summary": "List orders for QR owner dashboard.",
+      "description": "Used by menu-orders-tab and similar admin UIs.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": [] }",
+      "tags": ["GetMenuOrders", "admin", "orders"]
+    },
+    {
+      "id": "update-order-status",
+      "method": "POST",
+      "path": "/SmartQRApi/UpdateMenuOrderStatus",
+      "summary": "Change kitchen/fulfillment status.",
+      "description": "Payload includes `orderID` and next status enum per backend.",
+      "parameters": [],
+      "requestBody": "{ \"orderID\": \"...\", \"status\": \"Preparing\" }",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["UpdateMenuOrderStatus", "menu orders"]
+    }
+  ]
+}

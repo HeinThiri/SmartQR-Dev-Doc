@@ -43,6 +43,163 @@ import { RouterModule } from '@angular/router';
       </section>
 
       <section class="card">
+        <h2>Full repository map (frontend + backend)</h2>
+        <pre><code>Smart_QR/
+├── Smart_QR_UI/                  # Angular frontend
+│   └── src/app/
+│       ├── app-routing.module.ts
+│       ├── app.module.ts
+│       ├── guards/               # AuthGuard, AdminGuard
+│       ├── interceptors/         # HTTP/JWT middleware
+│       ├── services/             # API clients (qr-code.service, etc.)
+│       ├── shared/               # Reusable UI blocks
+│       ├── layouts/              # Sidebar/topbar layouts
+│       └── pages/systematic/modules/
+│           ├── qr-code-list/     # QR create/edit/viewer + loyalty + shops
+│           ├── admin/            # Users/roles/QR admin/email/system settings
+│           ├── auth/             # login/register/forgot/set-password
+│           ├── analytics/
+│           └── settings/
+├── Smart_QR_API/                 # ASP.NET Core backend
+│   ├── Program.cs                # Startup: CORS, JWT, Swagger, services
+│   ├── appsettings.json          # DB/JWT/recaptcha/aws config
+│   ├── APIs/                     # API controllers and modules
+│   ├── DBModels/                 # EF Core entities + context
+│   ├── Infrastructure/           # Repositories + core wiring
+│   ├── DTO/                      # Request/response contracts
+│   ├── Services/                 # Business/service layer
+│   ├── Migrations/               # EF migrations
+│   └── SQL_Scripts/              # SQL helper scripts
+├── SQL/                          # Project SQL and docs
+└── smart-qr-dev-doc/             # This developer documentation portal</code></pre>
+      </section>
+
+      <section class="card">
+        <h2>Frontend module responsibilities</h2>
+        <table>
+          <thead>
+            <tr><th>Area</th><th>Folder</th><th>What to change there</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>QR creation/edit</td>
+              <td><code>pages/systematic/modules/qr-code-list/qr-operation/</code></td>
+              <td>Step-one / step-two wizard forms, validation, payload building.</td>
+            </tr>
+            <tr>
+              <td>Viewers</td>
+              <td><code>pages/systematic/modules/qr-code-list/qr-viewer/</code></td>
+              <td>Public rendering of menu, loyalty, website, content, event, feedback, v-card.</td>
+            </tr>
+            <tr>
+              <td>Loyalty admin/detail</td>
+              <td><code>pages/systematic/modules/qr-code-list/loyalty-registration-detail/</code></td>
+              <td>Registration review, report dashboards, deep links from scanned admin QR.</td>
+            </tr>
+            <tr>
+              <td>Shops/catalog</td>
+              <td><code>pages/systematic/modules/qr-code-list/shops-configuration/</code></td>
+              <td>Shop/category/product/location/map management for menu/content experiences.</td>
+            </tr>
+            <tr>
+              <td>Administration</td>
+              <td><code>pages/systematic/modules/admin/</code></td>
+              <td>Users/roles, QR type config, email templates/settings, system settings.</td>
+            </tr>
+            <tr>
+              <td>Auth</td>
+              <td><code>pages/systematic/modules/auth/</code></td>
+              <td>Login, register, forgot password, set/reset password.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>Backend architecture details (Smart_QR_API)</h2>
+        <table>
+          <thead>
+            <tr><th>Concern</th><th>Where in backend</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Startup pipeline</td>
+              <td><code>Program.cs</code></td>
+              <td>Registers controllers, health checks, Swagger docs, CORS policy, JWT auth, DI services.</td>
+            </tr>
+            <tr>
+              <td>Authentication</td>
+              <td><code>Program.cs</code> + auth APIs</td>
+              <td>JWT bearer validation (issuer/key/lifetime), consumed by frontend Bearer tokens.</td>
+            </tr>
+            <tr>
+              <td>CORS</td>
+              <td><code>Program.cs</code></td>
+              <td>Allowed origins combine DB SysConfig + localhost + production/UAT host list.</td>
+            </tr>
+            <tr>
+              <td>Database</td>
+              <td><code>DBModels/</code> + <code>ConnectionStrings</code></td>
+              <td>EF Core with SQL Server; migration scripts under <code>Migrations/</code>.</td>
+            </tr>
+            <tr>
+              <td>API modules</td>
+              <td><code>APIs/</code> + <code>Infrastructure/Repository</code></td>
+              <td>Smart QR, authentication, service feedback, admin and other domain endpoints.</td>
+            </tr>
+            <tr>
+              <td>Operational extras</td>
+              <td><code>appsettings.json</code></td>
+              <td>Hangfire connection, recaptcha, Google auth, email/AWS integration settings.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>Request lifecycle (end-to-end)</h2>
+        <ol>
+          <li><strong>UI route:</strong> User opens a frontend route (wizard/viewer/admin) from <code>app-routing.module.ts</code>.</li>
+          <li><strong>Service call:</strong> Component calls a service (primarily <code>qr-code.service.ts</code>).</li>
+          <li><strong>API request:</strong> URL built from <code>environment.baseApiUrl</code> + endpoint path.</li>
+          <li><strong>Security:</strong> JWT token (for protected routes) validated by backend middleware.</li>
+          <li><strong>Business/data:</strong> Backend module + repository + EF context read/write SQL data.</li>
+          <li><strong>Response/UI state:</strong> JSON response mapped to frontend models and rendered state.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>Where to edit for common tasks</h2>
+        <table>
+          <thead>
+            <tr><th>Task</th><th>Frontend</th><th>Backend</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Add new QR type</td>
+              <td><code>qr-codes-type</code>, wizard components, viewer, <code>app-routing.module.ts</code></td>
+              <td>SmartQR API endpoints + type mapping/business logic + DB schema if needed</td>
+            </tr>
+            <tr>
+              <td>Change loyalty behavior</td>
+              <td><code>loyalty-viewer</code>, registration detail, report demo</td>
+              <td>Loyalty endpoints in SmartQR module + validation rules + persistence</td>
+            </tr>
+            <tr>
+              <td>Update order/menu flow</td>
+              <td><code>menu-viewer</code>, cart, orders/guest tabs, shops config</td>
+              <td>Menu/order/shop/product endpoints + transactional handling</td>
+            </tr>
+            <tr>
+              <td>Adjust login/security</td>
+              <td><code>modules/auth</code>, guards, interceptors</td>
+              <td>Authentication API + JWT settings + CORS/session policy</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
         <h2>Major route groups (product app)</h2>
         <p>Defined in <code>Smart_QR_UI/src/app/app-routing.module.ts</code>. Examples:</p>
         <table>

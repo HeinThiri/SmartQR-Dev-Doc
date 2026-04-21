@@ -75,6 +75,136 @@ import { RouterModule } from '@angular/router';
         </div>
       </section>
 
+      <section class="card" id="runtime">
+        <h2>Smart QR runtime architecture</h2>
+        <table>
+          <thead>
+            <tr><th>Layer</th><th>Implementation in this repo</th><th>Responsibility</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Client app</td>
+              <td><code>Smart_QR_UI</code> (Angular)</td>
+              <td>QR creation/edit flows, viewers, admin screens, auth pages, dashboard UX.</td>
+            </tr>
+            <tr>
+              <td>API app</td>
+              <td><code>Smart_QR_API</code> (ASP.NET Core)</td>
+              <td>Authentication, SmartQR APIs, service feedback APIs, CORS/security, data access.</td>
+            </tr>
+            <tr>
+              <td>Data layer</td>
+              <td>SQL Server via <code>SmartProjectContext</code></td>
+              <td>Persist users, QR definitions, loyalty data, orders, configuration.</td>
+            </tr>
+            <tr>
+              <td>Async jobs</td>
+              <td>Hangfire connection in backend config</td>
+              <td>Background processing for scheduled or heavy tasks.</td>
+            </tr>
+            <tr>
+              <td>Developer docs</td>
+              <td><code>smart-qr-dev-doc</code></td>
+              <td>Project guides, API conventions, deep dives, domain knowledge transfer.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card" id="frontend-architecture">
+        <h2>Frontend architecture (Smart_QR_UI)</h2>
+        <p>
+          The product UI is route-centric, with feature modules grouped under
+          <code>pages/systematic/modules</code>.
+        </p>
+        <pre><code>Smart_QR_UI/src/app/
+├── app-routing.module.ts        # Main route map
+├── services/qr-code.service.ts  # Core SmartQR API client + payload mapping
+├── guards/                      # AuthGuard, AdminGuard
+├── shared/                      # Reusable UI blocks
+└── pages/systematic/modules/
+    ├── qr-code-list/            # QR type flows, viewers, shops, loyalty
+    ├── admin/                   # Users, roles, QR admin, email/system settings
+    ├── auth/                    # login / forgot / set password
+    ├── analytics/
+    └── settings/</code></pre>
+
+        <h3>Routing characteristics</h3>
+        <ul>
+          <li><strong>Wizard/editor routes:</strong> <code>/qr-codes/type/...</code> and <code>/qr-codes/edit/.../:id</code></li>
+          <li><strong>Public viewers:</strong> <code>/menu/:id</code>, <code>/loyalty/:id</code>, <code>/website/:id</code>, <code>/content/:id</code>, etc.</li>
+          <li><strong>Admin paths:</strong> protected by <code>AdminGuard</code> for system operations.</li>
+          <li><strong>Compatibility routes:</strong> loyalty registration detail supports both camelCase and PascalCase params.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="backend-architecture">
+        <h2>Backend architecture (Smart_QR_API)</h2>
+        <p>
+          Backend startup in <code>Program.cs</code> configures OpenAPI, JWT bearer auth, CORS, EF Core DB context,
+          repository registrations, and controller services.
+        </p>
+        <div class="container-grid">
+          <div class="container-card">
+            <div class="cc-head"><i class="bi bi-shield-lock"></i> Security & auth</div>
+            <p>JWT Bearer configured with issuer/key validation and Swagger Bearer definition for testing.</p>
+            <p class="cc-meta">Related: <code>JwtAuth</code> config + <code>AddAuthentication().AddJwtBearer()</code></p>
+          </div>
+          <div class="container-card">
+            <div class="cc-head"><i class="bi bi-diagram-2"></i> API surface</div>
+            <p>Primary Smart QR endpoints are exposed via SmartQR and related controllers/services.</p>
+            <p class="cc-meta">Examples: <code>SmartQRApi</code>, <code>AuthenticationApi</code>, <code>ServiceFeedbackApi</code></p>
+          </div>
+          <div class="container-card">
+            <div class="cc-head"><i class="bi bi-database"></i> Persistence</div>
+            <p>Entity Framework Core uses SQL Server through <code>SmartProjectContext</code> and UnitOfWork.</p>
+            <p class="cc-meta">Connection strings + DB settings are loaded from app settings/environment</p>
+          </div>
+          <div class="container-card">
+            <div class="cc-head"><i class="bi bi-globe2"></i> CORS policy</div>
+            <p>Allowed origins include localhost and deployment origins, composed from SysConfig + static list.</p>
+            <p class="cc-meta">Critical for frontend ↔ API communication across environments</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="request-flows">
+        <h2>Key request flows</h2>
+        <h3>Flow A: QR create/edit</h3>
+        <div class="flow-wrap">
+          <div class="diagram-row">
+            <div class="diagram-node node-step">Wizard screen</div>
+            <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="diagram-node node-action">qr-code.service</div>
+            <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="diagram-node node-action">/SmartQRApi/SaveQR</div>
+            <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="diagram-node node-success">SQL persisted</div>
+          </div>
+        </div>
+
+        <h3>Flow B: Viewer access after scan</h3>
+        <div class="flow-wrap">
+          <div class="diagram-row">
+            <div class="diagram-node node-step">Scan URL</div>
+            <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="diagram-node node-step">Viewer route</div>
+            <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="diagram-node node-action">/SmartQRApi/GetQRPublic/...</div>
+            <div class="diagram-arrow"><i class="bi bi-arrow-right"></i></div>
+            <div class="diagram-node node-success">Render payload</div>
+          </div>
+        </div>
+
+        <h3>Flow C: Auth + protected operations</h3>
+        <ul>
+          <li>Login/registration obtains token via <code>AuthenticationApi</code>.</li>
+          <li>Frontend stores auth state and sends Bearer token for protected endpoints.</li>
+          <li><code>AuthGuard</code> and <code>AdminGuard</code> enforce route-level access in UI.</li>
+          <li>Backend JWT validation enforces API-level authorization.</li>
+        </ul>
+      </section>
+
       <section class="card" id="devdoc-internal">
         <h2>DevDocs application internals</h2>
         <div class="flow-wrap">
@@ -101,6 +231,8 @@ import { RouterModule } from '@angular/router';
         <ul>
           <li><a routerLink="/getting-started">Getting Started</a></li>
           <li><a routerLink="/smart-qr-hub">Smart QR hub</a></li>
+          <li><a routerLink="/deep-dives">Deep dives &amp; diagrams</a> — sequence/data-flow views</li>
+          <li><a routerLink="/api-truth-source">API truth source</a> — auth and error conventions</li>
           <li><a routerLink="/how-to-doc">How to Doc?</a> — contributing pages and diagrams</li>
         </ul>
       </section>
@@ -128,6 +260,18 @@ import { RouterModule } from '@angular/router';
     .card ul { padding-left: 22px; margin: 0; font-size: 14px; color: #444; }
     .card li { margin-bottom: 6px; }
     .card a { color: #6c8cff; font-weight: 500; }
+    table { width: 100%; border-collapse: collapse; margin: 0 0 14px; font-size: 13px; }
+    th {
+      text-align: left; padding: 10px 12px; background: #f5f7fa;
+      border-bottom: 2px solid #e0e4ec; font-weight: 600; color: #444;
+    }
+    td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; color: #444; vertical-align: top; }
+    tr:hover td { background: #fafbfd; }
+    pre {
+      background: #1a1f36; border-radius: 10px; padding: 16px 18px;
+      overflow-x: auto; margin: 0 0 14px;
+    }
+    pre code { background: none; color: #e0e6ff; padding: 0; font-size: 12px; line-height: 1.5; }
     code {
       background: #f0f3ff; color: #4a6cf7; padding: 2px 7px;
       border-radius: 4px; font-size: 13px;

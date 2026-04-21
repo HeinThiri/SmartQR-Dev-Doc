@@ -46,29 +46,62 @@ import { RouterModule } from '@angular/router';
       </section>
 
       <section class="card">
-        <h2>2) Data flow: loyalty registration</h2>
+        <h2>2) Data flow: website QR</h2>
         <div class="diagram-row">
-          <div class="node node-start">LoyaltyViewer form<br><small>name + phone</small></div>
+          <div class="node node-start">WebsiteViewer</div>
           <div class="arrow">→</div>
-          <div class="node node-api"><code>RegisterForLoyalty</code></div>
+          <div class="node node-api"><code>GetQRPublic</code></div>
           <div class="arrow">→</div>
-          <div class="node node-step">registrationID</div>
+          <div class="node node-step">URL + branding<br><small>from ContentJson</small></div>
           <div class="arrow">→</div>
-          <div class="node node-api"><code>CheckLoyaltyRegistration</code></div>
+          <div class="node node-api"><code>ResolveGoogleMapsUrl</code><br><small>if maps short link</small></div>
           <div class="arrow">→</div>
-          <div class="node node-end">Stamp/reward screens</div>
+          <div class="node node-end">Open / preview link</div>
         </div>
-
-        <h3>Admin side (same registration)</h3>
+        <h3>Owner side</h3>
         <ul>
-          <li><code>GetLoyaltyRegistrations/&#123;qrCodeID&#125;</code> for moderation table.</li>
-          <li><code>ApproveRejectLoyaltyRegistration</code> updates status.</li>
-          <li><code>AddLoyaltyStamps</code>, <code>RedeemLoyaltyReward</code>, <code>VerifyLoyaltyRedemption</code> complete lifecycle.</li>
+          <li>Create/edit: <code>website-step-one</code> → <code>website-step-two</code> → <code>SaveQR</code>.</li>
+          <li>Analytics: <code>ScanQR</code> (when product records opens).</li>
         </ul>
       </section>
 
       <section class="card">
-        <h2>3) Data flow: menu ordering</h2>
+        <h2>3) Data flow: v-card QR</h2>
+        <div class="diagram-row">
+          <div class="node node-start">VcardViewer</div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>GetQRPublic</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-step">Contact fields<br><small>name, phone, email…</small></div>
+          <div class="arrow">→</div>
+          <div class="node node-end">Save / share actions</div>
+        </div>
+        <h3>Owner side</h3>
+        <ul>
+          <li>Create/edit: <code>v-card-step-one</code> → <code>v-card-step-two</code> → <code>SaveQR</code>.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>4) Data flow: image gallery QR</h2>
+        <div class="diagram-row">
+          <div class="node node-start">GalleryViewer</div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>GetQRPublic</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-step">Gallery payload<br><small>images + layout mode</small></div>
+          <div class="arrow">→</div>
+          <div class="node node-end">Slide / scroll UI</div>
+        </div>
+        <h3>Owner side</h3>
+        <ul>
+          <li>Create/edit: <code>image-gallery-step-one</code> → <code>image-gallery-step-two</code> → <code>SaveQR</code>.</li>
+          <li>Routes: <code>/gallery/:data</code>, <code>/gallery/:data/slide</code>, <code>/gallery/:data/scroll</code>.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>5) Data flow: menu ordering</h2>
         <div class="diagram-row">
           <div class="node node-start">MenuViewer</div>
           <div class="arrow">→</div>
@@ -87,11 +120,99 @@ import { RouterModule } from '@angular/router';
         <ul>
           <li><code>GetMenuOrders/&#123;qrCodeID&#125;</code> + <code>GetMenuOrderDetail/&#123;orderID&#125;</code>.</li>
           <li><code>UpdateMenuOrderStatus</code>, <code>UpdateMenuOrderProductImage</code>, <code>DeleteMenuOrder/&#123;orderID&#125;</code>.</li>
+          <li>Guest links: optional <code>ResolveMenuGuestToken</code> on <code>/menu/:id/g/:guestToken</code>.</li>
         </ul>
       </section>
 
       <section class="card">
-        <h2>4) Component hierarchy (major features)</h2>
+        <h2>6) Data flow: event QR</h2>
+        <div class="diagram-row">
+          <div class="node node-start">EventViewer</div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>GetQRPublic</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-step">Registration form</div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>RegisterForEvent</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>CheckEventRegistration</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-end">Confirmation / status</div>
+        </div>
+        <h3>Owner side</h3>
+        <ul>
+          <li>Create/edit: <code>event-step-one</code> → <code>event-step-two</code> → <code>SaveQR</code>.</li>
+          <li>Admin lists: <code>GetEventRegistrations</code>, <code>UpdateEventRegistrationStatus</code>, summaries/timeline endpoints.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>7) Data flow: service feedback QR</h2>
+        <div class="diagram-row">
+          <div class="node node-start">ServiceFeedbackViewer</div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>GetQRPublic</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-step">Feedback form<br><small>ratings + text</small></div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>Submit</code><br><small>SmartQR / feedback API</small></div>
+          <div class="arrow">→</div>
+          <div class="node node-end">Thank you state</div>
+        </div>
+        <h3>Operations side</h3>
+        <ul>
+          <li><code>ServiceFeedbackApi/GetFeedbackList/&#123;qrCodeID&#125;</code> for owner review.</li>
+          <li>Create/edit: <code>service-feedback-step-one</code> → <code>service-feedback-step-two</code> → <code>SaveQR</code>.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>8) Data flow: loyalty program QR</h2>
+        <div class="diagram-row">
+          <div class="node node-start">LoyaltyViewer</div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>GetQRPublic</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-step">Signup form<br><small>name + phone</small></div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>RegisterForLoyalty</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-step"><code>registrationID</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>CheckLoyaltyRegistration</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-end">Stamps / rewards / redeem</div>
+        </div>
+        <h3>Operations side</h3>
+        <ul>
+          <li><code>GetLoyaltyRegistrations/&#123;qrCodeID&#125;</code>, <code>ApproveRejectLoyaltyRegistration</code>.</li>
+          <li><code>AddLoyaltyStamps</code>, <code>GetLoyaltyUserStamps</code>, <code>RedeemLoyaltyReward</code>, <code>VerifyLoyaltyRedemption</code>.</li>
+          <li>Staff scan route: <code>LoyaltyRegistrationDetailComponent</code> (<code>/qr-codes/loyalty-program/…</code>).</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>9) Data flow: content-system QR</h2>
+        <div class="diagram-row">
+          <div class="node node-start">ContentViewer</div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>GetQRPublic</code></div>
+          <div class="arrow">→</div>
+          <div class="node node-step">Section model<br><small>hero, promos, parking…</small></div>
+          <div class="arrow">→</div>
+          <div class="node node-api"><code>GetShopsPublic</code> / <code>GetPromotionsPublic</code> / <code>GetParkingZonesPublic</code><br><small>as needed</small></div>
+          <div class="arrow">→</div>
+          <div class="node node-end">Rendered landing</div>
+        </div>
+        <h3>Owner side</h3>
+        <ul>
+          <li>Create/edit: <code>content-step-one</code> → <code>content-step-two</code> → <code>SaveQR</code>.</li>
+          <li>Catalog edits use shop/promo/parking admin endpoints from owner session.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>10) Component hierarchy (major features)</h2>
         <h3>A. Menu feature</h3>
         <pre><code>QrCodesComponent
 └── qr-codes/
@@ -111,10 +232,21 @@ import { RouterModule } from '@angular/router';
     └── loyalty-registration-detail/
         ├── loyalty-registration-detail.component
         └── loyalty-report-demo.component</code></pre>
+
+        <h3>C. All QR type wizard/viewer pairs</h3>
+        <pre><code>QR type                  Create/edit components                             Viewer component
+website                  website-step-one + website-step-two               website-viewer
+v-card                   v-card-step-one + v-card-step-two                 vcard-viewer
+image-gallery            image-gallery-step-one + image-gallery-step-two   gallery-viewer
+menu                     menu-step-one + menu-step-two                     menu-viewer
+event                    event-step-one + event-step-two                   event-viewer
+service-feedback         service-feedback-step-one + service-feedback-step-two  service-feedback-viewer
+loyalty-program          loyalty-step-one + loyalty-step-two               loyalty-viewer
+content-system           content-step-one + content-step-two               content-viewer</code></pre>
       </section>
 
       <section class="card">
-        <h2>5) Engineer notes linked into doc site</h2>
+        <h2>11) Engineer notes linked into doc site</h2>
         <p>Source notes from product repo (used for this summary):</p>
         <ul>
           <li><code>Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/loyalty-registration-detail/loyalty-report-demo/LOYALTY_MAIN_DASHBOARD.md</code></li>
@@ -153,6 +285,13 @@ import { RouterModule } from '@angular/router';
     .card h3 { font-size: 16px; margin: 16px 0 8px; color: #1a1f36; }
     .card p, .card li { font-size: 14px; color: #444; line-height: 1.7; }
     .card ul { margin: 0; padding-left: 22px; }
+    table { width: 100%; border-collapse: collapse; margin: 0 0 14px; font-size: 13px; }
+    th {
+      text-align: left; padding: 10px 12px; background: #f5f7fa;
+      border-bottom: 2px solid #e0e4ec; font-weight: 600; color: #444;
+    }
+    td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; color: #444; vertical-align: top; }
+    tr:hover td { background: #fafbfd; }
     code {
       background: #f0f3ff; color: #4a6cf7; padding: 2px 6px;
       border-radius: 4px; font-size: 12px;

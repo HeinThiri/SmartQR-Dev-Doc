@@ -12,24 +12,111 @@ import { RouterModule } from '@angular/router';
       </a>
       <h1><i class="bi bi-braces-asterisk"></i> API truth source</h1>
       <p class="subtitle">
-        Single source of truth for Smart QR endpoint references, auth conventions, and error catalog.
+        Single source of truth for Smart QR backend contracts, frontend consumers, auth conventions, and error handling.
       </p>
 
       <section class="card">
-        <h2>Single maintained list</h2>
+        <h2>1) Source files that define API truth</h2>
         <p>
           Master endpoint list is maintained in:
           <code>src/assets/content/api/master-api-reference.json</code>
         </p>
         <ul>
-          <li>If OpenAPI is available, import/transform from that source into the same file.</li>
-          <li>If OpenAPI is not available, maintain this JSON directly from validated backend contracts.</li>
-          <li>Domain-level <code>api-reference.json</code> files are considered curated views derived from this master list.</li>
+          <li>Backend implementation source: <code>Smart_QR_API/APIs/SmartQR_Module/SmartQRApi.cs</code>.</li>
+          <li>Auth source: <code>Smart_QR_API/APIs/Authentication_Module/AuthenticationApi.cs</code>.</li>
+          <li>Service feedback source: <code>Smart_QR_API/APIs/ServiceFeedback_Module/ServiceFeedbackApi.cs</code>.</li>
+          <li>Main frontend caller: <code>Smart_QR_UI/src/app/services/qr-code.service.ts</code>.</li>
+          <li>Domain-level <code>api-reference.json</code> files are curated views derived from this master list.</li>
         </ul>
       </section>
 
       <section class="card">
-        <h2>Auth convention (applies to endpoint descriptions)</h2>
+        <h2>2) Backend module ownership (Smart QR scope)</h2>
+        <table>
+          <thead>
+            <tr><th>Backend controller</th><th>Responsibilities</th><th>Example actions</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>SmartQRApi</code></td>
+              <td>Core QR lifecycle + type runtimes (menu, loyalty, event, map, promotions, shops/products)</td>
+              <td><code>SaveQR</code>, <code>GetQRPublic</code>, <code>SubmitMenuOrder</code>, <code>RegisterForLoyalty</code></td>
+            </tr>
+            <tr>
+              <td><code>AuthenticationApi</code></td>
+              <td>Login and password/OTP authentication flows</td>
+              <td><code>login</code>, <code>ResetPassword</code>, <code>ResendLoginOtp</code></td>
+            </tr>
+            <tr>
+              <td><code>ServiceFeedbackApi</code></td>
+              <td>Feedback submission and owner analytics/reporting</td>
+              <td><code>SubmitFeedback</code>, <code>GetFeedbackList</code>, <code>GetFeedbackAnalytics</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>3) Frontend to backend mapping (high-traffic flows)</h2>
+        <table>
+          <thead>
+            <tr><th>User flow</th><th>Frontend caller</th><th>Backend endpoints</th><th>Auth mode</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Login</td>
+              <td><code>login.component.ts</code>, <code>login-v2.component.ts</code></td>
+              <td><code>POST /AuthenticationApi/login</code></td>
+              <td>Public</td>
+            </tr>
+            <tr>
+              <td>Create/update QR</td>
+              <td><code>qr-codes.component.ts</code> via <code>qr-code.service.ts</code></td>
+              <td><code>POST /SmartQRApi/SaveQR</code>, <code>POST /SmartQRApi/SaveQRType</code></td>
+              <td>Bearer JWT</td>
+            </tr>
+            <tr>
+              <td>Viewer load</td>
+              <td>All viewer components via <code>getQRPublic()</code></td>
+              <td><code>GET /SmartQRApi/GetQRPublic/&#123;qrCodeID&#125;</code></td>
+              <td>Public</td>
+            </tr>
+            <tr>
+              <td>Menu ordering</td>
+              <td><code>menu-viewer.component.ts</code>, <code>my-cart.component.ts</code></td>
+              <td><code>GetShopsPublic</code>, <code>GetProductsPublic</code>, <code>SubmitMenuOrder</code></td>
+              <td>Public</td>
+            </tr>
+            <tr>
+              <td>Menu operations</td>
+              <td>Owner menu tabs via <code>qr-code.service.ts</code></td>
+              <td><code>GetMenuOrders</code>, <code>GetMenuOrderDetail</code>, <code>UpdateMenuOrderStatus</code>, <code>DeleteMenuOrder</code></td>
+              <td>Bearer JWT</td>
+            </tr>
+            <tr>
+              <td>Loyalty registration/redeem</td>
+              <td><code>loyalty-viewer</code> + registration detail pages</td>
+              <td><code>RegisterForLoyalty</code>, <code>CheckLoyaltyRegistration</code>, <code>AddLoyaltyStamps</code>, <code>RedeemLoyaltyReward</code></td>
+              <td>Mixed (Public + Bearer)</td>
+            </tr>
+            <tr>
+              <td>Event registration</td>
+              <td><code>event-viewer</code> and owner dashboards</td>
+              <td><code>RegisterForEvent</code>, <code>CheckEventRegistration</code>, <code>GetEventRegistrations</code></td>
+              <td>Mixed (Public + Bearer)</td>
+            </tr>
+            <tr>
+              <td>Service feedback</td>
+              <td><code>service-feedback-viewer.component.ts</code></td>
+              <td><code>POST /ServiceFeedbackApi/SubmitFeedback</code>, <code>GET /ServiceFeedbackApi/GetFeedbackList/&#123;qrCodeID&#125;</code></td>
+              <td>Mixed (Public + Bearer)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>4) Auth convention (applies to endpoint descriptions)</h2>
         <table>
           <thead>
             <tr><th>Scheme</th><th>When used</th><th>Documentation rule</th></tr>
@@ -55,7 +142,7 @@ import { RouterModule } from '@angular/router';
       </section>
 
       <section class="card">
-        <h2>Error catalog</h2>
+        <h2>5) Error catalog</h2>
         <p>Use this baseline across Smart QR docs. Extend codes as backend formalizes business errors.</p>
         <table>
           <thead>
@@ -74,11 +161,23 @@ import { RouterModule } from '@angular/router';
       </section>
 
       <section class="card">
-        <h2>Implementation checklist</h2>
+        <h2>6) How to keep backend/frontend in sync</h2>
+        <ol>
+          <li>Change backend controller action signature in <code>Smart_QR_API</code>.</li>
+          <li>Update the matching method in <code>Smart_QR_UI/src/app/services/qr-code.service.ts</code>.</li>
+          <li>Verify caller pages/components still pass expected payload shape.</li>
+          <li>Update <code>master-api-reference.json</code> with method, path, auth, and error codes.</li>
+          <li>Update any curated domain <code>api-reference.json</code> docs if behavior changed.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>7) Implementation checklist</h2>
         <ul>
           <li>Keep <code>master-api-reference.json</code> updated first.</li>
           <li>Ensure each endpoint description marks one auth mode: Bearer, Cookie(+CSRF), or Public.</li>
           <li>Map endpoint failures to the shared error catalog with HTTP + business code.</li>
+          <li>Prefer adding endpoints only after they exist in backend controller source.</li>
         </ul>
       </section>
     </div>
@@ -103,6 +202,7 @@ import { RouterModule } from '@angular/router';
     }
     .card p, .card li { font-size: 14px; color: #444; line-height: 1.7; }
     .card ul { margin: 0; padding-left: 22px; }
+    .card ol { margin: 0; padding-left: 22px; }
     code {
       background: #f0f3ff; color: #4a6cf7; padding: 2px 6px;
       border-radius: 4px; font-size: 12px;
@@ -116,5 +216,5 @@ import { RouterModule } from '@angular/router';
     tr:hover td { background: #fafbfd; }
   `]
 })
-export class ApiTruthSourceComponent {}
+export class ApiTruthSourceComponent { }
 

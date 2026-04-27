@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
 import { FrontendDevComponent } from './pages/frontend-dev/frontend-dev.component';
+import { BackendDevComponent } from './pages/backend-dev/backend-dev.component';
 import { ArchitectureComponent } from './pages/architecture/architecture.component';
 import { SmartQrHubComponent } from './pages/smart-qr-hub/smart-qr-hub.component';
 import { DeepDivesComponent } from './pages/deep-dives/deep-dives.component';
@@ -69,6 +70,7 @@ export const routes: Routes = [
       { path: 'welcome', component: WelcomeComponent },
       { path: 'getting-started', component: GettingStartedComponent },
       { path: 'frontend-dev', component: FrontendDevComponent },
+      { path: 'backend-dev', component: BackendDevComponent },
       { path: 'architecture', component: ArchitectureComponent },
       { path: 'smart-qr-hub', component: SmartQrHubComponent },
       { path: 'deep-dives', component: DeepDivesComponent },

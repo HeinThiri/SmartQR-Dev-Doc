@@ -559,10 +559,11 @@ export class WelcomeComponent implements OnInit {
       role: 'Backend Developer',
       description: 'Work on Smart_QR_API (ASP.NET Core 8) — REST endpoints, JWT auth, EF Core models, Hangfire jobs.',
       links: [
-        { label: 'Auth & Token Flow',     route: '/domains/smart-qr-auth'            },
-        { label: 'API Truth Source',      route: '/api-truth-source'                 },
-        { label: 'Admin & Roles',         route: '/domains/smart-qr-admin'           },
-        { label: 'Approval Workflow',     route: '/common-features/approval-workflow' },
+        { label: 'Backend Developer Guide', route: '/backend-dev'                    },
+        { label: 'Auth & Token Flow',       route: '/domains/smart-qr-auth'        },
+        { label: 'API Truth Source',        route: '/api-truth-source'             },
+        { label: 'Admin & Roles',           route: '/domains/smart-qr-admin'       },
+        { label: 'Approval Workflow',       route: '/common-features/approval-workflow' },
       ]
     },
     {

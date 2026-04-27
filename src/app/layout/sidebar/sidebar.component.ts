@@ -44,6 +44,10 @@ import { Domain } from '../../core/models/domain.model';
           <i class="bi bi-diagram-2"></i>
           <span *ngIf="!collapsed">Deep dives</span>
         </a>
+        <a routerLink="/backend-dev" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-server"></i>
+          <span *ngIf="!collapsed">Backend Developer</span>
+        </a>
         <a routerLink="/api-truth-source" routerLinkActive="active" class="nav-item">
           <i class="bi bi-braces-asterisk"></i>
           <span *ngIf="!collapsed">API truth source</span>
@@ -55,23 +59,6 @@ import { Domain } from '../../core/models/domain.model';
         <a routerLink="/search" routerLinkActive="active" class="nav-item">
           <i class="bi bi-search"></i>
           <span *ngIf="!collapsed">Search</span>
-        </a>
-        <div class="nav-divider" *ngIf="!collapsed">More</div>
-        <a routerLink="/smart-hr" routerLinkActive="active" class="nav-item">
-          <i class="bi bi-briefcase"></i>
-          <span *ngIf="!collapsed">Smart HR Design</span>
-        </a>
-        <a routerLink="/smart-hr-case" routerLinkActive="active" class="nav-item">
-          <i class="bi bi-bug"></i>
-          <span *ngIf="!collapsed">Smart HR Case</span>
-        </a>
-        <a routerLink="/pentest" routerLinkActive="active" class="nav-item">
-          <i class="bi bi-shield-exclamation"></i>
-          <span *ngIf="!collapsed">PenTest</span>
-        </a>
-        <a routerLink="/common-features" routerLinkActive="active" class="nav-item">
-          <i class="bi bi-puzzle"></i>
-          <span *ngIf="!collapsed">Common Features</span>
         </a>
         <a routerLink="/how-to-doc" routerLinkActive="active" class="nav-item">
           <i class="bi bi-journal-code"></i>

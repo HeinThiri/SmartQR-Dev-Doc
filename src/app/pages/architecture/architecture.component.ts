@@ -59,6 +59,158 @@ import { RouterModule } from '@angular/router';
         </div>
       </section>
 
+      <section class="card" id="system-diagram">
+        <h2>System Architecture Diagram</h2>
+        <svg viewBox="0 0 1000 700" class="architecture-svg" preserveAspectRatio="xMidYMid meet">
+          <!-- Title -->
+          <text x="500" y="25" text-anchor="middle" class="svg-title">SmartQR System Architecture</text>
+
+          <!-- Actors -->
+          <g id="actors">
+            <!-- End Users -->
+            <circle cx="100" cy="150" r="35" fill="#e8f5e9" stroke="#81c784" stroke-width="2"/>
+            <text x="100" y="145" text-anchor="middle" font-size="20">👥</text>
+            <text x="100" y="210" text-anchor="middle" font-size="12" font-weight="600">End Users</text>
+            <text x="100" y="225" text-anchor="middle" font-size="11" fill="#666">&amp; Admins</text>
+
+            <!-- Developers -->
+            <circle cx="900" cy="150" r="35" fill="#e8eaf6" stroke="#9fa8da" stroke-width="2"/>
+            <text x="900" y="145" text-anchor="middle" font-size="20">👨‍💻</text>
+            <text x="900" y="210" text-anchor="middle" font-size="12" font-weight="600">Developers</text>
+          </g>
+
+          <!-- Frontend Layer -->
+          <g id="frontend">
+            <rect x="20" y="280" width="180" height="120" rx="8" fill="#e3f2fd" stroke="#64b5f6" stroke-width="2"/>
+            <text x="110" y="300" text-anchor="middle" font-size="13" font-weight="700">Smart_QR_UI</text>
+            <line x1="25" y1="310" x2="195" y2="310" stroke="#64b5f6" stroke-width="1"/>
+            <text x="30" y="330" font-size="11" fill="#1a1f36">• QR Creation/Edit</text>
+            <text x="30" y="347" font-size="11" fill="#1a1f36">• Menu/Loyalty Viewers</text>
+            <text x="30" y="364" font-size="11" fill="#1a1f36">• Admin Dashboard</text>
+            <text x="30" y="381" font-size="11" fill="#1a1f36">• Analytics &amp; Settings</text>
+          </g>
+
+          <!-- Smart QR UI - Standalone DevDocs -->
+          <g id="devdoc">
+            <rect x="800" y="280" width="180" height="120" rx="8" fill="#f3e5f5" stroke="#ce93d8" stroke-width="2"/>
+            <text x="890" y="300" text-anchor="middle" font-size="13" font-weight="700">smart-qr-dev-doc</text>
+            <line x1="805" y1="310" x2="975" y2="310" stroke="#ce93d8" stroke-width="1"/>
+            <text x="810" y="330" font-size="11" fill="#1a1f36">• API Documentation</text>
+            <text x="810" y="347" font-size="11" fill="#1a1f36">• Architecture Guides</text>
+            <text x="810" y="364" font-size="11" fill="#1a1f36">• Code Patterns</text>
+            <text x="810" y="381" font-size="11" fill="#1a1f36">• Static Content</text>
+          </g>
+
+          <!-- API Layer -->
+          <g id="api">
+            <rect x="220" y="280" width="180" height="120" rx="8" fill="#fff3e0" stroke="#ffb74d" stroke-width="2"/>
+            <text x="310" y="300" text-anchor="middle" font-size="13" font-weight="700">Smart_QR_API</text>
+            <line x1="225" y1="310" x2="395" y2="310" stroke="#ffb74d" stroke-width="1"/>
+            <text x="230" y="330" font-size="11" fill="#1a1f36">• Authentication</text>
+            <text x="230" y="347" font-size="11" fill="#1a1f36">• QR Management API</text>
+            <text x="230" y="364" font-size="11" fill="#1a1f36">• Loyalty Service</text>
+            <text x="230" y="381" font-size="11" fill="#1a1f36">• Analytics Service</text>
+          </g>
+
+          <!-- Background Jobs -->
+          <g id="jobs">
+            <rect x="420" y="280" width="160" height="120" rx="8" fill="#fce4ec" stroke="#f06292" stroke-width="2"/>
+            <text x="500" y="300" text-anchor="middle" font-size="13" font-weight="700">Hangfire</text>
+            <line x1="425" y1="310" x2="575" y2="310" stroke="#f06292" stroke-width="1"/>
+            <text x="430" y="330" font-size="11" fill="#1a1f36">• Background Jobs</text>
+            <text x="430" y="347" font-size="11" fill="#1a1f36">• Scheduled Tasks</text>
+            <text x="430" y="364" font-size="11" fill="#1a1f36">• Async Processing</text>
+            <text x="430" y="381" font-size="11" fill="#1a1f36">• Email/Notifications</text>
+          </g>
+
+          <!-- Database Layer -->
+          <g id="database">
+            <rect x="620" y="280" width="160" height="120" rx="8" fill="#e8f5e9" stroke="#81c784" stroke-width="2"/>
+            <text x="700" y="300" text-anchor="middle" font-size="13" font-weight="700">SQL Server DB</text>
+            <line x1="625" y1="310" x2="775" y2="310" stroke="#81c784" stroke-width="1"/>
+            <text x="630" y="330" font-size="11" fill="#1a1f36">• Users &amp; Accounts</text>
+            <text x="630" y="347" font-size="11" fill="#1a1f36">• QR Definitions</text>
+            <text x="630" y="364" font-size="11" fill="#1a1f36">• Loyalty Programs</text>
+            <text x="630" y="381" font-size="11" fill="#1a1f36">• Analytics Data</text>
+          </g>
+
+          <!-- Connection arrows from users -->
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <polygon points="0 0, 10 3, 0 6" fill="#666"/>
+            </marker>
+            <marker id="arrowhead-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <polygon points="0 0, 10 3, 0 6" fill="#6c8cff"/>
+            </marker>
+          </defs>
+
+          <!-- End Users to Frontend -->
+          <path d="M 135 185 L 110 280" stroke="#81c784" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+          <text x="75" y="235" font-size="11" fill="#555">uses</text>
+
+          <!-- Developers to DevDocs -->
+          <path d="M 865 185 L 890 280" stroke="#9fa8da" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+          <text x="875" y="235" font-size="11" fill="#555">reads</text>
+
+          <!-- Frontend to API -->
+          <path d="M 200 340 L 220 340" stroke="#6c8cff" stroke-width="2" fill="none" marker-end="url(#arrowhead-blue)"/>
+          <text x="205" y="330" font-size="10" fill="#6c8cff" font-weight="600">REST API</text>
+
+          <!-- API to Jobs -->
+          <path d="M 400 340 L 420 340" stroke="#f06292" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+          <text x="405" y="330" font-size="10" fill="#555">triggers</text>
+
+          <!-- API to Database -->
+          <path d="M 600 340 L 620 340" stroke="#81c784" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+          <text x="605" y="330" font-size="10" fill="#555">reads/writes</text>
+
+          <!-- Jobs to Database -->
+          <path d="M 580 380 Q 650 420 680 400" stroke="#81c784" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+          <text x="600" y="420" font-size="10" fill="#555">updates</text>
+
+          <!-- Data Stores Section -->
+          <g id="data-stores">
+            <text x="500" y="520" text-anchor="middle" font-size="14" font-weight="700">External Integrations &amp; Services</text>
+
+            <!-- Cache -->
+            <rect x="50" y="560" width="140" height="80" rx="8" fill="#ede7f6" stroke="#7c4dff" stroke-width="2"/>
+            <text x="120" y="585" text-anchor="middle" font-size="12" font-weight="600">Cache Layer</text>
+            <text x="60" y="605" font-size="10" fill="#1a1f36">• In-Memory Cache</text>
+            <text x="60" y="620" font-size="10" fill="#1a1f36">• Session Storage</text>
+
+            <!-- Payment Gateway -->
+            <rect x="240" y="560" width="140" height="80" rx="8" fill="#e1f5fe" stroke="#0288d1" stroke-width="2"/>
+            <text x="310" y="585" text-anchor="middle" font-size="12" font-weight="600">Payment Gateway</text>
+            <text x="250" y="605" font-size="10" fill="#1a1f36">• SmartPay</text>
+            <text x="250" y="620" font-size="10" fill="#1a1f36">• Order Processing</text>
+
+            <!-- Email Service -->
+            <rect x="430" y="560" width="140" height="80" rx="8" fill="#f0f4c3" stroke="#827717" stroke-width="2"/>
+            <text x="500" y="585" text-anchor="middle" font-size="12" font-weight="600">Email Service</text>
+            <text x="440" y="605" font-size="10" fill="#1a1f36">• Notifications</text>
+            <text x="440" y="620" font-size="10" fill="#1a1f36">• Transactional Mail</text>
+
+            <!-- File Storage -->
+            <rect x="620" y="560" width="140" height="80" rx="8" fill="#f3e5f5" stroke="#6a1b9a" stroke-width="2"/>
+            <text x="690" y="585" text-anchor="middle" font-size="12" font-weight="600">File Storage</text>
+            <text x="630" y="605" font-size="10" fill="#1a1f36">• Images/Media</text>
+            <text x="630" y="620" font-size="10" fill="#1a1f36">• QR Designs</text>
+
+            <!-- Analytics -->
+            <rect x="810" y="560" width="140" height="80" rx="8" fill="#e0f2f1" stroke="#00796b" stroke-width="2"/>
+            <text x="880" y="585" text-anchor="middle" font-size="12" font-weight="600">Analytics</text>
+            <text x="820" y="605" font-size="10" fill="#1a1f36">• Tracking/Metrics</text>
+            <text x="820" y="620" font-size="10" fill="#1a1f36">• Reporting</text>
+          </g>
+
+          <!-- Legend -->
+          <g id="legend" opacity="0.8">
+            <rect x="50" y="680" width="900" height="15" rx="4" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+            <text x="60" y="691" font-size="10" fill="#666">◆ Solid arrow: Synchronous communication  |  ◆ Dashed arrow: Asynchronous/Trigger</text>
+          </g>
+        </svg>
+      </section>
+
       <section class="card" id="containers">
         <h2>Containers in this repository</h2>
         <div class="container-grid">
@@ -328,9 +480,28 @@ import { RouterModule } from '@angular/router';
     .node-success { background: #43a047; color: #fff; }
     .diagram-arrow { color: #bbb; font-size: 18px; }
     .diagram-down { text-align: center; color: #bbb; font-size: 20px; padding: 6px 0; }
+    .architecture-svg {
+      width: 100%;
+      height: auto;
+      max-width: 1000px;
+      margin: 20px auto;
+      display: block;
+      background: #fafbfd;
+      border-radius: 12px;
+      border: 1px solid #e0e4ec;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .svg-title {
+      font-weight: 700;
+      fill: #1a1f36;
+    }
+
     @media (max-width: 768px) {
       .diagram-row { flex-direction: column; }
       .diagram-arrow { transform: rotate(90deg); }
+      .architecture-svg {
+        margin: 10px auto;
+      }
     }
   `]
 })

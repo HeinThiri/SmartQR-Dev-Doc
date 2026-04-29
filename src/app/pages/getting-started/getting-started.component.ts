@@ -841,12 +841,6 @@ npm run build-prod
             </a>
           </li>
           <li>
-            <a routerLink="/domains/smart-qr-overview">
-              <i class="bi bi-folder2-open"></i>
-              <span><strong>Smart QR Overview</strong> — folder layout, routing, and naming conventions.</span>
-            </a>
-          </li>
-          <li>
             <a routerLink="/domains/smart-qr-auth">
               <i class="bi bi-shield-lock"></i>
               <span><strong>Auth domain</strong> — JWT flow, guards, and token storage in detail.</span>

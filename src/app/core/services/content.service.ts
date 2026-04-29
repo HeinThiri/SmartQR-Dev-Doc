@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, timeout } from 'rxjs';
 import { Domain, DomainIndex, Feature, ApiEndpoint, QaItem, SearchableItem } from '../models/domain.model';
 
 @Injectable({ providedIn: 'root' })
@@ -9,11 +9,12 @@ export class ContentService {
   private domainsCache: Domain[] | null = null;
   private domainContentCache = new Map<string, any>();
   private searchIndex: SearchableItem[] | null = null;
+  private requestTimeoutMs = 5_000;
 
   async getDomains(): Promise<Domain[]> {
     if (this.domainsCache) return this.domainsCache;
     const data = await firstValueFrom(
-      this.http.get<{ domains: Domain[] }>('assets/content/domains.json')
+      this.http.get<{ domains: Domain[] }>('assets/content/domains.json').pipe(timeout(this.requestTimeoutMs))
     );
     this.domainsCache = data.domains.sort((a, b) => a.order - b.order);
     return this.domainsCache;
@@ -43,7 +44,7 @@ export class ContentService {
     if (this.domainContentCache.has(key)) return this.domainContentCache.get(key);
     try {
       const content = await firstValueFrom(
-        this.http.get(`assets/content/${slug}/${filename}`, { responseType: 'text' })
+        this.http.get(`assets/content/${slug}/${filename}`, { responseType: 'text' }).pipe(timeout(this.requestTimeoutMs))
       );
       this.domainContentCache.set(key, content);
       return content;
@@ -115,11 +116,33 @@ export class ContentService {
     return items;
   }
 
+  async getDocumentationMarkdown(filename: string): Promise<string> {
+    const key = `documentation/${filename}`;
+    if (this.domainContentCache.has(key)) return this.domainContentCache.get(key);
+    const candidates = [
+      `assets/documentation/${filename}`,
+      `documentation/${filename}`,
+      `assets/${filename}`
+    ];
+    for (const url of candidates) {
+      try {
+        const content = await firstValueFrom(
+          this.http.get(url, { responseType: 'text' }).pipe(timeout(this.requestTimeoutMs))
+        );
+        if (content && content.trim().length > 0) {
+          this.domainContentCache.set(key, content);
+          return content;
+        }
+      } catch {}
+    }
+    return '';
+  }
+
   private async loadDomainFile<T>(slug: string, filename: string): Promise<T> {
     const key = `${slug}/${filename}`;
     if (this.domainContentCache.has(key)) return this.domainContentCache.get(key);
     const data = await firstValueFrom(
-      this.http.get<T>(`assets/content/${slug}/${filename}`)
+      this.http.get<T>(`assets/content/${slug}/${filename}`).pipe(timeout(this.requestTimeoutMs))
     );
     this.domainContentCache.set(key, data);
     return data;

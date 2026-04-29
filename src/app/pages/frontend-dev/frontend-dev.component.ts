@@ -547,7 +547,6 @@ commonService.getAuthHeaders()           // returns HttpHeaders with Bearer toke
       <section class="card">
         <h2><i class="bi bi-arrow-right-circle"></i> Dig deeper</h2>
         <ul class="next-list">
-          <li><a routerLink="/domains/smart-qr-overview"><i class="bi bi-folder2-open"></i><span><strong>Smart QR Overview</strong> — full folder map, naming conventions, and entry points.</span></a></li>
           <li><a routerLink="/domains/smart-qr-types"><i class="bi bi-ui-checks-grid"></i><span><strong>QR Types domain</strong> — step-wizard deep-dives, SaveQR contract, pending-QR design.</span></a></li>
           <li><a routerLink="/domains/smart-qr-viewers"><i class="bi bi-eye"></i><span><strong>Viewers domain</strong> — per-viewer breakdown, scan analytics, public vs authenticated.</span></a></li>
           <li><a routerLink="/domains/smart-qr-loyalty"><i class="bi bi-award"></i><span><strong>Loyalty domain</strong> — registration, stamps, prizes, redemption, admin approval.</span></a></li>

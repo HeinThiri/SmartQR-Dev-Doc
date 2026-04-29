@@ -35,7 +35,7 @@ import { RouterModule } from '@angular/router';
         <div class="info-box">
           <i class="bi bi-info-circle"></i>
           <div>
-            On <a routerLink="/domains">Domains</a>, open the <strong>Smart QR — …</strong> entries (overview, auth, types, viewers, loyalty, shops, admin) for features, API notes, and Q&amp;A indexed in search.
+            On <a routerLink="/domains">Domains</a>, open the <strong>Smart QR — …</strong> entries (auth, types, viewers, loyalty, shops, admin) for features, API notes, and Q&amp;A indexed in search.
             To add more packs, see
             <a routerLink="/how-to-doc">How to Doc?</a>.
           </div>
@@ -244,7 +244,6 @@ import { RouterModule } from '@angular/router';
           <li><a routerLink="/deep-dives">Deep dives &amp; diagrams</a> — sequence, data flow, and component hierarchy</li>
           <li><a routerLink="/api-truth-source">API truth source</a> — master API list, auth conventions, and error catalog</li>
           <li><a routerLink="/domains">Browse domains</a> — JSON-driven module docs</li>
-          <li><a routerLink="/common-features">Common Features</a> — shared platform behaviors</li>
         </ul>
       </section>
     </div>

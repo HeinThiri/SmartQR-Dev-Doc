@@ -126,9 +126,6 @@ import { Domain } from '../../core/models/domain.model';
 
         <div *ngIf="domains.length; else domainLoading" class="domain-grid">
           <a *ngFor="let d of domains" class="domain-card" [routerLink]="['/domains', d.slug]">
-            <div class="domain-icon">
-              <i class="bi" [ngClass]="d.icon"></i>
-            </div>
             <h3>{{ d.name }}</h3>
             <p>{{ d.description }}</p>
             <div class="card-link">
@@ -140,7 +137,6 @@ import { Domain } from '../../core/models/domain.model';
         <ng-template #domainLoading>
           <div class="domain-grid">
             <div class="domain-skeleton" *ngFor="let _ of [1,2,3,4,5,6]">
-              <div class="sk-icon"></div>
               <div class="sk-title"></div>
               <div class="sk-line"></div>
               <div class="sk-line sk-line-short"></div>
@@ -474,16 +470,6 @@ import { Domain } from '../../core/models/domain.model';
       box-shadow: 0 8px 24px rgba(108,140,255,0.14);
       border-color: #c0d0ff;
     }
-    .domain-icon {
-      width: 42px; height: 42px;
-      background: rgba(108,140,255,0.08);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-    }
-    .domain-icon .bi { font-size: 20px; color: #6c8cff; }
     .domain-card h3 {
       font-size: 14px;
       font-weight: 700;
@@ -518,7 +504,6 @@ import { Domain } from '../../core/models/domain.model';
       animation: shimmer 1.15s ease-in-out infinite;
       border-radius: 10px;
     }
-    .sk-icon { width: 42px; height: 42px; margin-bottom: 12px; }
     .sk-title { height: 14px; width: 70%; margin-bottom: 10px; border-radius: 8px; }
     .sk-line { height: 10px; width: 100%; margin-bottom: 8px; border-radius: 8px; }
     .sk-line-short { width: 74%; margin-bottom: 0; }
@@ -588,7 +573,6 @@ export class WelcomeComponent implements OnInit {
     { icon: 'bi-diagram-3',       label: 'Architecture',      route: '/architecture',      desc: 'System diagram, layers, and tech overview'          },
     { icon: 'bi-qr-code',         label: 'Smart QR Hub',      route: '/smart-qr-hub',      desc: 'Full platform feature map at a glance'              },
     { icon: 'bi-code-slash',      label: 'API Reference',     route: '/api-truth-source',  desc: 'All REST endpoints in one searchable place'         },
-    { icon: 'bi-puzzle',          label: 'Common Features',   route: '/common-features',   desc: 'Shared UI components and cross-cutting patterns'    },
     { icon: 'bi-search',          label: 'Search Docs',       route: '/search',            desc: 'Full-text search across features, APIs, and Q&A'   },
   ];
 
@@ -600,7 +584,6 @@ export class WelcomeComponent implements OnInit {
       route: '/frontend-dev',
       links: [
         { label: 'Frontend Developer Guide',        route: '/frontend-dev'               },
-        { label: 'Overview & Folder Layout',        route: '/domains/smart-qr-overview'  },
         { label: 'QR Types & Step Wizards',         route: '/domains/smart-qr-types'     },
         { label: 'Viewers (Menu, Gallery, Event…)', route: '/domains/smart-qr-viewers'   },
         { label: 'Loyalty Module',                  route: '/domains/smart-qr-loyalty'   },
@@ -617,7 +600,6 @@ export class WelcomeComponent implements OnInit {
         { label: 'Auth & Token Flow',       route: '/domains/smart-qr-auth'        },
         { label: 'API Truth Source',        route: '/api-truth-source'             },
         { label: 'Admin & Roles',           route: '/domains/smart-qr-admin'       },
-        { label: 'Approval Workflow',       route: '/common-features/approval-workflow' },
       ]
     },
     {
@@ -629,7 +611,6 @@ export class WelcomeComponent implements OnInit {
         { label: 'Getting Started',    route: '/getting-started'          },
         { label: 'System Architecture', route: '/architecture'            },
         { label: 'Admin Module Docs',  route: '/domains/smart-qr-admin'  },
-        { label: 'Email Notification', route: '/common-features/email-notification' },
       ]
     },
   ];

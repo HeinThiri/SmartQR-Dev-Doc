@@ -15,13 +15,13 @@ This document describes **what** you can document for the whole SmartQR project,
 
 The dev-doc site already supports:
 
-- **Domain catalog** via `assets/content/domains.json` and per-domain folders (`employee`, `attendance`, `payroll`, `kpi`, `lms`, `approval-workflow`, `common-features`) with `index.json`, `features.json`, `api-reference.json`, `qa.json`, and optional Markdown files loaded by `ContentService`.
+- **Domain catalog** via `assets/content/domains.json` and per-domain folders (`<slug>/`) with `index.json`, `features.json`, `api-reference.json`, `qa.json`, and optional Markdown files loaded by `ContentService`.
 - **Global search** built from those JSON sources (`buildSearchIndex()`).
-- **Static doc sections** (routes in `app.routes.ts`): Welcome, Common Features (many sub-pages), Smart HR design pages, Smart HR Case, PenTest findings (with Markdown under `assets/content/pentest/`), How-to-doc.
+- **Static doc sections** (routes in `app.routes.ts`): Welcome, Smart HR design pages, Smart HR Case, PenTest findings (with Markdown under `assets/content/pentest/`), How-to-doc.
 
 ### 1.2 Gap to close
 
-`domains.json` today centers on **HR-related domains** and **common features**. The **Smart QR product surface** in `Smart_QR_UI` (QR code types, wizards, viewers, loyalty, shops, admin QR configuration, email templates, etc.) is **not yet** represented as first-class documentation domains with the same JSON + Markdown pattern.
+`domains.json` today includes **HR-related domains** and **Smart QR product domains**. The **Smart QR product surface** in `Smart_QR_UI` (QR code types, wizards, viewers, loyalty, shops, admin QR configuration, email templates, etc.) should be documented as first-class domains with the same JSON + Markdown pattern.
 
 ---
 
@@ -119,7 +119,7 @@ Align the **sidebar** and **domains** with product reality:
    - Viewers & public surfaces  
    - Loyalty & shops  
    - Admin & configuration  
-3. **Cross-cutting / Common features** — Keep existing common-features content; ensure links from Smart QR pages where relevant.
+3. **Cross-cutting / Shared patterns** — Document shared UI/engineering patterns inside the most relevant domain pages and/or Deep Dives.
 4. **HR / legacy domains** — Keep `employee`, `attendance`, `payroll`, etc., if they remain part of the same program; otherwise mark as “related product” to avoid confusion.
 5. **Security** — PenTest index + secure development practices.
 6. **Search** — Already powered by JSON index; extend as you add domains.
@@ -143,7 +143,7 @@ Align the **sidebar** and **domains** with product reality:
 
 ### 4.2 Static guides (Angular pages)
 
-For long interactive tutorials or screenshots, add a **standalone component + route** (pattern already used for Common Features and Smart HR).
+For long interactive tutorials or screenshots, add a **standalone component + route** (pattern already used for Smart HR and other static pages).
 
 ### 4.3 Search
 
@@ -182,7 +182,6 @@ Suggested slug breakdown (example):
 
 | Slug | Content focus |
 |------|----------------|
-| `smart-qr-overview` | Repo map, module tree, naming conventions |
 | `smart-qr-auth` | Auth flows, guards, password reset |
 | `smart-qr-types` | Wizards by QR type, shared step patterns |
 | `smart-qr-viewers` | Viewer components, routing, public vs. protected |
@@ -199,7 +198,7 @@ Suggested slug breakdown (example):
 
 **Deliverable:** Search returns useful hits for “loyalty”, “menu viewer”, “AdminGuard”, etc.
 
-**Implemented (2026-04-01):** Seven domains — `smart-qr-overview`, `smart-qr-auth`, `smart-qr-types`, `smart-qr-viewers`, `smart-qr-loyalty`, `smart-qr-shops`, `smart-qr-admin` — registered in `domains.json` with full JSON packs. Domain detail page shows optional `summary` and `keyFiles` from `index.json`.
+**Implemented (2026-04-01):** Six domains — `smart-qr-auth`, `smart-qr-types`, `smart-qr-viewers`, `smart-qr-loyalty`, `smart-qr-shops`, `smart-qr-admin` — registered in `domains.json` with full JSON packs. Domain detail page shows optional `summary` and `keyFiles` from `index.json`.
 
 ### Phase 3 — Deep dives and diagrams (ongoing, 2–4 weeks parallel to Phase 2)
 

@@ -13,19 +13,6 @@ import { ApiTruthSourceComponent } from './pages/api-truth-source/api-truth-sour
 import { DomainListComponent } from './pages/domain/domain-list.component';
 import { DomainDetailComponent } from './pages/domain/domain-detail.component';
 import { SearchComponent } from './pages/search/search.component';
-import { CommonFeaturesComponent } from './pages/common-features/common-features.component';
-import { GridExportComponent } from './pages/common-features/grid-export.component';
-import { MultiProductBrandingComponent } from './pages/common-features/multi-product-branding.component';
-import { AdvancedViewComponent } from './pages/common-features/advanced-view.component';
-import { MaintenanceAlertComponent } from './pages/common-features/maintenance-alert.component';
-import { SmsPohIntegrationComponent } from './pages/common-features/sms-poh-integration.component';
-import { TotpMfaComponent } from './pages/common-features/totp-mfa.component';
-import { ApprovalWorkflowComponent } from './pages/common-features/approval-workflow.component';
-import { CustomFieldComponent } from './pages/common-features/custom-field.component';
-import { LogNoteComponent } from './pages/common-features/log-note.component';
-import { VimeoIntegrationComponent } from './pages/common-features/vimeo-integration.component';
-import { EmailNotificationComponent } from './pages/common-features/email-notification.component';
-import { DataMigrationComponent } from './pages/common-features/data-migration.component';
 import { DevopsComponent } from './pages/devops/devops.component';
 import { HowToDocComponent } from './pages/how-to-doc/how-to-doc.component';
 import { SmartHrComponent } from './pages/smart-hr/smart-hr.component';
@@ -37,7 +24,6 @@ import { ChildDataLogComponent } from './pages/smart-hr/child-data-log.component
 import { LicenseValidationComponent } from './pages/smart-hr/license-validation.component';
 import { ReportViewerComponent } from './pages/smart-hr/report-viewer.component';
 import { GroupDataAccessComponent } from './pages/smart-hr/group-data-access.component';
-import { DynamicProcedureComponent } from './pages/smart-hr/dynamic-procedure.component';
 import { LearningModuleComponent } from './pages/smart-hr/learning-module.component';
 import { MyWorkspaceComponent } from './pages/smart-hr/my-workspace.component';
 import { AssetManagementComponent } from './pages/smart-hr/asset-management.component';
@@ -76,19 +62,6 @@ export const routes: Routes = [
       { path: 'smart-qr-hub', component: SmartQrHubComponent },
       { path: 'deep-dives', component: DeepDivesComponent },
       { path: 'api-truth-source', component: ApiTruthSourceComponent },
-      { path: 'common-features', component: CommonFeaturesComponent },
-      { path: 'common-features/grid-export', component: GridExportComponent },
-      { path: 'common-features/multi-product-branding', component: MultiProductBrandingComponent },
-      { path: 'common-features/advanced-view', component: AdvancedViewComponent },
-      { path: 'common-features/maintenance-alert', component: MaintenanceAlertComponent },
-      { path: 'common-features/sms-poh-integration', component: SmsPohIntegrationComponent },
-      { path: 'common-features/totp-mfa', component: TotpMfaComponent },
-      { path: 'common-features/approval-workflow', component: ApprovalWorkflowComponent },
-      { path: 'common-features/custom-field', component: CustomFieldComponent },
-      { path: 'common-features/log-note', component: LogNoteComponent },
-      { path: 'common-features/vimeo-integration', component: VimeoIntegrationComponent },
-      { path: 'common-features/email-notification', component: EmailNotificationComponent },
-      { path: 'common-features/data-migration', component: DataMigrationComponent },
       { path: 'domains', component: DomainListComponent },
       { path: 'domains/:slug', component: DomainDetailComponent },
       { path: 'search', component: SearchComponent },
@@ -97,7 +70,6 @@ export const routes: Routes = [
       { path: 'smart-hr', component: SmartHrComponent },
       { path: 'smart-hr/salary-book', component: SalaryBookComponent },
       { path: 'smart-hr/org-structure', component: OrgStructureComponent },
-      { path: 'common-features/dynamic-procedure', component: DynamicProcedureComponent },
       { path: 'smart-hr/learning-module', component: LearningModuleComponent },
       { path: 'smart-hr/my-workspace', component: MyWorkspaceComponent },
       { path: 'smart-hr/asset-management', component: AssetManagementComponent },

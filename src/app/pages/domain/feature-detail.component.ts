@@ -28,7 +28,12 @@ import { marked } from 'marked';
     <div *ngIf="loading" class="loading-state">
       <i class="bi bi-arrow-clockwise spin"></i> Loading...
     </div>
-    <div *ngIf="!loading && !feature" class="empty-state">
+    <div *ngIf="!loading && loadError" class="empty-state">
+      <i class="bi bi-exclamation-triangle"></i>
+      <p>{{ loadError }}</p>
+      <a [routerLink]="['/domains', domainSlug]" class="back-link">Back to domain</a>
+    </div>
+    <div *ngIf="!loading && !loadError && !feature" class="empty-state">
       <i class="bi bi-file-earmark-x"></i>
       <p>Feature not found.</p>
       <a [routerLink]="['/domains', domainSlug]" class="back-link">Back to domain</a>
@@ -123,20 +128,27 @@ export class FeatureDetailComponent implements OnInit {
   feature: Feature | null = null;
   renderedContent = '';
   loading = true;
+  loadError = '';
 
   async ngOnInit() {
     this.domainSlug = this.route.snapshot.paramMap.get('slug')!;
     const featureId = this.route.snapshot.paramMap.get('featureId')!;
-
     try {
+      const domains = await this.contentService.getDomains();
+      if (!domains.some(d => d.slug === this.domainSlug)) {
+        this.feature = null;
+        return;
+      }
       const features = await this.contentService.getFeatures(this.domainSlug);
       this.feature = features.find(f => f.id === featureId) || null;
       if (this.feature) {
         this.renderedContent = marked.parse(this.feature.content, { async: false }) as string;
       }
     } catch (e) {
+      this.loadError = 'Failed to load feature content.';
       console.error('Failed to load feature', e);
+    } finally {
+      this.loading = false;
     }
-    this.loading = false;
   }
 }

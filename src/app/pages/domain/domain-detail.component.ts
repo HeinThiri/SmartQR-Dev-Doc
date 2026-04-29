@@ -4,13 +4,14 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ContentService } from '../../core/services/content.service';
 import { DomainIndex, Feature, ApiEndpoint, QaItem } from '../../core/models/domain.model';
 import { marked } from 'marked';
+import { AuthDomainPlaygroundComponent } from './auth-domain-playground.component';
 
 @Component({
   selector: 'app-domain-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, AuthDomainPlaygroundComponent],
   template: `
-    <div class="domain-detail" *ngIf="domainIndex">
+    <div class="domain-detail" *ngIf="domainIndex; else missing">
       <!-- Header -->
       <div class="page-header">
         <a routerLink="/domains" class="back-link">
@@ -35,6 +36,28 @@ import { marked } from 'marked';
           <i class="bi" [ngClass]="tab.icon"></i>
           {{ tab.label }}
         </button>
+      </div>
+
+      <!-- Spec Tab -->
+      <div *ngIf="activeTab === 'spec'" class="tab-content">
+        <div class="content-card">
+          <h3>{{ specTitle || specFilename }}</h3>
+          <p class="summary">
+            Source: <code>assets/documentation/{{ specFilename }}</code>
+          </p>
+          <div *ngIf="specLoading" class="markdown-content">
+            <i class="bi bi-arrow-clockwise spin"></i> Loading spec...
+          </div>
+          <div *ngIf="specError" class="markdown-content">
+            <blockquote>{{ specError }}</blockquote>
+          </div>
+          <div *ngIf="!specError && specHtml" class="markdown-content" [innerHTML]="specHtml"></div>
+        </div>
+      </div>
+
+      <!-- Playground Tab -->
+      <div *ngIf="activeTab === 'playground'" class="tab-content">
+        <app-auth-domain-playground></app-auth-domain-playground>
       </div>
 
       <!-- Features Tab -->
@@ -134,9 +157,22 @@ import { marked } from 'marked';
     <div *ngIf="loading" class="loading-state">
       <i class="bi bi-arrow-clockwise spin"></i> Loading...
     </div>
+
+    <ng-template #missing>
+      <div class="domain-detail" *ngIf="!loading">
+        <div class="page-header">
+          <a routerLink="/domains" class="back-link">
+            <i class="bi bi-arrow-left"></i> All Domains
+          </a>
+          <h1>{{ loadError ? 'Unable to load domain' : 'Domain not available' }}</h1>
+          <p class="domain-summary" *ngIf="loadError">{{ loadError }}</p>
+          <p class="domain-summary" *ngIf="!loadError">This domain has been removed from the application.</p>
+        </div>
+      </div>
+    </ng-template>
   `,
   styles: [`
-    .domain-detail { max-width: 960px; margin: 0 auto; }
+    .domain-detail { margin: 0 auto; }
 
     .page-header { margin-bottom: 20px; }
     .back-link {
@@ -271,6 +307,7 @@ export class DomainDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private contentService = inject(ContentService);
 
+  slug = '';
   domainIndex: DomainIndex | null = null;
   features: Feature[] = [];
   endpoints: ApiEndpoint[] = [];
@@ -278,6 +315,13 @@ export class DomainDetailComponent implements OnInit {
   activeTab = 'features';
   openQa = -1;
   loading = true;
+  loadError = '';
+  specMd = '';
+  specHtml = '';
+  specError = '';
+  specLoading = false;
+  specFilename = '';
+  specTitle = '';
 
   tabs = [
     { key: 'features', label: 'Features', icon: 'bi-book' },
@@ -287,25 +331,123 @@ export class DomainDetailComponent implements OnInit {
 
   async ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug')!;
+    this.slug = slug;
+    const docMap: Record<string, { filename: string; title: string; name: string; summary: string; icon: string; includePlayground?: boolean }> = {
+      'smart-qr-auth': {
+        filename: 'Authentication_System.md',
+        title: 'Authentication System Spec',
+        name: 'Smart QR — Auth',
+        summary: 'Authentication flows, endpoints, OTP, rate limits, JWT session binding, and troubleshooting.',
+        icon: 'bi-shield-lock',
+        includePlayground: true
+      },
+      'smart-qr-types': {
+        filename: 'SmartQR_System.md',
+        title: 'Smart QR Code System Spec',
+        name: 'Smart QR — QR types & wizards',
+        summary: 'Wizard steps, supported QR types, validation rules, and viewer behavior.',
+        icon: 'bi-ui-checks-grid'
+      },
+      'smart-qr-viewers': {
+        filename: 'SmartQR_System.md',
+        title: 'Smart QR Code System Spec',
+        name: 'Smart QR — Viewers',
+        summary: 'Viewer routes and type-specific UI/actions for Smart QR.',
+        icon: 'bi-eye'
+      },
+      'smart-qr-loyalty': {
+        filename: 'SmartQR_System.md',
+        title: 'Smart QR Code System Spec',
+        name: 'Smart QR — Loyalty',
+        summary: 'Loyalty flows and related QR/viewer behavior in Smart QR.',
+        icon: 'bi-award'
+      },
+      'smart-qr-shops': {
+        filename: 'SmartQR_System.md',
+        title: 'Smart QR Code System Spec',
+        name: 'Smart QR — Shops & menu catalog',
+        summary: 'Shop/menu related QR behavior and viewer patterns in Smart QR.',
+        icon: 'bi-shop'
+      },
+      'smart-qr-admin': {
+        filename: 'SmartQR_System.md',
+        title: 'Smart QR Code System Spec',
+        name: 'Smart QR — Admin',
+        summary: 'Admin-related QR behavior and system patterns in Smart QR.',
+        icon: 'bi-gear-wide-connected'
+      }
+    };
+
+    const mapped = docMap[slug];
+    if (mapped) {
+      this.specFilename = mapped.filename;
+      this.specTitle = mapped.title;
+      const extraTabs = [{ key: 'spec', label: 'Spec', icon: 'bi-file-text' }];
+      if (mapped.includePlayground) extraTabs.push({ key: 'playground', label: 'Playground', icon: mapped.icon });
+      this.tabs = [...extraTabs, ...this.tabs];
+      this.activeTab = 'spec';
+      this.domainIndex = {
+        slug,
+        name: mapped.name,
+        sections: [],
+        lastUpdated: 'N/A',
+        summary: mapped.summary,
+        keyFiles: [`documentation/${mapped.filename}`]
+      };
+      this.loading = false;
+      void this.loadSpec(mapped.filename);
+      void this.loadDomainAssets(slug);
+      return;
+    }
+
+    await this.loadDomainAssets(slug, true);
+  }
+
+  toggleQa(index: number) {
+    this.openQa = this.openQa === index ? -1 : index;
+  }
+
+  private async loadSpec(filename: string) {
+    this.specLoading = true;
+    this.specError = '';
+    this.specMd = await this.contentService.getDocumentationMarkdown(filename);
+    if (!this.specMd) {
+      this.specError = `${filename} could not be loaded. Verify it is served via /assets/documentation/.`;
+      this.specHtml = '';
+      this.specLoading = false;
+      return;
+    }
+    this.specHtml = marked.parse(this.specMd, { async: false }) as string;
+    this.specLoading = false;
+  }
+
+  private async loadDomainAssets(slug: string, showLoading = false) {
+    if (showLoading) this.loading = true;
+    this.loadError = '';
     try {
+      const domains = await this.contentService.getDomains();
+      if (!domains.some(d => d.slug === slug)) {
+        this.domainIndex = null;
+        return;
+      }
+
       const [domainIndex, features, endpoints, qaItems] = await Promise.all([
         this.contentService.getDomainIndex(slug).catch(() => null),
         this.contentService.getFeatures(slug).catch(() => [] as Feature[]),
         this.contentService.getApiReference(slug).catch(() => [] as ApiEndpoint[]),
         this.contentService.getQaItems(slug).catch(() => [] as QaItem[])
       ]);
-      this.domainIndex = domainIndex;
+
+      if (domainIndex) this.domainIndex = domainIndex;
       this.features = features;
       this.endpoints = endpoints;
       this.qaItems = qaItems;
     } catch (e) {
+      this.loadError = 'Failed to load domain content. Verify assets are reachable (assets/content/domains.json).';
       console.error('Failed to load domain', e);
+    } finally {
+      if (showLoading) this.loading = false;
     }
-    this.loading = false;
-  }
-
-  toggleQa(index: number) {
-    this.openQa = this.openQa === index ? -1 : index;
   }
 
   renderMarkdown(content: string): string {

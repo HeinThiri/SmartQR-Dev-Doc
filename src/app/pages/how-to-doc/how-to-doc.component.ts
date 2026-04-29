@@ -24,7 +24,6 @@ import { RouterModule } from '@angular/router';
           <li><a href="javascript:void(0)" (click)="scrollTo('page-template')">Page Template Structure</a></li>
           <li><a href="javascript:void(0)" (click)="scrollTo('add-route')">Adding Routes</a></li>
           <li><a href="javascript:void(0)" (click)="scrollTo('add-sidebar')">Adding to Sidebar</a></li>
-          <li><a href="javascript:void(0)" (click)="scrollTo('add-common-feature')">Adding a Common Feature Page</a></li>
           <li><a href="javascript:void(0)" (click)="scrollTo('domain-content')">Adding Domain Content (JSON)</a></li>
           <li><a href="javascript:void(0)" (click)="scrollTo('diagrams')">Creating Diagrams (ER &amp; Flow)</a></li>
           <li><a href="javascript:void(0)" (click)="scrollTo('style-guide')">Style Guide</a></li>
@@ -72,7 +71,6 @@ import { RouterModule } from '@angular/router';
 │   │   │   ├── sidebar/         # Sidebar navigation
 │   │   │   └── topbar/          # Top bar with search
 │   │   ├── pages/
-│   │   │   ├── common-features/ # Static feature pages (9 pages)
 │   │   │   ├── domain/          # Domain list &amp; detail pages
 │   │   │   ├── how-to-doc/      # This guide!
 │   │   │   ├── login/           # Login page
@@ -88,7 +86,6 @@ import { RouterModule } from '@angular/router';
 │   │       ├── domains.json     # Domain listing
 │   │       ├── employee/        # Domain-specific JSON content
 │   │       ├── attendance/
-│   │       └── common-features/
 │   └── styles.scss              # Global styles
 └── angular.json</code></pre>
       </section>
@@ -96,10 +93,10 @@ import { RouterModule } from '@angular/router';
       <!-- 3. Creating a New Static Page -->
       <section class="card" id="create-static-page">
         <h2>3. Creating a New Static Page</h2>
-        <p>All documentation pages in <code>common-features/</code> are <strong>standalone Angular components</strong> with inline templates. Follow these steps:</p>
+        <p>Documentation pages are <strong>standalone Angular components</strong> with inline templates. Follow these steps:</p>
 
         <h3>Step 1: Create the component file</h3>
-        <pre><code>src/app/pages/common-features/your-feature.component.ts</code></pre>
+        <pre><code>src/app/pages/your-area/your-page.component.ts</code></pre>
 
         <h3>Step 2: Use this minimal template</h3>
         <pre><code>import &#123; Component &#125; from '&#64;angular/core';
@@ -111,8 +108,8 @@ import &#123; RouterModule &#125; from '&#64;angular/router';
   imports: [RouterModule],
   template: \`
     &lt;div class="page"&gt;
-      &lt;a routerLink="/common-features" class="back-link"&gt;
-        &lt;i class="bi bi-arrow-left"&gt;&lt;/i&gt; Common Features
+      &lt;a routerLink="/welcome" class="back-link"&gt;
+        &lt;i class="bi bi-arrow-left"&gt;&lt;/i&gt; Home
       &lt;/a&gt;
       &lt;h1&gt;Your Feature Title&lt;/h1&gt;
       &lt;p class="subtitle"&gt;Brief description of the feature.&lt;/p&gt;
@@ -184,13 +181,6 @@ export class YourFeatureComponent &#123;&#125;</code></pre>
         <h2>5. Adding Routes</h2>
         <p>All routes are defined in <code>src/app/app.routes.ts</code>. Add your new page inside the <code>LayoutComponent</code> children array (so it's behind auth guard).</p>
 
-        <h3>For a Common Feature page:</h3>
-        <pre><code>// 1. Import the component
-import &#123; YourFeatureComponent &#125; from './pages/common-features/your-feature.component';
-
-// 2. Add route in the children array (after existing common-features routes)
-&#123; path: 'common-features/your-feature', component: YourFeatureComponent &#125;,</code></pre>
-
         <h3>For a standalone page (like this guide):</h3>
         <pre><code>// Add route at the same level as 'welcome', 'search', etc.
 &#123; path: 'how-to-doc', component: HowToDocComponent &#125;,</code></pre>
@@ -213,41 +203,11 @@ import &#123; YourFeatureComponent &#125; from './pages/common-features/your-fea
             <tr><td><i class="bi bi-house"></i></td><td><code>bi-house</code></td><td>Home / Landing</td></tr>
             <tr><td><i class="bi bi-grid"></i></td><td><code>bi-grid</code></td><td>Listings / Domains</td></tr>
             <tr><td><i class="bi bi-search"></i></td><td><code>bi-search</code></td><td>Search</td></tr>
-            <tr><td><i class="bi bi-puzzle"></i></td><td><code>bi-puzzle</code></td><td>Common Features</td></tr>
             <tr><td><i class="bi bi-journal-code"></i></td><td><code>bi-journal-code</code></td><td>Documentation Guide</td></tr>
             <tr><td><i class="bi bi-file-earmark-text"></i></td><td><code>bi-file-earmark-text</code></td><td>Documents / Files</td></tr>
             <tr><td><i class="bi bi-gear"></i></td><td><code>bi-gear</code></td><td>Settings / Config</td></tr>
           </tbody>
         </table>
-      </section>
-
-      <!-- 7. Adding a Common Feature Page -->
-      <section class="card" id="add-common-feature">
-        <h2>7. Adding a Common Feature Page</h2>
-        <p>To add a new feature to the Common Features listing page:</p>
-
-        <h3>Step 1: Create the component</h3>
-        <p>Create <code>src/app/pages/common-features/your-feature.component.ts</code> as described in section 3.</p>
-
-        <h3>Step 2: Add the route</h3>
-        <pre><code>&#123; path: 'common-features/your-feature', component: YourFeatureComponent &#125;,</code></pre>
-
-        <h3>Step 3: Add to the listing page</h3>
-        <p>Open <code>src/app/pages/common-features/common-features.component.ts</code> and add a new entry to the <code>features</code> array:</p>
-        <pre><code>&#123;
-  title: 'Your Feature Name',
-  description: 'Brief description of what this feature does.',
-  icon: 'bi-icon-name',
-  route: '/common-features/your-feature'
-&#125;</code></pre>
-
-        <h3>Step 4: Update the feature count</h3>
-        <p>The count badge on the Common Features listing page shows the total number of features. It is calculated automatically from the <code>features.length</code> — no manual update needed.</p>
-
-        <div class="info-box">
-          <i class="bi bi-info-circle"></i>
-          <div>Features are <strong>automatically sorted A-Z</strong> by title on the listing page.</div>
-        </div>
       </section>
 
       <!-- 8. Domain Content (JSON) -->
@@ -486,7 +446,7 @@ import &#123; YourFeatureComponent &#125; from './pages/common-features/your-fea
             <tr><td>Component file</td><td>kebab-case</td><td><code>grid-export.component.ts</code></td></tr>
             <tr><td>Component class</td><td>PascalCase</td><td><code>GridExportComponent</code></td></tr>
             <tr><td>Component selector</td><td>app- prefix + kebab</td><td><code>app-grid-export</code></td></tr>
-            <tr><td>Route path</td><td>kebab-case</td><td><code>common-features/grid-export</code></td></tr>
+            <tr><td>Route path</td><td>kebab-case</td><td><code>your-area/your-page</code></td></tr>
             <tr><td>Asset folder</td><td>kebab-case</td><td><code>assets/content/employee/</code></td></tr>
             <tr><td>JSON file</td><td>kebab-case</td><td><code>features.json</code>, <code>api-reference.json</code></td></tr>
           </tbody>
@@ -628,7 +588,7 @@ import &#123; YourFeatureComponent &#125; from './pages/common-features/your-fea
             <tr><td>4</td><td>Page has title (h1) and subtitle</td><td>Yes</td></tr>
             <tr><td>5</td><td>Content organized in <code>.card</code> sections</td><td>Yes</td></tr>
             <tr><td>6</td><td>Standard styles copied from existing page</td><td>Yes</td></tr>
-            <tr><td>7</td><td>Added to Common Features listing (if applicable)</td><td>Conditional</td></tr>
+            <tr><td>7</td><td>Added to relevant index/listing page (if applicable)</td><td>Conditional</td></tr>
             <tr><td>8</td><td>Added to sidebar (if applicable)</td><td>Optional</td></tr>
             <tr><td>9</td><td>ER diagram added (if database tables exist)</td><td>Recommended</td></tr>
             <tr><td>10</td><td>Flow diagram added (if workflow exists)</td><td>Recommended</td></tr>
@@ -715,30 +675,24 @@ import &#123; YourFeatureComponent &#125; from './pages/common-features/your-fea
         <h3>Prompt Templates</h3>
         <p>Use these proven prompts when asking Claude to generate documentation pages:</p>
 
-        <h4>Create a new Common Feature page</h4>
-        <pre><code>Write a full documentation page for [Feature Name] as a static
+        <h4>Create a new doc page</h4>
+        <pre><code>Write a full documentation page for [Topic] as a static
 Angular standalone component at:
-src/app/pages/common-features/[feature-name].component.ts
+src/app/pages/your-area/[page-name].component.ts
 
-Follow the exact same pattern as grid-export.component.ts:
-- Back link to /common-features
+Follow the existing page patterns in this repository:
+- Back link to /welcome
 - Overview section with capabilities
-- Database ER diagram (CSS-based, same classes)
-- Flow diagram (CSS-based, same node classes)
+- Diagrams (CSS-based) if needed
 - Interfaces / Data models
 - Integration guide with code examples
-- Integration checklist table
-- Same styles block
 
-Source content: [paste your .md file or describe the feature]
+Source content: [paste your .md file or describe the topic]
 
 Also:
 - Add route in app.routes.ts
-- Add card entry in common-features.component.ts
-- Use HTML encoding for curly braces and angle brackets
-
-Note: The floating TOC automatically picks up all h2
-headings inside .card sections — no extra work needed.</code></pre>
+- Add a sidebar link if it should be discoverable
+- Use HTML encoding for curly braces and angle brackets</code></pre>
 
         <h4>Add diagrams to an existing page</h4>
         <pre><code>In [component-name].component.ts, add:
@@ -875,27 +829,10 @@ rm -rf src/app/pages/pentest/
 # Delete Smart HR Case page
 rm -rf src/app/pages/smart-hr-case/
 
-# Delete all Common Feature pages (keep the folder)
-rm src/app/pages/common-features/grid-export.component.ts
-rm src/app/pages/common-features/advanced-view.component.ts
-rm src/app/pages/common-features/approval-workflow.component.ts
-rm src/app/pages/common-features/custom-field.component.ts
-rm src/app/pages/common-features/log-note.component.ts
-rm src/app/pages/common-features/maintenance-alert.component.ts
-rm src/app/pages/common-features/maintenance-alert.component.html
-rm src/app/pages/common-features/multi-product-branding.component.ts
-rm src/app/pages/common-features/sms-poh-integration.component.ts
-rm src/app/pages/common-features/totp-mfa.component.ts
-rm src/app/pages/common-features/vimeo-integration.component.ts
-rm src/app/pages/common-features/email-notification.component.ts
-rm src/app/pages/common-features/data-migration.component.ts
-rm src/app/pages/common-features/dynamic-procedure.component.ts
-
 # Delete all asset content
 rm -rf src/assets/content/pentest/
 rm -rf src/assets/content/employee/
 rm -rf src/assets/content/attendance/
-rm -rf src/assets/content/common-features/
 rm -rf src/assets/images/*</code></pre>
 
         <h4>B. Clean the routes file</h4>
@@ -905,7 +842,6 @@ import &#123; authGuard &#125; from './core/guards/auth.guard';
 import &#123; LayoutComponent &#125; from './layout/layout.component';
 import &#123; LoginComponent &#125; from './pages/login/login.component';
 import &#123; WelcomeComponent &#125; from './pages/welcome/welcome.component';
-import &#123; CommonFeaturesComponent &#125; from './pages/common-features/common-features.component';
 import &#123; HowToDocComponent &#125; from './pages/how-to-doc/how-to-doc.component';
 
 export const routes: Routes = [
@@ -917,7 +853,6 @@ export const routes: Routes = [
     children: [
       &#123; path: '', redirectTo: 'welcome', pathMatch: 'full' &#125;,
       &#123; path: 'welcome', component: WelcomeComponent &#125;,
-      &#123; path: 'common-features', component: CommonFeaturesComponent &#125;,
       &#123; path: 'how-to-doc', component: HowToDocComponent &#125;,
     ]
   &#125;,
@@ -931,20 +866,13 @@ export const routes: Routes = [
     &lt;i class="bi bi-house"&gt;&lt;/i&gt;
     &lt;span *ngIf="!collapsed"&gt;Home&lt;/span&gt;
   &lt;/a&gt;
-  &lt;a routerLink="/common-features" routerLinkActive="active" class="nav-item"&gt;
-    &lt;i class="bi bi-puzzle"&gt;&lt;/i&gt;
-    &lt;span *ngIf="!collapsed"&gt;Common Features&lt;/span&gt;
-  &lt;/a&gt;
   &lt;a routerLink="/how-to-doc" routerLinkActive="active" class="nav-item"&gt;
     &lt;i class="bi bi-journal-code"&gt;&lt;/i&gt;
     &lt;span *ngIf="!collapsed"&gt;How to Doc?&lt;/span&gt;
   &lt;/a&gt;
 &lt;/nav&gt;</code></pre>
 
-        <h4>D. Clean the Common Features listing</h4>
-        <p>Open <code>src/app/pages/common-features/common-features.component.ts</code> and remove all feature card links. Set count badge to <code>0</code>.</p>
-
-        <h4>E. Clean the Welcome page</h4>
+        <h4>D. Clean the Welcome page</h4>
         <p>Open <code>src/app/pages/welcome/welcome.component.ts</code> and update the project name, description, and stats to match your new project.</p>
 
         <h3>Step 4: Rebrand</h3>
@@ -998,7 +926,6 @@ ng serve --port 4300   # Start dev server
             <tr><td><code>floating-toolbar/</code></td><td>Back, Home, in-page search</td></tr>
             <tr><td><code>floating-toc/</code></td><td>Auto-generated section navigation</td></tr>
             <tr><td><code>welcome/</code></td><td>Home page (customizable)</td></tr>
-            <tr><td><code>common-features/</code></td><td>Listing page pattern</td></tr>
             <tr><td><code>how-to-doc/</code></td><td>This guide</td></tr>
             <tr><td><code>auth.guard.ts</code></td><td>Route protection</td></tr>
             <tr><td><code>auth.service.ts</code></td><td>Login/logout with SHA-256</td></tr>
@@ -1014,7 +941,6 @@ ng serve --port 4300   # Start dev server
             <tr><td><code>pages/smart-hr/</code></td><td>All Smart HR Design pages</td></tr>
             <tr><td><code>pages/smart-hr-case/</code></td><td>Smart HR Case listing</td></tr>
             <tr><td><code>pages/pentest/</code></td><td>All PenTest bug pages</td></tr>
-            <tr><td><code>pages/common-features/*.component.ts</code></td><td>All feature detail pages (keep listing page)</td></tr>
             <tr><td><code>pages/domain/</code></td><td>Domain list/detail (unused)</td></tr>
             <tr><td><code>pages/search/</code></td><td>Search page (unused)</td></tr>
             <tr><td><code>assets/content/</code></td><td>All JSON &amp; markdown content</td></tr>
@@ -1033,7 +959,6 @@ ng serve --port 4300   # Start dev server
             <tr><td>Build for production</td><td><code>ng build</code></td></tr>
             <tr><td>Routes file</td><td><code>src/app/app.routes.ts</code></td></tr>
             <tr><td>Sidebar</td><td><code>src/app/layout/sidebar/sidebar.component.ts</code></td></tr>
-            <tr><td>Common Features listing</td><td><code>src/app/pages/common-features/common-features.component.ts</code></td></tr>
             <tr><td>Global styles</td><td><code>src/styles.scss</code></td></tr>
             <tr><td>Static content</td><td><code>src/assets/content/</code></td></tr>
             <tr><td>Auth credentials</td><td><code>src/assets/content/users.json</code></td></tr>

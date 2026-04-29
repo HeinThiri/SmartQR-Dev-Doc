@@ -99,7 +99,7 @@ import { Domain } from '../../core/models/domain.model';
         <h2 class="section-title">Start Here by Role</h2>
         <p class="section-lead">Choose your entry point based on where you work in the stack.</p>
         <div class="role-grid">
-          <div *ngFor="let path of rolePaths" class="role-card">
+          <a *ngFor="let path of rolePaths" class="role-card" [routerLink]="path.route">
             <div class="role-header">
               <div class="role-icon">
                 <i class="bi" [ngClass]="path.icon"></i>
@@ -109,33 +109,44 @@ import { Domain } from '../../core/models/domain.model';
                 <p>{{ path.description }}</p>
               </div>
             </div>
-            <ul class="role-links">
-              <li *ngFor="let link of path.links">
-                <a [routerLink]="link.route">
-                  <i class="bi bi-arrow-right-short"></i>{{ link.label }}
-                </a>
-              </li>
-            </ul>
-          </div>
+            <div class="role-action">
+              <span>Open</span>
+              <i class="bi bi-arrow-right-short"></i>
+            </div>
+          </a>
         </div>
       </section>
 
       <!-- ══════════════════════════ DOMAINS ═══════════════════════════════ -->
       <section class="section">
         <h2 class="section-title">Documentation Domains</h2>
-        <p class="section-lead">{{ domains.length }} domains — each with features, API notes, and Q&amp;A.</p>
-        <div class="domain-grid">
-          <a *ngFor="let domain of domains"
-             [routerLink]="['/domains', domain.slug]"
-             class="domain-card">
+        <p class="section-lead">
+          {{ domains.length ? domains.length : '—' }} domains — each with features, API notes, and Q&amp;A.
+        </p>
+
+        <div *ngIf="domains.length; else domainLoading" class="domain-grid">
+          <a *ngFor="let d of domains" class="domain-card" [routerLink]="['/domains', d.slug]">
             <div class="domain-icon">
-              <i class="bi" [ngClass]="domain.icon"></i>
+              <i class="bi" [ngClass]="d.icon"></i>
             </div>
-            <h3>{{ domain.name }}</h3>
-            <p>{{ domain.description }}</p>
-            <span class="card-link">Explore <i class="bi bi-arrow-right"></i></span>
+            <h3>{{ d.name }}</h3>
+            <p>{{ d.description }}</p>
+            <div class="card-link">
+              Open domain <i class="bi bi-arrow-right"></i>
+            </div>
           </a>
         </div>
+
+        <ng-template #domainLoading>
+          <div class="domain-grid">
+            <div class="domain-skeleton" *ngFor="let _ of [1,2,3,4,5,6]">
+              <div class="sk-icon"></div>
+              <div class="sk-title"></div>
+              <div class="sk-line"></div>
+              <div class="sk-line sk-line-short"></div>
+            </div>
+          </div>
+        </ng-template>
       </section>
 
       <!-- ══════════════════════════ TECH STACK ════════════════════════════ -->
@@ -166,7 +177,7 @@ import { Domain } from '../../core/models/domain.model';
   `,
   styles: [`
     /* ─── Page wrapper ─── */
-    .welcome-page { max-width: 1100px; margin: 0 auto; }
+    .welcome-page { max-width: 1100px; margin: 0 auto; padding: 18px 16px 44px; }
 
     /* ─── HERO ─── */
     .hero {
@@ -371,6 +382,17 @@ import { Domain } from '../../core/models/domain.model';
       padding: 22px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       border: 1px solid #e8ebf5;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background 0.15s;
+      position: relative;
+    }
+    .role-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+      border-color: #d8def0;
+      background: #fbfcff;
     }
     .role-header {
       display: flex;
@@ -400,6 +422,15 @@ import { Domain } from '../../core/models/domain.model';
       margin: 0;
       line-height: 1.55;
     }
+    .role-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #6c8cff;
+    }
+    .role-action .bi { font-size: 18px; line-height: 1; }
     .role-links {
       list-style: none;
       margin: 0;
@@ -474,6 +505,27 @@ import { Domain } from '../../core/models/domain.model';
       align-items: center;
       gap: 4px;
     }
+    .domain-skeleton {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px;
+      border: 1px solid #e8ebf5;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .sk-icon, .sk-title, .sk-line {
+      background: linear-gradient(90deg, #f1f3f7 0%, #e9edf6 45%, #f1f3f7 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.15s ease-in-out infinite;
+      border-radius: 10px;
+    }
+    .sk-icon { width: 42px; height: 42px; margin-bottom: 12px; }
+    .sk-title { height: 14px; width: 70%; margin-bottom: 10px; border-radius: 8px; }
+    .sk-line { height: 10px; width: 100%; margin-bottom: 8px; border-radius: 8px; }
+    .sk-line-short { width: 74%; margin-bottom: 0; }
+    @keyframes shimmer {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
 
     /* ─── TECH STACK ─── */
     .stack-list {
@@ -545,6 +597,7 @@ export class WelcomeComponent implements OnInit {
       icon: 'bi-window-fullscreen',
       role: 'Frontend Developer',
       description: 'Build Smart_QR_UI (Angular 19) — QR wizards, viewer pages, loyalty flows, and product UI modules.',
+      route: '/frontend-dev',
       links: [
         { label: 'Frontend Developer Guide',        route: '/frontend-dev'               },
         { label: 'Overview & Folder Layout',        route: '/domains/smart-qr-overview'  },
@@ -558,6 +611,7 @@ export class WelcomeComponent implements OnInit {
       icon: 'bi-server',
       role: 'Backend Developer',
       description: 'Work on Smart_QR_API (ASP.NET Core 8) — REST endpoints, JWT auth, EF Core models, Hangfire jobs.',
+      route: '/backend-dev',
       links: [
         { label: 'Backend Developer Guide', route: '/backend-dev'                    },
         { label: 'Auth & Token Flow',       route: '/domains/smart-qr-auth'        },
@@ -570,6 +624,7 @@ export class WelcomeComponent implements OnInit {
       icon: 'bi-gear-wide',
       role: 'DevOps / DBA',
       description: 'Deployment, environment config, DB migrations, email setup, and system administration.',
+      route: '/devops',
       links: [
         { label: 'Getting Started',    route: '/getting-started'          },
         { label: 'System Architecture', route: '/architecture'            },

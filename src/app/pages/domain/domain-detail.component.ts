@@ -123,7 +123,7 @@ import { marked } from 'marked';
           </div>
           <div class="qa-answer" *ngIf="openQa === i">
             <div [innerHTML]="renderMarkdown(qa.answer)"></div>
-            <div class="tags" *ngIf="qa.tags?.length">
+            <div class="tags" *ngIf="qa.tags.length">
               <span *ngFor="let tag of qa.tags" class="tag">{{ tag }}</span>
             </div>
           </div>

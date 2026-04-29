@@ -26,6 +26,7 @@ import { LogNoteComponent } from './pages/common-features/log-note.component';
 import { VimeoIntegrationComponent } from './pages/common-features/vimeo-integration.component';
 import { EmailNotificationComponent } from './pages/common-features/email-notification.component';
 import { DataMigrationComponent } from './pages/common-features/data-migration.component';
+import { DevopsComponent } from './pages/devops/devops.component';
 import { HowToDocComponent } from './pages/how-to-doc/how-to-doc.component';
 import { SmartHrComponent } from './pages/smart-hr/smart-hr.component';
 import { SalaryBookComponent } from './pages/smart-hr/salary-book.component';
@@ -91,6 +92,7 @@ export const routes: Routes = [
       { path: 'domains', component: DomainListComponent },
       { path: 'domains/:slug', component: DomainDetailComponent },
       { path: 'search', component: SearchComponent },
+      { path: 'devops', component: DevopsComponent },
       { path: 'how-to-doc', component: HowToDocComponent },
       { path: 'smart-hr', component: SmartHrComponent },
       { path: 'smart-hr/salary-book', component: SalaryBookComponent },

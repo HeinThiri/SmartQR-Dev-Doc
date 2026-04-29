@@ -1,0 +1,60 @@
+{
+  "features": [
+    {
+      "id": "login-classic",
+      "title": "Login (classic flow)",
+      "summary": "Email/password against AuthenticationApi/login; stores authToken and user ids.",
+      "content": "## login.component.ts\n\nPosts to `{baseUrl}/AuthenticationApi/login`. On success, persists `authToken`, `userId`, `licenseId`, `userRoleName`, `roleId` in **localStorage** for subsequent guards and API calls.",
+      "tags": ["login", "AuthenticationApi", "authToken"]
+    },
+    {
+      "id": "login-v2-register",
+      "title": "Login v2 / registration",
+      "summary": "login-v2 uses AuthenticationApi/Register for sign-up style entry with timezone.",
+      "content": "## login-v2.component.ts\n\nSends `Register` payload including `LocalTimeZone`. Still relies on the same localStorage keys for session continuity and pending QR save after signup.",
+      "tags": ["Register", "login-v2", "signup"]
+    },
+    {
+      "id": "forgot-password",
+      "title": "Forgot password & OTP",
+      "summary": "Forgot-password flow with OTP verification endpoints.",
+      "content": "## forgot-password.component.ts\n\nCoordinates with `AuthenticationApi` endpoints for requesting reset and verifying OTP (`VerifyForgotPasswordOtp`). Always validate rate limiting and OTP expiry on the server (see PenTest docs).",
+      "tags": ["forgot-password", "OTP", "security"]
+    },
+    {
+      "id": "set-password",
+      "title": "Set / reset password",
+      "summary": "Completes password change via AuthenticationApi/ResetPassword.",
+      "content": "## set-password.component.ts\n\nUses token/user context from the reset link or prior step, then posts new password to `ResetPassword`.",
+      "tags": ["ResetPassword", "set-password"]
+    },
+    {
+      "id": "auth-guard",
+      "title": "AuthGuard",
+      "summary": "Blocks routes when authToken (or equivalent) is missing.",
+      "content": "## auth.guard.ts\n\nStandard pattern: read `localStorage` for `authToken` and `userId`; redirect to login if absent. Keep guard logic in sync with any interceptor that attaches Authorization headers.",
+      "tags": ["AuthGuard", "canActivate", "routing"]
+    },
+    {
+      "id": "admin-guard",
+      "title": "AdminGuard",
+      "summary": "Restricts admin modules to elevated roles.",
+      "content": "## admin.guard.ts\n\nChecks role name or role id from storage (e.g. `userRoleName`, `roleId`) before activating admin routes such as loyalty dashboards or QR admin screens.",
+      "tags": ["AdminGuard", "admin", "role"]
+    },
+    {
+      "id": "google-login",
+      "title": "Google OAuth hook",
+      "summary": "login.component exposes googleLogin path when configured.",
+      "content": "## Google\n\n`AuthenticationApi/googleLogin` integrates with Google token from the client. Ensure `googleClientId` in `environment` matches your OAuth console project.",
+      "tags": ["googleLogin", "OAuth", "AuthenticationApi"]
+    },
+    {
+      "id": "session-keys",
+      "title": "Session storage keys",
+      "summary": "Common localStorage keys used across the app.",
+      "content": "## Keys\n\nTypical keys: `authToken`, `userId`, `licenseId`, `userRoleName`, `roleId`. Any new feature that calls SmartQRApi should read `userId` from the same source of truth.",
+      "tags": ["localStorage", "session", "userId"]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "qa-auth-1",
+      "question": "Why am I redirected to login on refresh?",
+      "answer": "If `authToken` is missing from localStorage (cleared storage, expired implementation, or private mode), `AuthGuard` sends you to the login route. Confirm the login response actually stores `authToken`.",
+      "tags": ["AuthGuard", "authToken", "localStorage"]
+    },
+    {
+      "id": "qa-auth-2",
+      "question": "How does AdminGuard decide I am an admin?",
+      "answer": "It reads role information saved at login (`userRoleName`, `roleId`, or equivalent). Align role strings with backend values; mismatches cause false denials.",
+      "tags": ["AdminGuard", "role", "admin"]
+    },
+    {
+      "id": "qa-auth-3",
+      "question": "Does SmartQRApi use the same token as AuthenticationApi?",
+      "answer": "Typically yes — the JWT or token from login is attached to Smart QR requests via HTTP interceptor or per-call headers. Verify interceptor configuration if APIs return 401.",
+      "tags": ["token", "SmartQRApi", "interceptor"]
+    },
+    {
+      "id": "qa-auth-4",
+      "question": "Where is forgot-password implemented?",
+      "answer": "`forgot-password.component.ts` under `modules/auth/`. It chains OTP request and `VerifyForgotPasswordOtp` before allowing password reset.",
+      "tags": ["forgot-password", "OTP"]
+    },
+    {
+      "id": "qa-auth-5",
+      "question": "What is the difference between login and login-v2?",
+      "answer": "**login** targets existing users via `login`. **login-v2** emphasizes `Register` for first-time account creation (e.g. after designing a QR) and still sets the same storage keys.",
+      "tags": ["login", "login-v2", "Register"]
+    }
+  ]
+}

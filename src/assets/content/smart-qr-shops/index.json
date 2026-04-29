@@ -1,0 +1,13 @@
+{
+  "slug": "smart-qr-shops",
+  "name": "Smart QR — Shops & menu catalog",
+  "sections": ["features", "api-reference", "qa"],
+  "lastUpdated": "2026-04-01",
+  "summary": "Shop-backed menus: categories, shops, products, promotions, parking zones, menu orders for admin, and public read APIs for viewers.",
+  "keyFiles": [
+    "Smart_QR_UI/src/app/services/qr-code.service.ts",
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/shops-configuration/",
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/qr-codes/menu-orders-tab/",
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/qr-codes/menu-guest-tab/"
+  ]
+}

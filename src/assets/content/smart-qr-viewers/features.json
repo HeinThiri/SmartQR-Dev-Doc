@@ -1,0 +1,60 @@
+{
+  "features": [
+    {
+      "id": "menu-viewer",
+      "title": "Menu viewer",
+      "summary": "menu-viewer shows catalog, cart, and guest flows; ties to SubmitMenuOrder.",
+      "content": "## MenuViewerComponent\n\nPublic menu experience for scanned menu QRs. May call `GetQRPublic`, shop/product public endpoints, and `SubmitMenuOrder` for checkout. **menu viewer** is the primary UX surface for food & beverage use cases.",
+      "tags": ["menu viewer", "MenuViewer", "public"]
+    },
+    {
+      "id": "loyalty-viewer",
+      "title": "Loyalty viewer",
+      "summary": "Registration, stamp card, and rewards for loyalty-program QRs.",
+      "content": "## LoyaltyViewerComponent\n\nUses `RegisterForLoyalty`, `CheckLoyaltyRegistration`, prize and redemption endpoints. See loyalty domain for admin APIs.",
+      "tags": ["loyalty viewer", "LoyaltyViewer", "RegisterForLoyalty"]
+    },
+    {
+      "id": "website-viewer",
+      "title": "Website viewer",
+      "summary": "Opens external or embedded web content from QR payload.",
+      "content": "## WebsiteViewerComponent\n\nResolves URL from content JSON; may track ScanQR for analytics.",
+      "tags": ["website viewer", "WebsiteViewer"]
+    },
+    {
+      "id": "content-viewer",
+      "title": "Content system viewer",
+      "summary": "Renders multi-section content QR (hero, promos, parking).",
+      "content": "## ContentViewerComponent\n\nMaps JSON sections to layout blocks; shares design tokens with editor tabs.",
+      "tags": ["content viewer", "ContentViewer"]
+    },
+    {
+      "id": "event-viewer",
+      "title": "Event viewer",
+      "summary": "Registration UI with RegisterForEvent and CheckEventRegistration.",
+      "content": "## EventViewerComponent\n\nHandles signup forms and status display for event QRs.",
+      "tags": ["event viewer", "RegisterForEvent"]
+    },
+    {
+      "id": "gallery-vcard-feedback",
+      "title": "Gallery, v-card, service feedback viewers",
+      "summary": "Specialized renderers for media, contact card, and feedback forms.",
+      "content": "## Components\n\n`GalleryViewerComponent`, `VcardViewerComponent`, `ServiceFeedbackViewerComponent` — each aligns with its wizard JSON schema.",
+      "tags": ["gallery viewer", "vcard viewer", "ServiceFeedback"]
+    },
+    {
+      "id": "public-vs-auth",
+      "title": "Public vs authenticated viewers",
+      "summary": "Some routes use AuthGuard or hide layout for admin-only flows.",
+      "content": "## Routing\n\nCompare `data: { hideLayout: true }` on loyalty registration detail vs public viewer routes. Use **GetQRPublic** when no session exists.",
+      "tags": ["GetQRPublic", "AuthGuard", "public"]
+    },
+    {
+      "id": "scan-analytics",
+      "title": "Scan tracking",
+      "summary": "ScanQR and history endpoints power dashboards.",
+      "content": "## Analytics\n\n`ScanQR` may fire on open. `GetQRScansHistory` supports owner analytics views.",
+      "tags": ["ScanQR", "analytics", "viewer"]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "slug": "smart-qr-loyalty",
+  "name": "Smart QR — Loyalty",
+  "sections": ["features", "api-reference", "qa"],
+  "lastUpdated": "2026-04-01",
+  "summary": "Loyalty program lifecycle: public registration, stamps, rewards, redemptions, admin approval, and reporting. Most calls are under SmartQRApi from qr-code.service.",
+  "keyFiles": [
+    "Smart_QR_UI/src/app/services/qr-code.service.ts",
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/qr-viewer/loyalty-viewer/",
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/loyalty-registration-detail/",
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/loyalty-registration-detail/loyalty-report-demo/"
+  ]
+}

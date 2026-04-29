@@ -11,6 +11,10 @@ export interface DomainIndex {
   name: string;
   sections: string[];
   lastUpdated: string;
+  /** Short overview shown under the domain title */
+  summary?: string;
+  /** Notable paths in Smart_QR_UI or this repo */
+  keyFiles?: string[];
 }
 
 export interface Feature {

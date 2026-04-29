@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "qa-shop-1",
+      "question": "Why does the menu viewer show no products?",
+      "answer": "Confirm **GetShopsPublic** returns shops and that **GetProductsPublic** is called with the correct `shopID`. Empty catalog usually means no products linked or shop not published.",
+      "tags": ["menu viewer", "GetProductsPublic", "debug"]
+    },
+    {
+      "id": "qa-shop-2",
+      "question": "Where do I configure shops for a menu QR?",
+      "answer": "`shops-configuration` module under `qr-code-list`, reachable from QR management flows. Components: `shop-management`, `category-management`, `product-management`, etc.",
+      "tags": ["shops-configuration", "menu", "admin"]
+    },
+    {
+      "id": "qa-shop-3",
+      "question": "How are menu orders tracked?",
+      "answer": "**SubmitMenuOrder** creates the record; **GetMenuOrders** and **GetMenuOrderDetail** power admin tabs. Status changes go through **UpdateMenuOrderStatus**.",
+      "tags": ["SubmitMenuOrder", "GetMenuOrders", "orders"]
+    },
+    {
+      "id": "qa-shop-4",
+      "question": "What is GetMenuProductsForAdmin for?",
+      "answer": "Loads products for admin tooling tied to a QR (overrides or quick edits) distinct from pure shop catalog reads — see `qr-code.service` usage.",
+      "tags": ["GetMenuProductsForAdmin", "admin", "menu"]
+    },
+    {
+      "id": "qa-shop-5",
+      "question": "How do promotions appear on the public menu?",
+      "answer": "**GetPromotionsPublic** supplies viewer-facing promos configured via **CreatePromotion** / **UpdatePromotion**.",
+      "tags": ["promotions", "GetPromotionsPublic", "menu viewer"]
+    }
+  ]
+}

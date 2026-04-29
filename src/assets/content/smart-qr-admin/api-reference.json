@@ -1,0 +1,69 @@
+{
+  "endpoints": [
+    {
+      "id": "content-asset",
+      "method": "GET",
+      "path": "/content/{path}",
+      "summary": "Fetch uploaded static asset (icon, image) referenced by admin QR type form.",
+      "description": "Resolved as `{baseApiUrl}/content/{path}` in `qr-type-form.component.ts`. Not under SmartQRApi prefix.",
+      "parameters": [
+        { "name": "path", "in": "path", "type": "string", "required": true, "description": "Relative file path" }
+      ],
+      "requestBody": "",
+      "responseBody": "(binary or image/png)",
+      "tags": ["content", "assets", "admin"]
+    },
+    {
+      "id": "get-qr-list-admin",
+      "method": "GET",
+      "path": "/SmartQRApi/GetQRList/{userId}",
+      "summary": "Same list API used by owners; admins may impersonate or filter by tenant depending on backend.",
+      "description": "Admin QR list components reuse owner APIs with elevated session.",
+      "parameters": [
+        { "name": "userId", "in": "path", "type": "string", "required": true, "description": "Target user id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": [] }",
+      "tags": ["GetQRList", "admin", "SmartQRApi"]
+    },
+    {
+      "id": "get-qr-admin",
+      "method": "GET",
+      "path": "/SmartQRApi/GetQR/{qrCodeID}",
+      "summary": "Inspect QR detail in admin view.",
+      "description": "Mirrors owner GetQR; requires appropriate admin token.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": {} }",
+      "tags": ["GetQR", "admin", "operator"]
+    },
+    {
+      "id": "loyalty-admin-list",
+      "method": "GET",
+      "path": "/SmartQRApi/GetLoyaltyRegistrations/{qrCodeID}",
+      "summary": "Admin/support inspection of loyalty enrollments.",
+      "description": "Often opened from admin contexts alongside owner tools.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": [] }",
+      "tags": ["GetLoyaltyRegistrations", "admin", "loyalty"]
+    },
+    {
+      "id": "menu-orders-admin-api",
+      "method": "GET",
+      "path": "/SmartQRApi/GetMenuOrders/{qrCodeID}",
+      "summary": "Operational visibility into orders for support.",
+      "description": "Same endpoint as owner operations; access controlled by role on backend.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": [] }",
+      "tags": ["GetMenuOrders", "admin", "support"]
+    }
+  ]
+}

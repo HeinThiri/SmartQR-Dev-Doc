@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "qa-types-1",
+      "question": "Where is the route for editing a menu QR?",
+      "answer": "`/qr-codes/edit/menu/:id` and `/qr-codes/edit/menu/:id/customize` in `app-routing.module.ts`, both using `MenuStepOneComponent` / `MenuStepTwoComponent`.",
+      "tags": ["menu", "routing", "edit"]
+    },
+    {
+      "id": "qa-types-2",
+      "question": "Why does SaveQR fail after login?",
+      "answer": "Ensure `userId` and `licenseId` are populated in localStorage from AuthenticationApi. Pending QR save explicitly waits for those values.",
+      "tags": ["SaveQR", "login", "licenseId"]
+    },
+    {
+      "id": "qa-types-3",
+      "question": "How do I add a new QR type?",
+      "answer": "1) Extend backend with new `QRTypeID`. 2) Add mapping in `qr-code.service` `getQRTypeID` / `mapQRTypeIdToType`. 3) Create step-one/step-two components and register routes + type tile.",
+      "tags": ["QRTypeID", "new-type", "wizard"]
+    },
+    {
+      "id": "qa-types-4",
+      "question": "What format is content stored in?",
+      "answer": "Typically JSON string in `ContentJson` / similar field, shape per type. Viewers parse the same JSON for rendering.",
+      "tags": ["ContentJson", "payload"]
+    },
+    {
+      "id": "qa-types-5",
+      "question": "Where are landing pages for each QR type?",
+      "answer": "Under `qr-codes-landing/` (e.g. `menu-qr-landing`, `loyalty-qr-landing`). They provide marketing or entry flows before the wizard.",
+      "tags": ["landing", "qr-codes-landing"]
+    }
+  ]
+}

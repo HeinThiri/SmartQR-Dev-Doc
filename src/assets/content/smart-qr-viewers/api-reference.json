@@ -1,0 +1,74 @@
+{
+  "endpoints": [
+    {
+      "id": "get-qr-public-viewer",
+      "method": "GET",
+      "path": "/SmartQRApi/GetQRPublic/{qrCodeID}",
+      "summary": "Load QR payload for anonymous viewers.",
+      "description": "Primary read for most public viewer components when only `qrCodeID` is known.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": { \"ContentJson\": \"...\", \"QRTypeID\": 4 } }",
+      "tags": ["GetQRPublic", "menu viewer", "viewer"]
+    },
+    {
+      "id": "scan-qr-viewer",
+      "method": "POST",
+      "path": "/SmartQRApi/ScanQR",
+      "summary": "Record that a QR was opened.",
+      "description": "Optional analytics hook from viewer init.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["ScanQR", "analytics"]
+    },
+    {
+      "id": "submit-menu-order",
+      "method": "POST",
+      "path": "/SmartQRApi/SubmitMenuOrder",
+      "summary": "Place an order from menu viewer.",
+      "description": "Used by **menu viewer** checkout; body lists line items and guest metadata per backend contract.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\", \"items\": [], \"guestName\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\", \"resultObject\": { \"orderID\": \"...\" } }",
+      "tags": ["SubmitMenuOrder", "menu viewer", "order"]
+    },
+    {
+      "id": "resolve-menu-guest-token",
+      "method": "POST",
+      "path": "/SmartQRApi/ResolveMenuGuestToken",
+      "summary": "Validate or resolve menu guest magic link token.",
+      "description": "Supports guest table experiences and admin token management.",
+      "parameters": [],
+      "requestBody": "{ \"token\": \"...\" }",
+      "responseBody": "{ \"resultObject\": { \"guestProfileID\": \"...\" } }",
+      "tags": ["menu guest", "token", "ResolveMenuGuestToken"]
+    },
+    {
+      "id": "service-feedback-list",
+      "method": "GET",
+      "path": "/ServiceFeedbackApi/GetFeedbackList/{qrCodeID}",
+      "summary": "List feedback entries for a feedback QR (admin/owner).",
+      "description": "Different controller prefix than SmartQRApi; used alongside feedback viewer.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"data\": [] }",
+      "tags": ["ServiceFeedbackApi", "feedback", "viewer"]
+    },
+    {
+      "id": "register-loyalty-public",
+      "method": "POST",
+      "path": "/SmartQRApi/RegisterForLoyalty",
+      "summary": "Self-service loyalty signup from loyalty viewer.",
+      "description": "Pairs with CheckLoyaltyRegistration for returning users.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\", \"phoneNumber\": \"...\", \"name\": \"...\" }",
+      "responseBody": "{ \"resultObject\": { \"registrationID\": \"...\" } }",
+      "tags": ["RegisterForLoyalty", "loyalty viewer"]
+    }
+  ]
+}

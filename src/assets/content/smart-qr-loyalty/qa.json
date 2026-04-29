@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "qa-loy-1",
+      "question": "How do I debug loyalty registration failures?",
+      "answer": "Inspect the network call to **RegisterForLoyalty** and verify required fields match backend validation. Check duplicate handling via **CheckLoyaltyRegistrationByPhone** if applicable.",
+      "tags": ["loyalty", "RegisterForLoyalty", "debug"]
+    },
+    {
+      "id": "qa-loy-2",
+      "question": "Where is the loyalty dashboard route?",
+      "answer": "`/qr-codes/loyalty-program-dashboard` with **AdminGuard** in `app-routing.module.ts`, using `LoyaltyReportDemoComponent` for demo/report UI.",
+      "tags": ["loyalty", "dashboard", "AdminGuard"]
+    },
+    {
+      "id": "qa-loy-3",
+      "question": "What is GetLoyaltyUserRegistrationForScan used for?",
+      "answer": "Loads registration context when scanning a user's loyalty QR at the counter (registration id + qr id path). Used in registration detail / staff flows.",
+      "tags": ["loyalty", "scan", "registration"]
+    },
+    {
+      "id": "qa-loy-4",
+      "question": "Can prizes be hidden from the public viewer?",
+      "answer": "**GetLoyaltyPrizesPublic** returns the public catalog; owner APIs like **GetLoyaltyPrizes** support `includeInactive` to manage drafts or disabled prizes.",
+      "tags": ["prizes", "loyalty", "public"]
+    },
+    {
+      "id": "qa-loy-5",
+      "question": "Where are in-repo loyalty docs?",
+      "answer": "See `Smart_QR_UI/.../loyalty-report-demo/*.md` for dashboard and filter logic notes; mirror updates in this portal when behavior changes.",
+      "tags": ["loyalty", "documentation", "markdown"]
+    }
+  ]
+}

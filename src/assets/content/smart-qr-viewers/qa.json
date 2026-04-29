@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "qa-vw-1",
+      "question": "Which API should the menu viewer call first?",
+      "answer": "Usually **GetQRPublic** with the scanned `qrCodeID` to load `ContentJson`, then public shop/product endpoints if the menu is shop-backed.",
+      "tags": ["menu viewer", "GetQRPublic"]
+    },
+    {
+      "id": "qa-vw-2",
+      "question": "Why does the viewer show empty content?",
+      "answer": "Verify the QR is published, not paused (`TogglePause`), and that `GetQRPublic` returns `statusTerm` success. Check browser network tab for 404 or 401.",
+      "tags": ["viewer", "GetQRPublic", "debug"]
+    },
+    {
+      "id": "qa-vw-3",
+      "question": "Where is the loyalty viewer route?",
+      "answer": "Declared in `app-routing.module.ts` as `LoyaltyViewerComponent` under the `qr-viewer` module paths (path segment typically includes `loyalty`).",
+      "tags": ["loyalty viewer", "routing"]
+    },
+    {
+      "id": "qa-vw-4",
+      "question": "How does menu guest token work?",
+      "answer": "Admins issue tokens linked to guest profiles; the viewer or admin calls **ResolveMenuGuestToken** to bind requests. See `menu-guest-tab` and `qr-code.service` guest types.",
+      "tags": ["menu guest", "ResolveMenuGuestToken"]
+    },
+    {
+      "id": "qa-vw-5",
+      "question": "Is ServiceFeedbackApi authenticated?",
+      "answer": "Owner views of feedback lists generally require the same auth as other owner APIs. Confirm headers in the component that calls `GetFeedbackList`.",
+      "tags": ["ServiceFeedbackApi", "auth"]
+    }
+  ]
+}

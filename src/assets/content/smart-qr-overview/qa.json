@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "qa-sqo-1",
+      "question": "Where do I start reading code for a new QR type?",
+      "answer": "Open `Smart_QR_UI/src/app/app-routing.module.ts` and find routes under `/qr-codes/type/...` and `/qr-codes/edit/...`. The matching components live under `pages/systematic/modules/qr-code-list/qr-operation/` and `qr-viewer/`.",
+      "tags": ["onboarding", "routing", "qr-type"]
+    },
+    {
+      "id": "qa-sqo-2",
+      "question": "Why are API paths prefixed with SmartQRApi?",
+      "answer": "The backend exposes Smart QR under a single controller/route prefix `SmartQRApi`. The UI builds URLs as `${environment.baseApiUrl}/SmartQRApi/...` in `qr-code.service.ts` and related services.",
+      "tags": ["SmartQRApi", "api", "baseApiUrl"]
+    },
+    {
+      "id": "qa-sqo-3",
+      "question": "How do I run the UI against a different API?",
+      "answer": "Change `baseApiUrl` in `Smart_QR_UI/src/environments/environment.ts` (or the prod file for production builds), restart `ng serve`, and ensure CORS is allowed on the API.",
+      "tags": ["environment", "CORS", "local-dev"]
+    },
+    {
+      "id": "qa-sqo-4",
+      "question": "What is the difference between GetQR and GetQRPublic?",
+      "answer": "**GetQR** is for authenticated owners editing a QR. **GetQRPublic** serves viewer-facing data for end users who only have a QR id from a link or scan.",
+      "tags": ["GetQR", "GetQRPublic", "viewer"]
+    },
+    {
+      "id": "qa-sqo-5",
+      "question": "Where is AdminGuard used?",
+      "answer": "Admin-only routes (e.g. loyalty dashboard, admin QR management) list `canActivate: [AdminGuard]` in `app-routing.module.ts`. Pair with **Smart QR — Auth** for role storage details.",
+      "tags": ["AdminGuard", "admin", "routing"]
+    }
+  ]
+}

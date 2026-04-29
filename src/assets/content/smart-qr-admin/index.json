@@ -1,0 +1,16 @@
+{
+  "slug": "smart-qr-admin",
+  "name": "Smart QR — Admin",
+  "sections": ["features", "api-reference", "qa"],
+  "lastUpdated": "2026-04-01",
+  "summary": "Administrative area: user and role management, QR type templates, QR listing for operators, email configuration, and system settings. Routes sit under the admin path with AdminGuard.",
+  "keyFiles": [
+    "Smart_QR_UI/src/app/app-routing.module.ts",
+    "Smart_QR_UI/src/app/guards/admin.guard.ts",
+    "Smart_QR_UI/src/app/pages/systematic/modules/admin/users/",
+    "Smart_QR_UI/src/app/pages/systematic/modules/admin/roles/",
+    "Smart_QR_UI/src/app/pages/systematic/modules/admin/qr-codes/",
+    "Smart_QR_UI/src/app/pages/systematic/modules/admin/email-configuration/",
+    "Smart_QR_UI/src/app/pages/systematic/modules/admin/system-settings/"
+  ]
+}

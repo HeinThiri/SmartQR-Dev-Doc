@@ -1,0 +1,83 @@
+{
+  "endpoints": [
+    {
+      "id": "register-loyalty",
+      "method": "POST",
+      "path": "/SmartQRApi/RegisterForLoyalty",
+      "summary": "Create loyalty registration for a QR.",
+      "description": "Called from loyalty viewer after user submits signup form.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\", \"name\": \"...\", \"phoneNumber\": \"...\" }",
+      "responseBody": "{ \"resultObject\": { \"registrationID\": \"...\" } }",
+      "tags": ["RegisterForLoyalty", "loyalty"]
+    },
+    {
+      "id": "check-loyalty",
+      "method": "POST",
+      "path": "/SmartQRApi/CheckLoyaltyRegistration",
+      "summary": "Check existing registration by identifiers.",
+      "description": "Used to skip duplicate signup or resume session.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\", \"registrationID\": \"...\" }",
+      "responseBody": "{ \"resultObject\": { \"exists\": true } }",
+      "tags": ["CheckLoyaltyRegistration", "loyalty"]
+    },
+    {
+      "id": "get-registrations",
+      "method": "GET",
+      "path": "/SmartQRApi/GetLoyaltyRegistrations/{qrCodeID}",
+      "summary": "List registrations for owner admin.",
+      "description": "Powers loyalty admin tables and approval queues.",
+      "parameters": [
+        { "name": "qrCodeID", "in": "path", "type": "string", "required": true, "description": "QR id" }
+      ],
+      "requestBody": "",
+      "responseBody": "{ \"resultObject\": [] }",
+      "tags": ["GetLoyaltyRegistrations", "loyalty", "admin"]
+    },
+    {
+      "id": "add-stamps",
+      "method": "POST",
+      "path": "/SmartQRApi/AddLoyaltyStamps",
+      "summary": "Increment stamps for a registration.",
+      "description": "Often triggered after staff scan or rule engine.",
+      "parameters": [],
+      "requestBody": "{ \"registrationID\": \"...\", \"count\": 1 }",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["AddLoyaltyStamps", "stamps", "loyalty"]
+    },
+    {
+      "id": "redeem-reward",
+      "method": "POST",
+      "path": "/SmartQRApi/RedeemLoyaltyReward",
+      "summary": "Redeem a prize for stamps or points.",
+      "description": "Returns redemption id for verification step.",
+      "parameters": [],
+      "requestBody": "{ \"registrationID\": \"...\", \"prizeID\": \"...\" }",
+      "responseBody": "{ \"resultObject\": { \"redemptionID\": \"...\" } }",
+      "tags": ["RedeemLoyaltyReward", "loyalty"]
+    },
+    {
+      "id": "verify-redemption",
+      "method": "POST",
+      "path": "/SmartQRApi/VerifyLoyaltyRedemption",
+      "summary": "Staff confirms redemption fulfilled.",
+      "description": "Closes loop after customer collects reward.",
+      "parameters": [],
+      "requestBody": "{ \"redemptionID\": \"...\" }",
+      "responseBody": "{ \"statusTerm\": \"success\" }",
+      "tags": ["VerifyLoyaltyRedemption", "loyalty"]
+    },
+    {
+      "id": "create-prize",
+      "method": "POST",
+      "path": "/SmartQRApi/CreateLoyaltyPrize",
+      "summary": "Add prize to program.",
+      "description": "Owner configuration; pairs with Update/Delete prize.",
+      "parameters": [],
+      "requestBody": "{ \"qrCodeID\": \"...\", \"title\": \"...\", \"stampCost\": 10 }",
+      "responseBody": "{ \"resultObject\": { \"prizeID\": \"...\" } }",
+      "tags": ["CreateLoyaltyPrize", "loyalty"]
+    }
+  ]
+}

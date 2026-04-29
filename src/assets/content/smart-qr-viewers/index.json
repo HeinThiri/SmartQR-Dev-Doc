@@ -1,0 +1,11 @@
+{
+  "slug": "smart-qr-viewers",
+  "name": "Smart QR — Viewers",
+  "sections": ["features", "api-reference", "qa"],
+  "lastUpdated": "2026-04-01",
+  "summary": "End-user facing routes that render a QR payload: menu viewer, loyalty viewer, website, gallery, event, content, service feedback, and v-card. Many load data via GetQRPublic or type-specific SmartQRApi calls.",
+  "keyFiles": [
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/qr-viewer/",
+    "Smart_QR_UI/src/app/app-routing.module.ts"
+  ]
+}

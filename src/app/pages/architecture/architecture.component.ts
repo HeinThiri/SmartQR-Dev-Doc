@@ -391,7 +391,7 @@ import { RouterModule } from '@angular/router';
     </div>
   `,
   styles: [`
-    .page { max-width: 900px; margin: 0 auto; }
+    .page {margin: 0 auto; }
     .back-link {
       font-size: 13px; color: #6c8cff; text-decoration: none;
       display: inline-flex; align-items: center; gap: 4px; margin-bottom: 12px;

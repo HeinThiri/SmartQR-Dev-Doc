@@ -265,7 +265,7 @@ content-system           content-step-one + content-step-two               conte
     </div>
   `,
   styles: [`
-    .page { max-width: 980px; margin: 0 auto; }
+    .page {margin: 0 auto; }
     .back-link {
       font-size: 13px; color: #6c8cff; text-decoration: none;
       display: inline-flex; align-items: center; gap: 4px; margin-bottom: 12px;

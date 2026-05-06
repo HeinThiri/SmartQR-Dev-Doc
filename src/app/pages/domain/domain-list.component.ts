@@ -239,7 +239,7 @@ import QRCode from 'qrcode';
     </div>
   `,
   styles: [`
-    .domain-list-page { max-width: 900px; margin: 0 auto; }
+    .domain-list-page {margin: 0 auto; }
     .page-header { margin-bottom: 24px; }
     .page-header h1 { font-size: 24px; font-weight: 700; color: #1a1f36; margin: 0 0 6px; }
     .page-header p { font-size: 14px; color: #888; margin: 0; }

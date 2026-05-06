@@ -530,7 +530,7 @@ import { CommonModule } from '@angular/common';
     </div>
   `,
   styles: [`
-    .page { max-width: 960px; margin: 0 auto; }
+    .page {margin: 0 auto; }
     .back-link { font-size: 13px; color: #6c8cff; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 14px; }
     .back-link:hover { text-decoration: underline; }
     .page-header { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 20px; }

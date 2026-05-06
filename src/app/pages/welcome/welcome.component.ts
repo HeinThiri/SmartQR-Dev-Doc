@@ -173,7 +173,7 @@ import { Domain } from '../../core/models/domain.model';
   `,
   styles: [`
     /* ─── Page wrapper ─── */
-    .welcome-page { max-width: 1100px; margin: 0 auto; padding: 18px 16px 44px; }
+    .welcome-page {margin: 0 auto; padding: 18px 16px 44px; }
 
     /* ─── HERO ─── */
     .hero {

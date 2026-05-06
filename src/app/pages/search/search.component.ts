@@ -68,7 +68,7 @@ import { Domain } from '../../core/models/domain.model';
     </div>
   `,
   styles: [`
-    .search-page { max-width: 800px; margin: 0 auto; }
+    .search-page {margin: 0 auto; }
     .page-header h1 { font-size: 24px; font-weight: 700; color: #1a1f36; margin: 0 0 20px; }
 
     .search-input-wrapper {

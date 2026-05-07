@@ -1,0 +1,60 @@
+{
+  "features": [
+    {
+      "id": "shops-configuration",
+      "title": "Shops configuration shell",
+      "summary": "shops-configuration hosts shop, category, product, location, map submodules.",
+      "content": "## Entry\n\nNavigated from QR owner tools for menu-type QRs. Each child component calls SmartQRApi CRUD endpoints scoped by `qrCodeID` or `shopID`.",
+      "tags": ["shops", "shops-configuration", "admin"]
+    },
+    {
+      "id": "shop-crud",
+      "title": "Shops CRUD",
+      "summary": "CreateShop, UpdateShop, DeleteShop, GetShops, GetShop.",
+      "content": "## Data model\n\nOne QR may have multiple shops (e.g. branches). Public endpoints **GetShopsPublic** feed **menu viewer**.",
+      "tags": ["GetShops", "CreateShop", "shop"]
+    },
+    {
+      "id": "category-product",
+      "title": "Categories and products",
+      "summary": "CreateShopCategory, CreateProduct, GetProducts, GetProductsPublic.",
+      "content": "## Catalog\n\nCategories group products per shop. Admin uses **GetMenuProductsForAdmin** for QR-level product overrides in some flows.",
+      "tags": ["category", "product", "catalog"]
+    },
+    {
+      "id": "promotions",
+      "title": "Promotions",
+      "summary": "CreatePromotion, UpdatePromotion, GetPromotionsPublic.",
+      "content": "## Marketing\n\nPromotions attach to QR content and can surface on menu and content viewers.",
+      "tags": ["promotions", "CreatePromotion", "menu"]
+    },
+    {
+      "id": "parking-zones",
+      "title": "Parking zones",
+      "summary": "CreateParkingZone, GetParkingZonesPublic for content QR parking sections.",
+      "content": "## Parking\n\nZones are edited in admin and rendered via public getters for end users.",
+      "tags": ["parking", "CreateParkingZone", "content"]
+    },
+    {
+      "id": "menu-orders-admin",
+      "title": "Menu orders (admin)",
+      "summary": "GetMenuOrders, UpdateMenuOrderStatus, GetMenuOrderDetail.",
+      "content": "## Operations\n\nKitchen or outlet staff update order status; images per line item via **UpdateMenuOrderProductImage**.",
+      "tags": ["GetMenuOrders", "SubmitMenuOrder", "menu orders"]
+    },
+    {
+      "id": "menu-guest-tab",
+      "title": "Menu guest tab",
+      "summary": "Guest profiles and tokens for table ordering (GetMenuGuestProfiles).",
+      "content": "## Guests\n\n**menu-guest-tab** surfaces issued tokens; pairs with **ResolveMenuGuestToken** on scan.",
+      "tags": ["menu guest", "menu-guest-tab", "token"]
+    },
+    {
+      "id": "public-read",
+      "title": "Public read surface",
+      "summary": "GetShopsPublic, GetProductsPublic mirror owner data without auth.",
+      "content": "## Security\n\nMust not leak draft or inactive entities — enforce server-side filtering on all `*Public` endpoints.",
+      "tags": ["GetShopsPublic", "menu viewer", "public"]
+    }
+  ]
+}

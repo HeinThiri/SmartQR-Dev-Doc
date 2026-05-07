@@ -1,0 +1,83 @@
+{
+  "version": "2026-04-01",
+  "source": "manual",
+  "notes": [
+    "Maintain this file as the single API truth source for Smart QR.",
+    "Domain api-reference.json files are curated subsets derived from this master list.",
+    "If OpenAPI becomes available, set source to openapi-import and include spec version."
+  ],
+  "authConventions": {
+    "bearer": {
+      "header": "Authorization: Bearer <token>",
+      "usage": "Owner/admin authenticated endpoints"
+    },
+    "cookie": {
+      "usage": "Session-cookie deployments",
+      "csrfHeader": "X-CSRF-Token (when backend enforces CSRF)"
+    },
+    "public": {
+      "usage": "Anonymous viewer endpoints",
+      "note": "Must enforce server-side filtering and safe payloads"
+    }
+  },
+  "errorCatalog": [
+    { "http": 400, "code": "VALIDATION_ERROR", "message": "Invalid input payload or missing required field" },
+    { "http": 401, "code": "AUTH_REQUIRED", "message": "Missing or expired token/session" },
+    { "http": 403, "code": "ACCESS_DENIED", "message": "Insufficient role or ownership" },
+    { "http": 404, "code": "RESOURCE_NOT_FOUND", "message": "Entity not found" },
+    { "http": 409, "code": "DUPLICATE_ACTION", "message": "Conflicting duplicate operation" },
+    { "http": 429, "code": "RATE_LIMITED", "message": "Too many requests" },
+    { "http": 500, "code": "INTERNAL_ERROR", "message": "Unexpected server error" }
+  ],
+  "endpoints": [
+    {
+      "id": "auth-login",
+      "method": "POST",
+      "path": "/AuthenticationApi/login",
+      "domain": "smart-qr-auth",
+      "auth": "public",
+      "errors": ["VALIDATION_ERROR", "AUTH_REQUIRED", "RATE_LIMITED", "INTERNAL_ERROR"]
+    },
+    {
+      "id": "save-qr",
+      "method": "POST",
+      "path": "/SmartQRApi/SaveQR",
+      "domain": "smart-qr-types",
+      "auth": "bearer",
+      "errors": ["VALIDATION_ERROR", "AUTH_REQUIRED", "ACCESS_DENIED", "INTERNAL_ERROR"]
+    },
+    {
+      "id": "get-qr-public",
+      "method": "GET",
+      "path": "/SmartQRApi/GetQRPublic/{qrCodeID}",
+      "domain": "smart-qr-viewers",
+      "auth": "public",
+      "errors": ["RESOURCE_NOT_FOUND", "INTERNAL_ERROR"]
+    },
+    {
+      "id": "register-loyalty",
+      "method": "POST",
+      "path": "/SmartQRApi/RegisterForLoyalty",
+      "domain": "smart-qr-loyalty",
+      "auth": "public",
+      "errors": ["VALIDATION_ERROR", "DUPLICATE_ACTION", "RATE_LIMITED", "INTERNAL_ERROR"]
+    },
+    {
+      "id": "submit-menu-order",
+      "method": "POST",
+      "path": "/SmartQRApi/SubmitMenuOrder",
+      "domain": "smart-qr-shops",
+      "auth": "public",
+      "errors": ["VALIDATION_ERROR", "RESOURCE_NOT_FOUND", "INTERNAL_ERROR"]
+    },
+    {
+      "id": "get-menu-orders",
+      "method": "GET",
+      "path": "/SmartQRApi/GetMenuOrders/{qrCodeID}",
+      "domain": "smart-qr-shops",
+      "auth": "bearer",
+      "errors": ["AUTH_REQUIRED", "ACCESS_DENIED", "RESOURCE_NOT_FOUND", "INTERNAL_ERROR"]
+    }
+  ]
+}
+

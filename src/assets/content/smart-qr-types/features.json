@@ -1,0 +1,60 @@
+{
+  "features": [
+    {
+      "id": "type-picker",
+      "title": "QR type picker",
+      "summary": "qr-codes-type lists website, v-card, gallery, menu, event, feedback, loyalty, content.",
+      "content": "## QrCodesTypeComponent\n\nEntry surface at `/qr-codes/type`. Each tile navigates to `/qr-codes/type/{type}` for the correct wizard pair.",
+      "tags": ["qr-codes-type", "wizard", "routing"]
+    },
+    {
+      "id": "website-wizard",
+      "title": "Website QR wizard",
+      "summary": "website-step-one and website-step-two capture URL and styling.",
+      "content": "## Routes\n\n`/qr-codes/type/website` → customize → `/qr-codes/edit/website/:id` mirrors the same components with loaded state from GetQR.",
+      "tags": ["website", "wizard", "step-one"]
+    },
+    {
+      "id": "menu-wizard",
+      "title": "Menu QR wizard",
+      "summary": "Menu flows hook into shops/content configuration before viewer.",
+      "content": "## menu-step-one / menu-step-two\n\nCollects branding, sections, and links to shop-backed catalog where enabled. Final payload is JSON in `ContentJson` for SmartQRApi.",
+      "tags": ["menu", "wizard", "SmartQRApi"]
+    },
+    {
+      "id": "loyalty-wizard",
+      "title": "Loyalty program wizard",
+      "summary": "loyalty-step-one and loyalty-step-two define program rules and visuals.",
+      "content": "## Loyalty\n\nAfter publish, registration and stamp APIs apply. See **Smart QR — Loyalty** domain.",
+      "tags": ["loyalty-program", "wizard", "loyalty"]
+    },
+    {
+      "id": "content-wizard",
+      "title": "Content system wizard",
+      "summary": "Hero, sections, parking, promotions tabs map into content QR JSON.",
+      "content": "## content-step-one / two\n\nReuses shared content-* tab components under `shared/` for consistent layout editing.",
+      "tags": ["content-system", "wizard", "shared"]
+    },
+    {
+      "id": "vcard-gallery-event",
+      "title": "V-card, gallery, event, feedback",
+      "summary": "Each type follows the same step-one / step-two pattern with type-specific fields.",
+      "content": "## Pattern\n\n1. Collect base metadata and media. 2. Customize appearance. 3. Save via `saveQRCodeToBackend` → `SaveQR`.",
+      "tags": ["v-card", "image-gallery", "event", "service-feedback"]
+    },
+    {
+      "id": "qr-type-id-mapping",
+      "title": "QRTypeID mapping",
+      "summary": "getQRTypeID and mapQRTypeIdToType bridge API integers to string union types.",
+      "content": "## qr-code.service\n\nWhen sending to API, string types like `loyalty-program` convert to numeric `QRTypeID`. Keep mapping updated when backend adds types.",
+      "tags": ["QRTypeID", "mapping", "qr-code.service"]
+    },
+    {
+      "id": "pending-qr-after-signup",
+      "title": "Pending QR after signup",
+      "summary": "login-v2 saves queued QR via qrCodeService after Register success.",
+      "content": "## Flow\n\nIf user designed a QR before account exists, data is held client-side then `saveQRCodeToBackend` runs once `userId` and `licenseId` exist.",
+      "tags": ["pending", "Register", "SaveQR"]
+    }
+  ]
+}

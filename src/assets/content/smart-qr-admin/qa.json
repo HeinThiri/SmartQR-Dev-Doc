@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "qa-adm-1",
+      "question": "I get blocked on /admin — what checks AdminGuard?",
+      "answer": "The guard reads role information from localStorage set at login (`userRoleName`, `roleId`, etc.). If your account is not an admin role on the backend, routes will redirect or error.",
+      "tags": ["AdminGuard", "admin", "role"]
+    },
+    {
+      "id": "qa-adm-2",
+      "question": "Where is the QR type admin UI?",
+      "answer": "Routes under admin `qr-codes`: `types`, `types/create`, `types/edit/:id` mapping to `QRTypeListComponent` and `QRTypeFormComponent`.",
+      "tags": ["QRType", "admin", "routing"]
+    },
+    {
+      "id": "qa-adm-3",
+      "question": "Why do icon previews 404?",
+      "answer": "URLs are built as `{baseApiUrl}/content/...`. Ensure the API serves static content at that path or adjust environment base URL and deployment nginx/IIS rules.",
+      "tags": ["content", "assets", "404"]
+    },
+    {
+      "id": "qa-adm-4",
+      "question": "How does admin differ from the QR owner list?",
+      "answer": "Owner list at `/qr-codes` is for the logged-in tenant. Admin modules are for operators managing multiple tenants or templates — same APIs may apply with different authorization.",
+      "tags": ["admin", "qr-codes", "tenant"]
+    },
+    {
+      "id": "qa-adm-5",
+      "question": "Where are email templates edited?",
+      "answer": "`admin/email-configuration` with `email-settings` and `email-templates` child components.",
+      "tags": ["email", "templates", "admin"]
+    }
+  ]
+}

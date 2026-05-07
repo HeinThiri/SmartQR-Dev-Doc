@@ -1,0 +1,60 @@
+{
+  "features": [
+    {
+      "id": "admin-routing",
+      "title": "Admin route group",
+      "summary": "Nested routes under admin with AdminGuard and child paths for users, roles, qr-codes, email.",
+      "content": "## app-routing.module.ts\n\nLocate the `admin` parent route. Children include `users`, `roles`, `qr-codes`, `email-configuration`, `system-settings`. Extend here when adding operator tools.",
+      "tags": ["AdminGuard", "admin", "routing"]
+    },
+    {
+      "id": "users-roles",
+      "title": "Users and roles",
+      "summary": "UserList, CreateUser, UserRoles, RoleList, CreateRole components.",
+      "content": "## Identity\n\nThese screens call your identity APIs (paths vary by deployment). Cross-check network tab for exact controller names when documenting integrations.",
+      "tags": ["users", "roles", "admin"]
+    },
+    {
+      "id": "qr-admin",
+      "title": "QR code administration",
+      "summary": "Operator views: QRCodeList, QRCodeView, QR type list and form.",
+      "content": "## qr-codes/\n\n`qr-code-list`, `qr-code-view`, `qr-type-list`, `qr-type-form`, `qr-code-config` help operators inspect tenant QRs without using the owner wizard.",
+      "tags": ["qr-codes", "admin", "operator"]
+    },
+    {
+      "id": "qr-type-templates",
+      "title": "QR type templates",
+      "summary": "QRTypeListComponent and QRTypeFormComponent manage type metadata and icons.",
+      "content": "## Assets\n\nIcon/image URLs may resolve via `{baseApiUrl}/content/{path}` when stored server-side (see qr-type-form).",
+      "tags": ["QRType", "templates", "content"]
+    },
+    {
+      "id": "email-configuration",
+      "title": "Email configuration",
+      "summary": "EmailSettings and EmailTemplates for transactional mail.",
+      "content": "## email-configuration/\n\nCentral place to adjust SMTP or provider settings and template bodies used by backend jobs.",
+      "tags": ["email", "templates", "admin"]
+    },
+    {
+      "id": "system-settings",
+      "title": "System settings",
+      "summary": "SystemSettingsComponent for global toggles and policy values.",
+      "content": "## Settings\n\nCoordinate with backend — many fields map 1:1 to configuration tables or feature flags.",
+      "tags": ["system-settings", "admin", "configuration"]
+    },
+    {
+      "id": "admin-vs-owner",
+      "title": "Admin vs QR owner",
+      "summary": "AdminGuard routes are for operators; owner flows use AuthGuard on qr-codes list and wizards.",
+      "content": "## Separation\n\nDo not mix concerns: tenant users edit their QRs under `/qr-codes`; platform admins use `/admin/...`.",
+      "tags": ["AdminGuard", "AuthGuard", "roles"]
+    },
+    {
+      "id": "content-static-assets",
+      "title": "Serving /content assets",
+      "summary": "Admin references uploaded icons via baseApiUrl/content/...",
+      "content": "## CDN / API\n\nEnsure reverse proxy serves `/content` from the same host as SmartQRApi or configure CORS and absolute URLs.",
+      "tags": ["content", "assets", "baseApiUrl"]
+    }
+  ]
+}

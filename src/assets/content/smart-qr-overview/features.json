@@ -1,0 +1,60 @@
+{
+  "features": [
+    {
+      "id": "repo-layout",
+      "title": "Monorepo layout",
+      "summary": "Smart_QR_UI holds the product; smart-qr-dev-doc is this documentation Angular app.",
+      "content": "## Layout\n\n- **Smart_QR_UI** — customer-facing Smart QR application (NgModule-based).\n- **smart-qr-dev-doc** — internal docs (standalone components, JSON under `assets/content`).\n\nClone once; open the folder you need for `npm install` and `ng serve`.",
+      "tags": ["Smart_QR_UI", "repository", "monorepo"]
+    },
+    {
+      "id": "app-routing",
+      "title": "Routing entry",
+      "summary": "All product routes are declared in app-routing.module.ts.",
+      "content": "## app-routing.module.ts\n\nCentral place for lazy-ish route wiring: QR list, per-type wizards (`/qr-codes/type/...`), edit flows, viewers, admin subtree, auth, analytics.\n\nWhen adding a screen, register the path here and place components under `pages/systematic/modules/`.",
+      "tags": ["routing", "app-routing", "navigation"]
+    },
+    {
+      "id": "qr-code-service",
+      "title": "qr-code.service central hub",
+      "summary": "Large service encapsulating SmartQRApi calls, QR generation, and loyalty/menu helpers.",
+      "content": "## qr-code.service.ts\n\nMost HTTP calls to `{baseApiUrl}/SmartQRApi/...` live here. When debugging API issues, search this file for the action name (e.g. `SaveQR`, `GetLoyaltyRegistrations`).",
+      "tags": ["qr-code.service", "SmartQRApi", "http"]
+    },
+    {
+      "id": "module-tree",
+      "title": "Module tree under systematic",
+      "summary": "qr-code-list, admin, auth, analytics, settings.",
+      "content": "## modules/\n\n- **qr-code-list** — QR CRUD, wizards, viewers, loyalty, shops configuration.\n- **admin** — users, roles, QR admin, email templates.\n- **auth** — login, forgot/set password.\n- **analytics** — usage dashboards.\n- **settings** — user-facing settings.",
+      "tags": ["modules", "folder-structure"]
+    },
+    {
+      "id": "shared-components",
+      "title": "Shared UI",
+      "summary": "Reusable pieces under shared/ for previews, filters, and content tabs.",
+      "content": "## shared/\n\nContains cross-feature widgets (e.g. menu preview frames, content section editors). Prefer reusing these before adding duplicate templates in a feature module.",
+      "tags": ["shared", "components", "reuse"]
+    },
+    {
+      "id": "environment-config",
+      "title": "Environment and API base",
+      "summary": "baseApiUrl points at your Smart QR backend (local or UAT).",
+      "content": "## environment.ts\n\n`baseApiUrl` must match a running API instance. `baseAdminUrl` is used where the UI needs its own origin. Align with DevOps for staging vs production URLs.",
+      "tags": ["environment", "baseApiUrl", "configuration"]
+    },
+    {
+      "id": "naming-conventions",
+      "title": "Naming conventions",
+      "summary": "PascalCase components, camelCase in TS, QRType routes kebab-case.",
+      "content": "## Conventions\n\n- Angular components: `SomethingComponent` + `something.component.ts`.\n- API DTOs from backend often arrive PascalCase; UI code may map to camelCase.\n- Route segments use kebab-case (`/qr-codes/type/loyalty-program`).",
+      "tags": ["conventions", "typescript", "angular"]
+    },
+    {
+      "id": "guards-overview",
+      "title": "Guards at a glance",
+      "summary": "AuthGuard and AdminGate restrict routes; detailed docs in Smart QR — Auth domain.",
+      "content": "## Guards\n\n`AuthGuard` protects authenticated areas. `AdminGuard` restricts admin modules. See **Smart QR — Auth** for storage keys (`authToken`, `userId`, etc.).",
+      "tags": ["AuthGuard", "AdminGuard", "security"]
+    }
+  ]
+}

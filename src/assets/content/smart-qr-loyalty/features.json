@@ -1,0 +1,60 @@
+{
+  "features": [
+    {
+      "id": "loyalty-registration",
+      "title": "Loyalty registration",
+      "summary": "RegisterForLoyalty, CheckLoyaltyRegistration, and phone lookup.",
+      "content": "## Public flow\n\nUser submits details on **loyalty viewer**; backend returns `registrationID`. Returning users use **CheckLoyaltyRegistration** or **CheckLoyaltyRegistrationByPhone**.",
+      "tags": ["loyalty", "RegisterForLoyalty", "registration"]
+    },
+    {
+      "id": "stamps",
+      "title": "Stamps",
+      "summary": "AddLoyaltyStamps, RemoveLoyaltyStamps, GetLoyaltyUserStamps.",
+      "content": "## Stamp card\n\nStaff scan or admin action adds stamps; UI reflects counts from **GetLoyaltyUserStamps**.",
+      "tags": ["stamps", "AddLoyaltyStamps", "loyalty"]
+    },
+    {
+      "id": "prizes-rewards",
+      "title": "Prizes and rewards",
+      "summary": "GetLoyaltyPrizesPublic, GetLoyaltyUserRewards, RedeemLoyaltyReward.",
+      "content": "## Catalog\n\nPublic prize list for viewers; authenticated user rewards for redemption flows.",
+      "tags": ["prizes", "RedeemLoyaltyReward", "loyalty"]
+    },
+    {
+      "id": "redemption-admin",
+      "title": "Redemption verification",
+      "summary": "VerifyLoyaltyRedemption, CancelLoyaltyRedemption, GetLoyaltyRedemptions.",
+      "content": "## Staff tools\n\nConfirm pick-up at counter; cancel mistaken redemptions. **GetLoyaltyRedemptions** lists activity per QR.",
+      "tags": ["redemption", "VerifyLoyaltyRedemption", "admin"]
+    },
+    {
+      "id": "registration-admin",
+      "title": "Registration admin",
+      "summary": "GetLoyaltyRegistrations, ApproveRejectLoyaltyRegistration, DeleteLoyaltyRegistration.",
+      "content": "## Moderation\n\nOwners review pending signups; approve/reject updates registration state.",
+      "tags": ["GetLoyaltyRegistrations", "ApproveRejectLoyaltyRegistration", "loyalty"]
+    },
+    {
+      "id": "loyalty-prize-crud",
+      "title": "Prize CRUD (owner)",
+      "summary": "CreateLoyaltyPrize, UpdateLoyaltyPrize, DeleteLoyaltyPrize, GetLoyaltyPrizes.",
+      "content": "## Configuration\n\nOwner configures catalog with optional inactive prizes (`includeInactive` query on GetLoyaltyPrizes).",
+      "tags": ["CreateLoyaltyPrize", "loyalty", "catalog"]
+    },
+    {
+      "id": "registration-detail-route",
+      "title": "Registration detail route",
+      "summary": "Deep link for admin scanning user QR: loyalty-program/:qrCodeId/registration/:registrationId.",
+      "content": "## Routing\n\n`LoyaltyRegistrationDetailComponent` uses `data.hideLayout` for full-page scanner UX. CamelCase and PascalCase param routes exist for compatibility.",
+      "tags": ["loyalty", "registration", "routing"]
+    },
+    {
+      "id": "loyalty-report-demo",
+      "title": "Loyalty report demo / dashboard",
+      "summary": "LoyaltyReportDemoComponent and loyalty-program-dashboard for analytics prototypes.",
+      "content": "## Reports\n\nIn-repo Markdown under `loyalty-report-demo` (`LOYALTY_*.md`) describes filters and dashboard logic; align UI with backend when APIs stabilize.",
+      "tags": ["loyalty", "dashboard", "report"]
+    }
+  ]
+}

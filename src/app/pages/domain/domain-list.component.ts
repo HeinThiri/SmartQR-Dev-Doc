@@ -12,7 +12,7 @@ import { Domain } from '../../core/models/domain.model';
     <div class="domain-list-page">
       <div class="page-header">
         <h1>All Domains</h1>
-        <p>Browse documentation organized by Smart HR modules and features.</p>
+        <p>Browse Smart QR product areas (QR types, viewers, loyalty, shops, admin, auth) and common features.</p>
       </div>
       <div class="domain-grid">
         <a *ngFor="let domain of domains"

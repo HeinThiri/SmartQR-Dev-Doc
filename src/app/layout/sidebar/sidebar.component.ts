@@ -14,7 +14,7 @@ import { Domain } from '../../core/models/domain.model';
         <div class="logo" *ngIf="!collapsed">
           <i class="bi bi-book"></i>
           <div class="logo-text">
-            <span class="logo-title">Smart HR</span>
+            <span class="logo-title">Smart QR</span>
             <span class="logo-sub">DevDocs</span>
           </div>
         </div>
@@ -24,25 +24,41 @@ import { Domain } from '../../core/models/domain.model';
       </div>
 
       <nav class="sidebar-nav">
-        <a routerLink="/welcome" routerLinkActive="active" class="nav-item">
+        <a routerLink="/welcome" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
           <i class="bi bi-house"></i>
           <span *ngIf="!collapsed">Home</span>
         </a>
-        <a routerLink="/smart-hr" routerLinkActive="active" class="nav-item">
-          <i class="bi bi-briefcase"></i>
-          <span *ngIf="!collapsed">Smart HR Design</span>
+        <a routerLink="/getting-started" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-rocket-takeoff"></i>
+          <span *ngIf="!collapsed">Getting Started</span>
         </a>
-        <a routerLink="/smart-hr-case" routerLinkActive="active" class="nav-item">
-          <i class="bi bi-bug"></i>
-          <span *ngIf="!collapsed">Smart HR Case</span>
+        <a routerLink="/architecture" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-diagram-3"></i>
+          <span *ngIf="!collapsed">Architecture</span>
         </a>
-        <a routerLink="/pentest" routerLinkActive="active" class="nav-item">
-          <i class="bi bi-shield-exclamation"></i>
-          <span *ngIf="!collapsed">PenTest</span>
+        <a routerLink="/smart-qr-hub" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-qr-code"></i>
+          <span *ngIf="!collapsed">Smart QR hub</span>
         </a>
-        <a routerLink="/common-features" routerLinkActive="active" class="nav-item">
-          <i class="bi bi-puzzle"></i>
-          <span *ngIf="!collapsed">Common Features</span>
+        <a routerLink="/deep-dives" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-diagram-2"></i>
+          <span *ngIf="!collapsed">Deep dives</span>
+        </a>
+        <a routerLink="/backend-dev" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-server"></i>
+          <span *ngIf="!collapsed">Backend Developer</span>
+        </a>
+        <a routerLink="/api-truth-source" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-braces-asterisk"></i>
+          <span *ngIf="!collapsed">API truth source</span>
+        </a>
+        <a routerLink="/domains" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-grid"></i>
+          <span *ngIf="!collapsed">Domains</span>
+        </a>
+        <a routerLink="/search" routerLinkActive="active" class="nav-item">
+          <i class="bi bi-search"></i>
+          <span *ngIf="!collapsed">Search</span>
         </a>
         <a routerLink="/how-to-doc" routerLinkActive="active" class="nav-item">
           <i class="bi bi-journal-code"></i>

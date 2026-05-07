@@ -1,0 +1,15 @@
+{
+  "slug": "smart-qr-auth",
+  "name": "Smart QR — Auth",
+  "sections": ["features", "api-reference", "qa"],
+  "lastUpdated": "2026-04-01",
+  "summary": "Authentication and authorization in Smart_QR_UI: AuthenticationApi for credentials, localStorage session keys, AuthGuard vs AdminGuard, and password recovery flows.",
+  "keyFiles": [
+    "Smart_QR_UI/src/app/guards/auth.guard.ts",
+    "Smart_QR_UI/src/app/guards/admin.guard.ts",
+    "Smart_QR_UI/src/app/pages/systematic/modules/auth/login/login.component.ts",
+    "Smart_QR_UI/src/app/pages/systematic/modules/auth/login-v2/login-v2.component.ts",
+    "Smart_QR_UI/src/app/pages/systematic/modules/auth/forgot-password/forgot-password.component.ts",
+    "Smart_QR_UI/src/app/pages/systematic/modules/auth/set-password/set-password.component.ts"
+  ]
+}

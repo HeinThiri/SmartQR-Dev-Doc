@@ -1,0 +1,13 @@
+{
+  "slug": "smart-qr-overview",
+  "name": "Smart QR — Overview",
+  "sections": ["features", "api-reference", "qa"],
+  "lastUpdated": "2026-04-01",
+  "summary": "Orientation for engineers working on the Smart QR web app (Smart_QR_UI): folder layout, routing entry points, and how the Angular app talks to SmartQRApi on environment.baseApiUrl.",
+  "keyFiles": [
+    "Smart_QR_UI/src/app/app.module.ts",
+    "Smart_QR_UI/src/app/app-routing.module.ts",
+    "Smart_QR_UI/src/app/services/qr-code.service.ts",
+    "Smart_QR_UI/src/environments/environment.ts"
+  ]
+}

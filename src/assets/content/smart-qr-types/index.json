@@ -1,0 +1,12 @@
+{
+  "slug": "smart-qr-types",
+  "name": "Smart QR — QR types & wizards",
+  "sections": ["features", "api-reference", "qa"],
+  "lastUpdated": "2026-04-01",
+  "summary": "Per-type creation and edit wizards (step one / step two), mapping between string type and QRTypeID, and persistence through SaveQR.",
+  "keyFiles": [
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/qr-operation/",
+    "Smart_QR_UI/src/app/services/qr-code.service.ts",
+    "Smart_QR_UI/src/app/pages/systematic/modules/qr-code-list/qr-codes-type/qr-codes-type.component.ts"
+  ]
+}

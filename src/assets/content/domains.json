@@ -1,53 +1,60 @@
 {
   "domains": [
     {
-      "slug": "employee",
-      "name": "Employee",
-      "icon": "bi-people",
-      "description": "Employee profiles, contracts, custom fields, and employee book management.",
-      "order": 1
-    },
-    {
-      "slug": "attendance",
-      "name": "Attendance",
-      "icon": "bi-calendar-check",
-      "description": "Daily attendance, calendar view, duty roster, and shift management.",
-      "order": 2
-    },
-    {
-      "slug": "payroll",
-      "name": "Payroll",
-      "icon": "bi-cash-stack",
-      "description": "Salary calculation, payslips, tax computation, and payroll reports.",
-      "order": 3
-    },
-    {
-      "slug": "kpi",
-      "name": "KPI",
-      "icon": "bi-graph-up",
-      "description": "Key performance indicators, goal tracking, and performance reviews.",
-      "order": 4
-    },
-    {
-      "slug": "lms",
-      "name": "LMS",
-      "icon": "bi-mortarboard",
-      "description": "Learning management — courses, quizzes, assignments, and certificates.",
-      "order": 5
-    },
-    {
-      "slug": "approval-workflow",
-      "name": "Approval Workflow",
-      "icon": "bi-check2-circle",
-      "description": "Multi-level approval chains, request routing, and approval policies.",
-      "order": 6
-    },
-    {
       "slug": "common-features",
       "name": "Common Features",
       "icon": "bi-puzzle",
       "description": "Reusable shared components — grid export, file upload, common utilities.",
+      "order": 1
+    },
+    {
+      "slug": "smart-qr-overview",
+      "name": "Smart QR — Overview",
+      "icon": "bi-folder2-open",
+      "description": "Repository map, module tree, naming conventions, and where to start in Smart_QR_UI.",
+      "order": 2
+    },
+    {
+      "slug": "smart-qr-auth",
+      "name": "Smart QR — Auth",
+      "icon": "bi-shield-lock",
+      "description": "Login, registration, password reset, AuthGuard, AdminGuard, and tokens in localStorage.",
+      "order": 3
+    },
+    {
+      "slug": "smart-qr-types",
+      "name": "Smart QR — QR types & wizards",
+      "icon": "bi-ui-checks-grid",
+      "description": "Step-one / step-two flows per QR type, SaveQR, and shared patterns in qr-code.service.",
+      "order": 4
+    },
+    {
+      "slug": "smart-qr-viewers",
+      "name": "Smart QR — Viewers",
+      "icon": "bi-eye",
+      "description": "Public and authenticated viewer routes: menu, website, gallery, event, loyalty, content, feedback.",
+      "order": 5
+    },
+    {
+      "slug": "smart-qr-loyalty",
+      "name": "Smart QR — Loyalty",
+      "icon": "bi-award",
+      "description": "Loyalty registration, stamps, prizes, redemptions, admin approval, and report dashboards.",
+      "order": 6
+    },
+    {
+      "slug": "smart-qr-shops",
+      "name": "Smart QR — Shops & menu catalog",
+      "icon": "bi-shop",
+      "description": "Shops, categories, products, promotions, parking zones, and menu orders.",
       "order": 7
+    },
+    {
+      "slug": "smart-qr-admin",
+      "name": "Smart QR — Admin",
+      "icon": "bi-gear-wide-connected",
+      "description": "Users, roles, QR type admin, email configuration, and system settings.",
+      "order": 8
     }
   ]
 }

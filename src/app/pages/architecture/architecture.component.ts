@@ -22,7 +22,7 @@ import { RouterModule } from '@angular/router';
           Developers extend <code>Smart_QR_UI</code>; this site documents modules, shared patterns, APIs, and security notes.
         </p>
         <div class="ctx-diagram">
-          <div class="ctx-box ctx-actor">
+          <div class="ctx-box ctx-actor"> 
             <i class="bi bi-person-badge"></i>
             <span>Developer / Technical reader</span>
           </div>
